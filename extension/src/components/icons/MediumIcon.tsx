@@ -1,0 +1,42 @@
+export default function MediumIcon(props: any) {
+  return (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle
+        cx="6"
+        cy="13"
+        r="5"
+        stroke="white"
+        strokeOpacity="0.95"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <ellipse
+        cx="16"
+        cy="13"
+        rx="3"
+        ry="5"
+        stroke="white"
+        strokeOpacity="0.95"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <ellipse
+        cx="22"
+        cy="13"
+        rx="1"
+        ry="4"
+        stroke="white"
+        strokeOpacity="0.95"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}

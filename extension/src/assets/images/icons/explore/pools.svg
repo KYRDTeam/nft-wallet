@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="104" height="104" viewBox="0 0 104 104">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <path d="M0 0L84 0 84 84 0 84z" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841)"/>
+                    <g stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                        <path stroke="#247B2B" d="M56.697 25.197h0c3.478 0 6.303 2.82 6.303 6.303h0c0 3.479-2.821 6.303-6.303 6.303h0c-3.48 0-6.304-2.82-6.304-6.303h0c.007-3.483 2.828-6.303 6.303-6.303z" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#794748" d="M31.5 9.926h0c3.479 0 6.303 2.821 6.303 6.304h0c0 3.479-2.82 6.303-6.303 6.303h0c-3.479-.004-6.303-2.821-6.303-6.303h0c0-3.483 2.82-6.304 6.303-6.304z" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#8F6922" d="M31.5 40.47h0c3.479 0 6.303 2.822 6.303 6.304h0c0 3.479-2.82 6.303-6.303 6.303h0c-3.479 0-6.303-2.82-6.303-6.303h0c0-3.486 2.82-6.303 6.303-6.303z" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#794748" d="M43.05 22.75L37.135 18.97" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#247B2B" d="M51.415 34.895L45.5 38.675" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#0C6CA6" d="M6.303 37.803h0C2.825 37.803 0 34.983 0 31.5h0c0-3.479 2.821-6.3 6.303-6.3h0c3.48 0 6.304 2.821 6.304 6.303h0c-.007 3.48-2.828 6.3-6.303 6.3z" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#8F6922" d="M19.95 40.25L25.865 44.03" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#0C6CA6" d="M11.585 28.105L17.5 24.325" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#1186C8" d="M0 52.5V56c0 3.867 3.132 7 7 7h3.5" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#0C6CA6" d="M63 10.5V7c0-3.868-3.133-7-7-7h-3.5" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#085E91" d="M10.5 0H7C3.132 0 0 3.132 0 7v3.5" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                        <path stroke="#0E7BB3" d="M52.5 63H56c3.867 0 7-3.133 7-7v-3.5" transform="translate(-1140 -300) translate(934 307) rotate(-15 161.394 -776.841) translate(10.5 10.5)"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

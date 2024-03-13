@@ -1,0 +1,16 @@
+export { default as ArrowBackIcon } from "./ArrowBack";
+export { default as ArrowDownIcon } from "./ArrowDown";
+export { default as ChainIcon } from "./Chain";
+export { default as CoinBaseIcon } from "./CoinBase";
+export { default as LedgerIcon } from "./Ledger";
+export { default as MetaMaskIcon } from "./MetaMask";
+export { default as TrezorIcon } from "./Trezor";
+export { default as WalletConnectIcon } from "./WalletConnect";
+export { default as CheckBoxCustomIcon } from "./CheckBoxCustomIcon";
+export { default as TwitterIcon } from "./TwitterIcon";
+export { default as TelegramIcon } from "./TelegramIcon";
+export { default as MediumIcon } from "./MediumIcon";
+export { default as EmailIcon } from "./EmailIcon";
+export { default as DiscordIcon } from "./DiscordIcon";
+export { default as YoutubeIcon } from "./YoutubeIcon";
+export { default as InfoIcon } from "./InfoIcon";

@@ -1,0 +1,158 @@
+import { ChainId, ChainNodeType } from "../types";
+
+export const NODE: {
+  [chainId in ChainId]: ChainNodeType;
+} = {
+  [ChainId.MAINNET]: {
+    rpcUrls: "https://mainnet.infura.io/v3/b14b5f54206846dcac9d091556a2a063",
+    name: "Ethereum",
+    platform: "ethereum",
+    standard: "ERC-20",
+    currencySymbol: "ETH",
+    scanUrl: "https://etherscan.io",
+    scanName: "Etherscan",
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    scanApi: {
+      endpoint: "https://api.etherscan.io/api",
+      key: "Z4PIDJWZJ4N3TM124ZG2V22ATWPQGSX6B2",
+    },
+    EIP1559: true,
+  },
+  [ChainId.ROPSTEN]: {
+    rpcUrls: "https://ropsten.infura.io/v3/b14b5f54206846dcac9d091556a2a063",
+    name: "Ropsten",
+    platform: "ethereum",
+    standard: "ERC-20",
+    currencySymbol: "ETH",
+    scanUrl: "https://ropsten.etherscan.io",
+    scanName: "Etherscan",
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    scanApi: {
+      endpoint: "https://api-ropsten.etherscan.io/api",
+      key: "ESP4NCWFSIBGYAXMRXGKS6HC29P62S6VSE",
+    },
+    EIP1559: true,
+  },
+  [ChainId.BSC]: {
+    rpcUrls: "https://bsc-dataseed.binance.org/",
+    name: "BSC",
+    platform: "binance-smart-chain",
+    standard: "BEP-20",
+    currencySymbol: "BNB",
+    scanName: "Bscscan",
+    scanUrl: "https://bscscan.com",
+    address: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    scanApi: {
+      endpoint: "https://api.bscscan.com/api",
+      key: "C65KNM5RDGXMBPK1JVKVCT89N14UEVIVWQ",
+    },
+    EIP1559: false,
+  },
+  [ChainId.BSC_TESTNET]: {
+    rpcUrls: "https://data-seed-prebsc-1-s1.binance.org:8545",
+    name: "BSC test",
+    platform: "binance-smart-chain",
+    standard: "BEP-20",
+    currencySymbol: "BNB",
+    scanName: "Bscscan",
+    scanUrl: "https://testnet.bscscan.com",
+    address: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    scanApi: {
+      endpoint: "https://testnet.bscscan.com/api",
+      key: "C65KNM5RDGXMBPK1JVKVCT89N14UEVIVWQ",
+    },
+    EIP1559: false,
+  },
+  [ChainId.POLYGON]: {
+    rpcUrls: "https://polygon-rpc.com/",
+    // rpcUrls: "https://polygon-mainnet.infura.io/v3/2343217699c44b45851935789f1f89e6",
+    name: "Polygon",
+    platform: "polygon-pos",
+    standard: "MATIC",
+    currencySymbol: "MATIC",
+    scanUrl: "https://polygonscan.com",
+    scanName: "Polygonscan",
+    address: "0xcccccccccccccccccccccccccccccccccccccccc",
+    scanApi: {
+      endpoint: "https://api.polygonscan.com/api",
+      key: "AIS4XGCHX84UEJY8W27M181J62H73YQHZA",
+    },
+    EIP1559: true,
+  },
+  [ChainId.AVALANCHE]: {
+    rpcUrls: "https://api.avax.network/ext/bc/C/rpc",
+    name: "Avalanche",
+    platform: "avalanche",
+    standard: "AVAX",
+    currencySymbol: "AVAX",
+    scanUrl: "https://cchain.explorer.avax.network",
+    scanName: "Avalance Explorer",
+    address: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    scanApi: {
+      endpoint: "",
+      key: "",
+    },
+    EIP1559: true,
+  },
+  [ChainId.CRONOS]: {
+    rpcUrls: "https://evm-cronos.crypto.org",
+    name: "Cronos",
+    platform: "cronos",
+    standard: "CRC-20",
+    currencySymbol: "CRO",
+    scanUrl: "https://cronos.crypto.org/explorer",
+    scanName: "Cronos Explorer",
+    address: "0xffffffffffffffffffffffffffffffffffffffff",
+    scanApi: {
+      endpoint: "",
+      key: "",
+    },
+    EIP1559: false,
+  },
+  [ChainId.FANTOM]: {
+    rpcUrls: "https://rpcapi.fantom.network",
+    name: "Fantom",
+    platform: "fantom",
+    standard: "Opera FTM",
+    currencySymbol: "FTM",
+    scanUrl: "https://ftmscan.com",
+    scanName: "Fantom Explorer",
+    address: "0xdddddddddddddddddddddddddddddddddddddddd",
+    scanApi: {
+      endpoint: "",
+      key: "",
+    },
+    EIP1559: false,
+  },
+  [ChainId.ARBITRUM]: {
+    rpcUrls: "https://arb1.arbitrum.io/rpc",
+    name: "Arbitrum",
+    platform: "ethereum",
+    standard: "Arbitrum",
+    currencySymbol: "ETH",
+    scanUrl: "https://arbiscan.io",
+    scanName: "Arbiscan",
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    scanApi: {
+      endpoint: "",
+      key: "",
+    },
+    EIP1559: false,
+  },
+};
+
+export const MAINNET_CHAINS = [
+  ChainId.MAINNET,
+  ChainId.BSC,
+  ChainId.POLYGON,
+  ChainId.AVALANCHE,
+  ChainId.CRONOS,
+  ChainId.FANTOM,
+  ChainId.ARBITRUM,
+];
+
+export const SUPPORTED_CHAINS = [
+  ...MAINNET_CHAINS,
+  ChainId.ROPSTEN,
+  ChainId.BSC_TESTNET,
+];

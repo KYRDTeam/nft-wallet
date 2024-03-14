@@ -8,9 +8,16 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 contract DeterministicNFTWallet is ERC721, ERC721Enumerable {
     constructor() ERC721("DeterministicNFTWallet", "DNW") {}
 
+    mapping(address => uint256) _nonce;
+
+    function nonceOf(address owner) external view returns (uint256 nonce) {
+        return _nonce[owner];
+    }
+
     function safeMint() public {
-        uint256 tokenId = uint256(keccak256(abi.encodePacked(msg.sender, balanceOf(msg.sender))));
-        _safeMint(msg.sender, tokenId);
+        uint256 tokenId = uint256(keccak256(abi.encodePacked(tx.origin, _nonce[tx.origin])));
+        _safeMint(tx.origin, tokenId);
+        _nonce[tx.origin] += 1;
     }
 
     // The following functions are overrides required by Solidity.

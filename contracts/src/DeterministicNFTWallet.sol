@@ -5,8 +5,8 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract SmartNFTWallet is ERC721, ERC721Enumerable {
-    constructor() ERC721("SmartNFTWallet", "SNW") {}
+contract DeterministicNFTWallet is ERC721, ERC721Enumerable {
+    constructor() ERC721("DeterministicNFTWallet", "DNW") {}
 
     function safeMint() public {
         uint256 tokenId = uint256(keccak256(abi.encodePacked(msg.sender, balanceOf(msg.sender))));

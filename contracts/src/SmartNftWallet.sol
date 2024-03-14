@@ -8,8 +8,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 contract SmartNFTWallet is ERC721, ERC721Enumerable {
     constructor() ERC721("SmartNFTWallet", "SNW") {}
 
-    function _baseURI() internal pure override returns (string memory) {
-        return "https://api-dev.krystal.team/";
+    function safeMint() public {
+        uint256 tokenId = uint256(keccak256(abi.encode(msg.sender, balanceOf(msg.sender))));
+        _safeMint(msg.sender, tokenId);
     }
 
     // The following functions are overrides required by Solidity.

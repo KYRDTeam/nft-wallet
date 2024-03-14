@@ -57,7 +57,7 @@ const Login = () => {
     <Box w="100%" fontWeight="semibold" mt="50px" mb="5">
       <Formik
         initialValues={{
-          password: "",
+          password: "123456789",
         }}
         validate={validate}
         onSubmit={submit}

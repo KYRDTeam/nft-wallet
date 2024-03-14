@@ -11,6 +11,7 @@ interface KeysState {
   selectedAccount?: string;
   accounts: string[];
   accountsName: { [key: string]: string };
+  accountsTBA: { [key: string]: { address: string; isEnabled: boolean } };
 }
 
 const initialState: KeysState = {
@@ -18,6 +19,7 @@ const initialState: KeysState = {
   isLoading: false,
   accounts: [],
   accountsName: {},
+  accountsTBA: {},
   selectedAccount: "",
 };
 
@@ -45,7 +47,10 @@ export const keysSlice = createSlice({
       state.accounts = accounts;
       if (!state.selectedAccount) {
         state.selectedAccount = accounts[0];
-        sendMessage({ type: "set_selected_account", selectedAccount: accounts[0] });
+        sendMessage({
+          type: "set_selected_account",
+          selectedAccount: accounts[0],
+        });
       }
     },
     setAccountsName: (
@@ -53,10 +58,10 @@ export const keysSlice = createSlice({
       action: PayloadAction<{
         address: string;
         name: string;
-      }>,
+      }>
     ) => {
-      console.log(action)
-      const addressKey = action.payload.address as keyof typeof state.accountsName;
+      const addressKey = action.payload
+        .address as keyof typeof state.accountsName;
       state.accountsName[addressKey] = action.payload.name;
     },
     deleteAccountsName: (state, action: PayloadAction<string>) => {
@@ -71,7 +76,10 @@ export const keysSlice = createSlice({
       state.accountsName = { ...newAccountsName };
     },
     resetState: () => initialState,
-    resetKeyringController: (state, action: PayloadAction<{ vault: string }>) => {
+    resetKeyringController: (
+      state,
+      action: PayloadAction<{ vault: string }>
+    ) => {
       state.vault = action.payload;
       const keyringController = new KeyringController({
         initState: action.payload,
@@ -79,15 +87,29 @@ export const keysSlice = createSlice({
       state.keyringController = keyringController;
     },
     setSelectedAccount: (state, action: PayloadAction<string>) => {
-      console.log(action.payload)
+      console.log(action.payload);
       state.selectedAccount = action.payload;
-      sendMessage({ type: "set_selected_account", selectedAccount: action.payload });
+      sendMessage({
+        type: "set_selected_account",
+        selectedAccount: action.payload,
+      });
     },
     lock: (state) => {
       state.password = "";
       state.accounts = [];
       state.keyringController.setLocked();
       sendMessage({ type: "set_password", password: "" });
+    },
+    setAccountsTBA: (
+      state,
+      action: PayloadAction<{ account: string; address: string; tba: boolean }>
+    ) => {
+      const addressKey = action.payload
+        .account as keyof typeof state.accountsTBA;
+      state.accountsTBA[addressKey] = {
+        address: action.payload.address,
+        isEnabled: action.payload.tba,
+      };
     },
   },
 });
@@ -103,6 +125,7 @@ export const {
   deleteAccountsName,
   resetState,
   resetKeyringController,
+  setAccountsTBA,
 } = keysSlice.actions;
 
 export const keysSelector = (state: RootState) => state.keys;

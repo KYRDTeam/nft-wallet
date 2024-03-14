@@ -2,7 +2,6 @@ import Web3 from "web3";
 import { provider as ProviderType } from "web3-core";
 import {
   ChainId,
-  NFTItem,
   Token,
   TransferNFTParamType,
   TxParams,
@@ -352,7 +351,7 @@ export const getNftBalance = async (
 
     const balance = await tokenContract.methods.balanceOf(userAddress).call();
     let balanceBN = new BigNumber(balance)
-    if (balanceBN.comparedTo(0) == 1) {
+    if (balanceBN.isGreaterThan(new BigNumber(0))) {
       let calls = []
       for (let i = 0; i < balanceBN.toNumber(); i++) {
         calls.push({

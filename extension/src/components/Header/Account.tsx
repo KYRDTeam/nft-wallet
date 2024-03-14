@@ -1,8 +1,8 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Tag, Text } from "@chakra-ui/react";
 import { ellipsis } from "src/utils/formatBalance";
 import { CheckIcon } from "@chakra-ui/icons";
 import { useAppSelector } from "src/hooks/useStore";
-import { keysSelector, setSelectedAccount } from "src/store/keys";
+import { enableTBA, keysSelector, setSelectedAccount } from "src/store/keys";
 import { useAppDispatch } from "src/hooks/useStore";
 import { useCallback } from "react";
 import { fetchNetWorth } from "src/store/wallets";
@@ -17,7 +17,7 @@ interface AccountProps {
 }
 
 export const Account = ({ account, accountName, onClose }: AccountProps) => {
-  const { selectedAccount } = useAppSelector(keysSelector);
+  const { selectedAccount, accountsTBA } = useAppSelector(keysSelector);
   const dispatch = useAppDispatch();
   const { account: currentAccount } = useWallet();
 
@@ -29,33 +29,73 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
     onClose();
   }, [account, currentAccount, dispatch, onClose]);
 
+  const handleSelectTBA = useCallback(
+    (address: string) => {
+      dispatch(enableTBA({ account, address }));
+      dispatch(setSelectedAccount(address));
+      dispatch(fetchNetWorth({ address, isForceSync: false }));
+      onClose();
+    },
+    [account, dispatch, onClose]
+  );
+
   return (
-    <Flex
-      alignItems="center"
-      justifyContent="space-between"
-      _hover={{
-        bg: transparentize("#1DE9B6", 0.2),
-        borderRadius: "16px",
-        cursor: "pointer",
-      }}
-    >
-      <Box
-        px={5}
-        py={2}
-        cursor="pointer"
-        onClick={handleSelect}
-        width="200px"
-        maxW="200px"
-        overflow="hidden"
-        fontSize={15}
-        transition="all .3s ease 0s"
+    <Flex direction="column">
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        _hover={{
+          bg: transparentize("#1DE9B6", 0.2),
+          borderRadius: "16px",
+          cursor: "pointer",
+        }}
       >
-        <Text display="block" fontSize="16px" mb={1}>
-          {accountName}
-        </Text>
-        <Text color="#fff" opacity={0.5} fontSize="14px">{`${ellipsis(account, 10, 5)}`}</Text>
-      </Box>
-      {selectedAccount === account && <CheckIcon color="primary.500" mr={6}></CheckIcon>}
+        <Box
+          px={5}
+          py={2}
+          cursor="pointer"
+          onClick={handleSelect}
+          width="200px"
+          maxW="200px"
+          overflow="hidden"
+          fontSize={15}
+          transition="all .3s ease 0s"
+        >
+          <Text display="block" fontSize="16px" mb={1}>
+            {accountName}
+          </Text>
+          <Text color="#fff" opacity={0.5} fontSize="14px">{`${ellipsis(
+            account,
+            10,
+            5
+          )}`}</Text>
+        </Box>
+        {selectedAccount === account && (
+          <CheckIcon color="primary.500" mr={6}></CheckIcon>
+        )}
+      </Flex>
+      {accountsTBA?.[account]?.map((item) => (
+        <Flex
+          align="center"
+          px={5}
+          py={2}
+          cursor="pointer"
+          _hover={{
+            bg: transparentize("#1DE9B6", 0.2),
+            borderRadius: "16px",
+            cursor: "pointer",
+          }}
+          onClick={() => handleSelectTBA(item?.address)}
+        >
+          <Tag colorScheme="primary" mr={1}>
+            TBA
+          </Tag>
+          {`${ellipsis(item?.address, 10, 5)}`}
+          {selectedAccount === item?.address && item?.isEnabled && (
+            <CheckIcon color="primary.500" ml={9}></CheckIcon>
+          )}
+        </Flex>
+      ))}
     </Flex>
   );
 };

@@ -7,9 +7,20 @@ import browser from "webextension-polyfill";
 import { getListTrustedApps } from "./bgHelper";
 import { notifyAllConnections } from "./index";
 
-const unlockPopup = ({ res, end, keyringController, isOpenRequestedPopup, selectedAccount, pageInfo }) => {
+const unlockPopup = ({
+  res,
+  end,
+  keyringController,
+  isOpenRequestedPopup,
+  selectedAccount,
+  pageInfo,
+}) => {
   const cb = async () => {
-    res.result = await getPermittedAccounts(keyringController, selectedAccount, pageInfo);
+    res.result = await getPermittedAccounts(
+      keyringController,
+      selectedAccount,
+      pageInfo
+    );
     end();
     if (isOpenRequestedPopup) {
       await sendMessage({ type: "close_popup" });
@@ -32,8 +43,8 @@ export async function requestAccounts({
   if (req.method === DAPP_REQUEST_METHODS.ETH_REQUEST_ACCOUNTS) {
     const { isUnlocked } = keyringController.memStore.getState();
     let data = [];
-    let rootStorage = {};
-    let trustedApps = {};
+    // let rootStorage = {};
+    // let trustedApps = {};
     let listApps = [];
     const promise = new Promise(async (resolve, reject) => {
       if (isUnlocked) {
@@ -47,16 +58,25 @@ export async function requestAccounts({
         keyringController.on("unlock", cb);
       }
     });
+
     promise
       .then(async () => {
         data = await keyringController.getAccounts();
-        rootStorage = JSON.parse(localStorage.getItem("persist:root") || "{}");
-        trustedApps = JSON.parse(rootStorage.trustedApps || "{}").trustedApps;
-        listApps = trustedApps[selectedAccount ? selectedAccount : data[0]];
+        // rootStorage = JSON.parse(localStorage.getItem("persist:root") || "{}");
+        // trustedApps = JSON.parse(rootStorage.trustedApps || "{}").trustedApps;
+        // listApps = trustedApps[selectedAccount ? selectedAccount : data[0]];
       })
       .then(async () => {
-        if (pageInfo && listApps && listApps.find((app) => app.domain === pageInfo.domain)) {
-          res.result = await getPermittedAccounts(keyringController, selectedAccount, pageInfo);
+        if (
+          pageInfo &&
+          listApps &&
+          listApps.find((app) => app.domain === pageInfo.domain)
+        ) {
+          res.result = await getPermittedAccounts(
+            keyringController,
+            selectedAccount,
+            pageInfo
+          );
           if (isOpenRequestedPopup) {
             await sendMessage({ type: "close_popup" });
           }
@@ -87,7 +107,11 @@ export async function getAccounts({
   pageInfo,
 }) {
   if (req.method === DAPP_REQUEST_METHODS.ETH_ACCOUNTS) {
-    res.result = await getPermittedAccounts(keyringController, selectedAccount, pageInfo);
+    res.result = await getPermittedAccounts(
+      keyringController,
+      selectedAccount,
+      pageInfo
+    );
     if (isOpenRequestedPopup) {
       await sendMessage({ type: "close_popup" });
     }
@@ -108,22 +132,28 @@ export async function signAndSendTx({
   if (req.method === DAPP_REQUEST_METHODS.ETH_SEND_TRANSACTION) {
     const { isUnlocked } = keyringController.memStore.getState();
     if (isUnlocked) {
-      await browser.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-        if (request.type === "is_loaded_popup") {
-          sendResponse(true);
-          await sendMessage({ type: "get_data_tx", data: req.params[0] });
+      await browser.runtime.onMessage.addListener(
+        async (request, sender, sendResponse) => {
+          if (request.type === "is_loaded_popup") {
+            sendResponse(true);
+            await sendMessage({ type: "get_data_tx", data: req.params[0] });
+          }
+          if (request.type === "send_tx_hash") {
+            sendResponse(true);
+            res.result = request.hash;
+            end();
+          }
+          if (request.type === "reject_tx") {
+            sendResponse(true);
+            res.result = "";
+            end(
+              new Error(
+                "Krystal Wallet Tx Signature: User denied transaction signature."
+              )
+            );
+          }
         }
-        if (request.type === "send_tx_hash") {
-          sendResponse(true);
-          res.result = request.hash;
-          end();
-        }
-        if (request.type === "reject_tx") {
-          sendResponse(true);
-          res.result = "";
-          end(new Error("Krystal Wallet Tx Signature: User denied transaction signature."));
-        }
-      });
+      );
     } else {
       unlockPopup({
         res,
@@ -150,25 +180,35 @@ export async function personalSign({
   if (req.method === DAPP_REQUEST_METHODS.PERSONAL_SIGN) {
     const { isUnlocked } = keyringController.memStore.getState();
     if (isUnlocked) {
-      await browser.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-        if (request.type === "is_loaded_popup") {
-          sendResponse(true);
-          await sendMessage({
-            type: "get_data_sign",
-            data: { tx: req.params[0], address: req.params[1], opts: req.params[2] },
-          });
+      await browser.runtime.onMessage.addListener(
+        async (request, sender, sendResponse) => {
+          if (request.type === "is_loaded_popup") {
+            sendResponse(true);
+            await sendMessage({
+              type: "get_data_sign",
+              data: {
+                tx: req.params[0],
+                address: req.params[1],
+                opts: req.params[2],
+              },
+            });
+          }
+          if (request.type === "send_tx_hash") {
+            sendResponse(true);
+            res.result = request.hash;
+            end();
+          }
+          if (request.type === "reject_tx") {
+            sendResponse(true);
+            res.result = "";
+            end(
+              new Error(
+                "Krystal Wallet Tx Signature: User denied transaction signature."
+              )
+            );
+          }
         }
-        if (request.type === "send_tx_hash") {
-          sendResponse(true);
-          res.result = request.hash;
-          end();
-        }
-        if (request.type === "reject_tx") {
-          sendResponse(true);
-          res.result = "";
-          end(new Error("Krystal Wallet Tx Signature: User denied transaction signature."));
-        }
-      });
+      );
     } else {
       unlockPopup({
         res,
@@ -195,7 +235,11 @@ export async function getProviderState({
 }) {
   if (req.method === DAPP_REQUEST_METHODS.METAMASK_GET_PROVIDER_STATE) {
     const { isUnlocked } = keyringController.memStore.getState();
-    const accounts = await getPermittedAccounts(keyringController, selectedAccount, pageInfo);
+    const accounts = await getPermittedAccounts(
+      keyringController,
+      selectedAccount,
+      pageInfo
+    );
     res.result = {
       accounts,
       chainId,
@@ -220,30 +264,35 @@ export async function switchChain({
   if (req.method === "wallet_switchEthereumChain") {
     const { isUnlocked } = keyringController.memStore.getState();
     if (isUnlocked) {
-      await browser.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-        if (request.type === "is_loaded_popup") {
-          sendResponse(true);
-          await sendMessage({ type: "get_chain_id", chainId: req.params[0].chainId });
+      await browser.runtime.onMessage.addListener(
+        async (request, sender, sendResponse) => {
+          if (request.type === "is_loaded_popup") {
+            sendResponse(true);
+            await sendMessage({
+              type: "get_chain_id",
+              chainId: req.params[0].chainId,
+            });
+          }
+          if (request.type === "confirm_switch_chain") {
+            sendResponse(true);
+            let chainId = "0x" + request.chainId.toString(16);
+            let networkVersion = request.chainId.toString();
+            notifyAllConnections(async () => {
+              return {
+                method: "metamask_chainChanged",
+                params: { chainId, networkVersion },
+              };
+            });
+            res.result = null;
+            end();
+          }
+          if (request.type === "reject_switch_chain") {
+            sendResponse(true);
+            res.result = null;
+            end(new Error("Krystal Wallet: User denied switch chain."));
+          }
         }
-        if (request.type === "confirm_switch_chain") {
-          sendResponse(true);
-          let chainId = "0x" + request.chainId.toString(16);
-          let networkVersion = request.chainId.toString();
-          notifyAllConnections(async () => {
-            return {
-              method: "metamask_chainChanged",
-              params: { chainId, networkVersion },
-            };
-          });
-          res.result = null;
-          end();
-        }
-        if (request.type === "reject_switch_chain") {
-          sendResponse(true);
-          res.result = null;
-          end(new Error("Krystal Wallet: User denied switch chain."));
-        }
-      });
+      );
     } else {
       unlockPopup({
         res,
@@ -264,12 +313,17 @@ export async function getChainId({ req, res, next, end, chainId }) {
   }
 }
 
-export async function getPermittedAccounts(keyringController, selectedAccount, pageInfo) {
+export async function getPermittedAccounts(
+  keyringController,
+  selectedAccount,
+  pageInfo
+) {
   const { isUnlocked } = keyringController.memStore.getState();
   const data = await keyringController.getAccounts();
-  const listApps = getListTrustedApps(selectedAccount);
-  return isUnlocked && listApps?.find((app) => app.domain === pageInfo.domain)
-    ? selectedAccount
+  // const listApps = getListTrustedApps(selectedAccount);
+  return isUnlocked
+    ? // && listApps?.find((app) => app.domain === pageInfo.domain)
+      selectedAccount
       ? [selectedAccount]
       : [data[0]]
     : [];

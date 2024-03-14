@@ -3,7 +3,13 @@ import browser from "webextension-polyfill";
 import { createEngineStream } from "json-rpc-middleware-stream";
 import PortStream from "extension-port-stream";
 import pump from "pump";
-import { getChainIdStorage, getCurrentPageInfo, getListTrustedApps, openPopup, setupMultiplex } from "./bgHelper";
+import {
+  getChainIdStorage,
+  getCurrentPageInfo,
+  getListTrustedApps,
+  openPopup,
+  setupMultiplex,
+} from "./bgHelper";
 import { DAPP_REQUEST_METHODS } from "src/config/constants/dappRequestMethods";
 import {
   requestAccounts,
@@ -68,7 +74,11 @@ function registerUnlockEvent() {
         method: DAPP_REQUEST_METHODS.METAMASK_UNLOCK_STATE_CHANGED,
         params: {
           isUnlocked: true,
-          params: await getPermittedAccounts(keyringController, globalData.selectedAccount, pageInfo),
+          params: await getPermittedAccounts(
+            keyringController,
+            globalData.selectedAccount,
+            pageInfo
+          ),
         },
       };
     });
@@ -138,7 +148,11 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const pageInfo = getCurrentPageInfo(connections, origin);
       return {
         method: DAPP_REQUEST_METHODS.METAMASK_ACCOUNTS_CHANGED,
-        params: await getPermittedAccounts(keyringController, globalData.selectedAccount, pageInfo),
+        params: await getPermittedAccounts(
+          keyringController,
+          globalData.selectedAccount,
+          pageInfo
+        ),
       };
     });
     sendResponse(globalData.selectedAccount);
@@ -161,7 +175,10 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     notifyAllConnections(async () => {
       return {
         method: DAPP_REQUEST_METHODS.METAMASK_CHAIN_CHANGED,
-        params: { chainId: globalData.chainId, networkVersion: globalData.networkVersion },
+        params: {
+          chainId: globalData.chainId,
+          networkVersion: globalData.networkVersion,
+        },
       };
     });
     sendResponse(true);
@@ -215,7 +232,10 @@ function connectRemote(remotePort) {
   engine.push(async (req, res, next, end) => {
     try {
       // Change global variables
-      if (req.params && req.method === DAPP_REQUEST_METHODS.METAMASK_SEND_DOMAIN_METADATA) {
+      if (
+        req.params &&
+        req.method === DAPP_REQUEST_METHODS.METAMASK_SEND_DOMAIN_METADATA
+      ) {
         const pageInfo = {
           title: req.params.name,
           domain: req.params.icon.split("/")[2],
@@ -233,21 +253,25 @@ function connectRemote(remotePort) {
   });
 
   engine.push(async (req, res, next, end) => {
-    console.log(req);
-
     try {
       if (Object.values(DAPP_REQUEST_METHODS).includes(req.method)) {
         const { isUnlocked } = keyringController.memStore.getState();
-        const listApps = getListTrustedApps(globalData.selectedAccount);
+        // const listApps = getListTrustedApps(globalData.selectedAccount);
         const pageInfo = getCurrentPageInfo(connections, origin);
         const chainIdStorage = getChainIdStorage();
         // Request account
         if (
           !!pageInfo &&
-          !(isUnlocked && listApps?.find((app) => app.domain === pageInfo.domain)) &&
+          !(
+            isUnlocked
+            // && listApps?.find((app) => app.domain === pageInfo.domain)
+          ) &&
           req.method === DAPP_REQUEST_METHODS.ETH_REQUEST_ACCOUNTS
         ) {
-          if (!globalData.isOpenRequestedPopup && !globalData.isRejectAccountOnce) {
+          if (
+            !globalData.isOpenRequestedPopup &&
+            !globalData.isRejectAccountOnce
+          ) {
             globalData.isRejectAccountOnce = true;
             globalData.isOpenRequestedPopup = true;
             await openPopup(`method=${req.method}&origin=${origin}`, () => {
@@ -298,6 +322,7 @@ function connectRemote(remotePort) {
       isOpenRequestedPopup: globalData.isOpenRequestedPopup,
       pageInfo,
     };
+
     getProviderState(params);
     getAccounts(params);
     requestAccounts(params);
@@ -409,7 +434,8 @@ function removeAllConnections(origin) {
  */
 function notifyConnections(origin, payload) {
   const connections = global.connections[origin];
-  const getPayload = typeof payload === "function" ? (origin) => payload(origin) : () => payload;
+  const getPayload =
+    typeof payload === "function" ? (origin) => payload(origin) : () => payload;
 
   if (connections) {
     Object.values(connections).forEach(async (conn) => {
@@ -434,7 +460,8 @@ function notifyConnections(origin, payload) {
  * @param {unknown} payload - The event payload, or payload getter function.
  */
 export function notifyAllConnections(payload) {
-  const getPayload = typeof payload === "function" ? (origin) => payload(origin) : () => payload;
+  const getPayload =
+    typeof payload === "function" ? (origin) => payload(origin) : () => payload;
 
   Object.keys(connections).forEach((origin) => {
     Object.values(connections[origin]).forEach(async (conn) => {

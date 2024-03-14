@@ -20,7 +20,7 @@ import { ellipsis } from "src/utils/formatBalance";
 import { useAppDispatch, useAppSelector } from "src/hooks/useStore";
 import { keysSelector, setAccountsTBA } from "src/store/keys";
 import Copy from "src/assets/images/icons/copy.svg";
-import { trustedAppsSelector } from "../../store/trustedApps";
+// import { trustedAppsSelector } from "../../store/trustedApps";
 import useGetPageInfo from "src/hooks/useGetPageInfo";
 import { useCallback } from "react";
 import { createTBA } from "src/utils/tba";
@@ -31,7 +31,7 @@ const AccountInfo = () => {
   const { account } = useWallet();
   const { accountsName } = useAppSelector(keysSelector);
   const { hasCopied, onCopy } = useClipboard(account || "");
-  const { trustedApps } = useAppSelector(trustedAppsSelector);
+  // const { trustedApps } = useAppSelector(trustedAppsSelector);
   const { pageInfo } = useGetPageInfo();
   const { chainId } = useAppSelector(globalSelector);
 
@@ -61,7 +61,7 @@ const AccountInfo = () => {
             display="flex"
             mr={4}
           >
-            {!pageInfo?.domain ? (
+            {/* {!pageInfo?.domain ? (
               <></>
             ) : trustedApps[account || ""]?.find(
                 (item: any) => item.domain === pageInfo?.domain
@@ -75,6 +75,14 @@ const AccountInfo = () => {
             ) : (
               <Text
                 backgroundColor="red.500"
+                p="1"
+                borderRadius="100%"
+                mr={2}
+              ></Text>
+            )} */}
+            {!!pageInfo?.domain && (
+              <Text
+                backgroundColor="#1DE9B6"
                 p="1"
                 borderRadius="100%"
                 mr={2}

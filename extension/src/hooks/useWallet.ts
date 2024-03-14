@@ -1,6 +1,12 @@
 import { ChainId } from "../config/types";
 import { useAppDispatch, useAppSelector } from "./useStore";
-import { keysSelector, setAccounts, setSelectedAccount, setAccountsName, deleteAccountsName } from "src/store/keys";
+import {
+  keysSelector,
+  setAccounts,
+  setSelectedAccount,
+  setAccountsName,
+  deleteAccountsName,
+} from "src/store/keys";
 import { useCallback } from "react";
 import { globalSelector } from "src/store/global";
 import { formatTxParams } from "src/utils/web3";
@@ -9,9 +15,11 @@ import Common from "@ethereumjs/common";
 import { sendMessage } from "src/services/extension";
 import { fetchNetWorth } from "src/store/wallets";
 import { NODE } from "../config/constants/chain";
+import { flatten } from "lodash";
 
 export function useWallet() {
-  const { selectedAccount, keyringController, accounts } = useAppSelector(keysSelector);
+  const { selectedAccount, keyringController, accounts, accountsTBA } =
+    useAppSelector(keysSelector);
   const { chainId } = useAppSelector(globalSelector);
   const dispatch = useAppDispatch();
 
@@ -25,10 +33,14 @@ export function useWallet() {
           common,
         });
       }
-      const signedTx = await keyringController.signTransaction(tx, address, opts);
+      const signedTx = await keyringController.signTransaction(
+        tx,
+        address,
+        opts
+      );
       return "0x" + signedTx.serialize().toString("hex");
     },
-    [chainId, keyringController],
+    [chainId, keyringController]
   );
 
   const setAccountsAndSelectAccount = useCallback(
@@ -58,14 +70,23 @@ export function useWallet() {
           if (type === "DELETE" && name) {
             dispatch(deleteAccountsName(name));
           }
-          dispatch(fetchNetWorth({ address: selectedAccount, isForceSync: false }));
+          dispatch(
+            fetchNetWorth({ address: selectedAccount, isForceSync: false })
+          );
         });
     },
-    [dispatch, keyringController],
+    [dispatch, keyringController]
   );
 
   return {
-    account: selectedAccount && accounts.includes(selectedAccount) ? selectedAccount : undefined,
+    account:
+      selectedAccount &&
+      (accounts.includes(selectedAccount) ||
+        flatten(
+          Object.values(accountsTBA).map((item) => item.map((i) => i.address))
+        ).includes(selectedAccount))
+        ? selectedAccount
+        : undefined,
     activate: (a?: any, b?: (e?: any) => {}) => {},
     keyringController,
     signTransaction: signTransaction,

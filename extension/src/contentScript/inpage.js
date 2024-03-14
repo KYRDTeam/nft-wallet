@@ -15,4 +15,6 @@ const { ethereum } = window;
 ethereum.isKrystalWallet = true;
 // ethereum.isMetaMask = false;
 
-ethereum.on('accountsChanged', () => {console.log('pl')})
+ethereum.on("accountsChanged", () => {
+  console.log("pl");
+});

@@ -1,5 +1,11 @@
 import React, { Suspense, lazy, useMemo, useEffect, useRef } from "react";
-import { Router, Route, Switch, useLocation, useHistory } from "react-router-dom";
+import {
+  Router,
+  Route,
+  Switch,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import routerHistory from "./routerHistory";
@@ -48,8 +54,12 @@ const Token = lazy(() => import("./components/TokenDetailRenew"));
 const Transfer = lazy(() => import("./components/Transfer"));
 const TrustedApps = lazy(() => import("./components/TrustedApps"));
 const SwitchChain = lazy(() => import("./components/DappServices/SwitchChain"));
-const ExecuteTransaction = lazy(() => import("./components/ExecuteTransaction"));
-const ConfirmConnection = lazy(() => import("./components/DappServices/ConfirmConnection"));
+const ExecuteTransaction = lazy(
+  () => import("./components/ExecuteTransaction")
+);
+const ConfirmConnection = lazy(
+  () => import("./components/DappServices/ConfirmConnection")
+);
 const SignAndSendTx = lazy(() => import("./components/SignAndSendTx"));
 const SignRequest = lazy(() => import("./components/SignRequest"));
 
@@ -94,7 +104,7 @@ const App: React.FC = () => {
           fetchNetWorth({
             address: account,
             isForceSync: true,
-          }),
+          })
         );
       }, 2000);
       onLoadRef.current = false;
@@ -103,7 +113,10 @@ const App: React.FC = () => {
 
   const location = useLocation();
 
-  const background = useMemo(() => get(location, "state.background"), [location]);
+  const background = useMemo(
+    () => get(location, "state.background"),
+    [location]
+  );
 
   const { chainId, currency } = useAppSelector(globalSelector);
 
@@ -125,10 +138,15 @@ const App: React.FC = () => {
     if (!account || isEmpty(queries) || loading || !pageInfo) {
       return;
     }
-    if ([DAPP_REQUEST_METHODS.ETH_ACCOUNTS, DAPP_REQUEST_METHODS.ETH_REQUEST_ACCOUNTS].includes(queries.method)) {
-      if (!trustedApps[account]?.find((app: any) => app.domain === pageInfo.domain)) {
-        history.push("/confirm-connection");
-      }
+    if (
+      [
+        DAPP_REQUEST_METHODS.ETH_ACCOUNTS,
+        DAPP_REQUEST_METHODS.ETH_REQUEST_ACCOUNTS,
+      ].includes(queries.method)
+    ) {
+      // if (!trustedApps[account]?.find((app: any) => app.domain === pageInfo.domain)) {
+      history.push("/confirm-connection");
+      // }
     }
   }, [account, history, loading, pageInfo, queries, trustedApps]);
 
@@ -175,18 +193,42 @@ const App: React.FC = () => {
                     <Route path="/referral" exact component={Referral} />
                     <Route path="/rewards" exact component={Reward} />
                     <Route path="/settings" exact component={Settings} />
-                    <Route path="/notifications" exact component={Notification} />
+                    <Route
+                      path="/notifications"
+                      exact
+                      component={Notification}
+                    />
                     <Route path="/trusted-apps" exact component={TrustedApps} />
-                    <Route path="/sign-send-tx" exact component={SignAndSendTx} />
+                    <Route
+                      path="/sign-send-tx"
+                      exact
+                      component={SignAndSendTx}
+                    />
                     <Route path="/sign-request" exact component={SignRequest} />
                     <Route path="/switch-chain" exact component={SwitchChain} />
-                    <Route path="/nft/:collectibleAddress/:tokenId" component={PreviewNFTModal} />
+                    <Route
+                      path="/nft/:collectibleAddress/:tokenId"
+                      component={PreviewNFTModal}
+                    />
                     <Route path="/switch-chain" exact component={SwitchChain} />
-                    <Route path="/execute-transaction" exact component={ExecuteTransaction} />
-                    <Route path="/confirm-connection" exact component={ConfirmConnection} />
+                    <Route
+                      path="/execute-transaction"
+                      exact
+                      component={ExecuteTransaction}
+                    />
+                    <Route
+                      path="/confirm-connection"
+                      exact
+                      component={ConfirmConnection}
+                    />
                     <Route component={Summary} />
                   </Switch>
-                  {background && <Route path="/nft/:collectibleAddress/:tokenId" component={PreviewNFTModal} />}
+                  {background && (
+                    <Route
+                      path="/nft/:collectibleAddress/:tokenId"
+                      component={PreviewNFTModal}
+                    />
+                  )}
                 </>
               </HttpRequest>
             </Suspense>

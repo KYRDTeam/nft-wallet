@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import { flatten } from "lodash";
 import { useCallback, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "src/hooks/useStore";
 import { sendMessage } from "src/services/extension";
@@ -16,7 +17,8 @@ import RestoreAccount from "./RestoreAccount";
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { keyringController, selectedAccount } = useAppSelector(keysSelector);
+  const { keyringController, selectedAccount, accountsTBA } =
+    useAppSelector(keysSelector);
   const inputRef = useRef<any>();
 
   useEffect(() => {
@@ -31,13 +33,30 @@ const Login = () => {
           accounts.push(...keyring.accounts);
         });
         dispatch(setAccounts(accounts));
-        if (selectedAccount && accounts.includes(selectedAccount)) {
+        console.log(
+          selectedAccount &&
+            (accounts.includes(selectedAccount) ||
+              flatten(
+                Object.values(accountsTBA).map((item) =>
+                  item.map((i) => i.address)
+                )
+              ).includes(selectedAccount))
+        );
+        if (
+          selectedAccount &&
+          (accounts.includes(selectedAccount) ||
+            flatten(
+              Object.values(accountsTBA).map((item) =>
+                item.map((i) => i.address)
+              )
+            ).includes(selectedAccount))
+        ) {
           dispatch(setSelectedAccount(selectedAccount));
         }
       });
       sendMessage({ type: "set_password", password: values.password });
     },
-    [keyringController, dispatch, selectedAccount]
+    [keyringController, dispatch, selectedAccount, accountsTBA]
   );
 
   const validate = useCallback(

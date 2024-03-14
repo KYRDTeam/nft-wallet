@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sendMessage } from "src/services/extension";
 import type { RootState } from "../store";
+import { isEmpty } from "lodash";
 
 const KeyringController = require("eth-keyring-controller");
 interface KeysState {
@@ -11,7 +12,7 @@ interface KeysState {
   selectedAccount?: string;
   accounts: string[];
   accountsName: { [key: string]: string };
-  accountsTBA: { [key: string]: { address: string; isEnabled: boolean } };
+  accountsTBA: { [key: string]: { address: string; isEnabled: boolean }[] };
 }
 
 const initialState: KeysState = {
@@ -106,10 +107,27 @@ export const keysSlice = createSlice({
     ) => {
       const addressKey = action.payload
         .account as keyof typeof state.accountsTBA;
-      state.accountsTBA[addressKey] = {
+      if (isEmpty(state.accountsTBA[addressKey])) {
+        state.accountsTBA[addressKey] = [];
+      }
+      state.accountsTBA[addressKey].push({
         address: action.payload.address,
         isEnabled: action.payload.tba,
-      };
+      });
+    },
+    enableTBA: (
+      state,
+      action: PayloadAction<{ account: string; address: string }>
+    ) => {
+      const addressKey = action.payload
+        .account as keyof typeof state.accountsTBA;
+      state.accountsTBA[addressKey].forEach((item) => {
+        if (item.address === action.payload.address) {
+          item.isEnabled = true;
+        } else {
+          item.isEnabled = false;
+        }
+      });
     },
   },
 });
@@ -126,6 +144,7 @@ export const {
   resetState,
   resetKeyringController,
   setAccountsTBA,
+  enableTBA,
 } = keysSlice.actions;
 
 export const keysSelector = (state: RootState) => state.keys;

@@ -2,17 +2,27 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 contract Free2MintNFTWallet is ERC721, ERC721Enumerable {
     constructor() ERC721("Free2MintNFTWallet", "FMW") {}
 
     uint256 private _nextTokenId;
 
-    function safeMint(address to) public {
-        uint256 tokenId = _nextTokenId++;
+    function safeMint(address to) public returns (uint256 tokenId){
+        tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
+    }
+
+    function getTokensOfOwner(
+        address owner
+    ) external view returns (uint256[] memory tokenIds, uint256 count) {
+        count = balanceOf(owner);
+        tokenIds = new uint256[](count);
+        for (uint256 i = 0; i < count; i++) {
+            tokenIds[i] = tokenOfOwnerByIndex(owner, i);
+        }
     }
 
     // The following functions are overrides required by Solidity.

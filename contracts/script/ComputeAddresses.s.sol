@@ -5,6 +5,7 @@ import "forge-std/Script.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
 
 import "../src/Free2MintNFTWallet.sol";
+import "../src/TBAHelper.sol";
 
 contract ComputeFree2MintNFTWallet is Script {
     function run() external view {
@@ -14,6 +15,10 @@ contract ComputeFree2MintNFTWallet is Script {
         address registry =
             Create2.computeAddress(salt, keccak256(type(Free2MintNFTWallet).creationCode), factory);
 
+        address tbaHelper = 
+            Create2.computeAddress(salt, keccak256(type(TBAHelper).creationCode), factory);
+
         console.log("Free2MintNFTWallet Address:", registry);
+        console.log("TBAHelper Address:", tbaHelper);
     }
 }

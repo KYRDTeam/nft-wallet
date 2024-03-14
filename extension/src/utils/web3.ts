@@ -2,6 +2,7 @@ import Web3 from "web3";
 import { provider as ProviderType } from "web3-core";
 import {
   ChainId,
+  NFTItem,
   Token,
   TransferNFTParamType,
   TxParams,
@@ -12,7 +13,10 @@ import { NFT_INTERFACE, NFT_TYPE } from "src/config/constants/constants";
 import ERC721ABI from "src/config/abi/ERC721.json";
 import ERC1155ABI from "src/config/abi/ERC1155.json";
 import ERC20ABI from "src/config/abi/erc20.json";
+import multicall from "./multicall";
 import { AbiItem, toHex } from "web3-utils";
+import BigNumber from "bignumber.js";
+import { get } from "lodash";
 
 export const getWeb3 = (chainId: ChainId, provider?: ProviderType) => {
   provider = provider
@@ -323,3 +327,51 @@ export const getWeb3BlockNumber = async (
   const web3 = getWeb3(chainId, provider);
   return await web3.eth.getBlockNumber();
 };
+
+export const getNftBalance = async (
+  chainId: ChainId,
+  userAddress: string,
+  tokenAddress: string,
+  provider?: ProviderType
+) => {
+  const web3 = getWeb3(chainId, provider);
+
+  let isERC721 = false;
+  try {
+    const tokenContract = new web3.eth.Contract(
+      ERC721ABI as unknown as AbiItem,
+      tokenAddress,
+    );
+    isERC721 = await tokenContract.methods
+      .supportsInterface(NFT_INTERFACE.ERC721)
+      .call();
+
+    if (!isERC721) {
+      return
+    }
+
+    const balance = await tokenContract.methods.balanceOf(userAddress).call();
+    let balanceBN = new BigNumber(balance)
+    if (balanceBN.comparedTo(0) == 1) {
+      let calls = []
+      for (let i = 0; i < balanceBN.toNumber(); i++) {
+        calls.push({
+          address: tokenAddress,
+          name: "tokenOfOwnerByIndex",
+          params: [userAddress, i],
+        })
+      }
+
+      const responses = await multicall(chainId, ERC721ABI, calls)
+      let tokens = responses.map((data: any) => {
+        return {
+          tokenID: get(data, "[0]").toString()
+        }
+      })
+      return tokens
+    }
+  } catch (e) {
+    console.log(isERC721, e);
+    return null
+  }
+}

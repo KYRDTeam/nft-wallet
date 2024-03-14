@@ -6,7 +6,7 @@ export const multiCall: {
   [ChainId.MAINNET]: "",
   [ChainId.ROPSTEN]: "",
   [ChainId.BSC]: process.env.REACT_APP_MULTICALL || "",
-  [ChainId.POLYGON]: "",
+  [ChainId.POLYGON]: process.env.REACT_APP_MULTICALL || "",
   [ChainId.AVALANCHE]: "",
   [ChainId.FANTOM]: "",
   [ChainId.CRONOS]: "",

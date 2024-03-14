@@ -17,14 +17,14 @@ import { useMemo } from "react";
 import NFTNotFoundIllus from "src/components/common/icons/NFTNotFoundIllus";
 import { NFTCollectionType } from "src/config/types";
 import { useFetchNFT } from "src/hooks/useFetchNFT";
+import { useFetchTBANFT } from "src/hooks/useFetchTBANFT";
 import { useWallet } from "src/hooks/useWallet";
 import { NFTCollection } from "./NFTCollection";
 
 export const NFTs = () => {
-  const { account } = useWallet();
-
+  const { account, chainId } = useWallet();
   const [isMobile] = useMediaQuery("(max-width: 720px)");
-  const { data, loading } = useFetchNFT({ address: account || "" });
+  const { data, loading } = useFetchTBANFT({address: account || "", chainId: chainId});
 
   const collections: NFTCollectionType[] = useMemo(() => {
     return get(data, "balances", []);

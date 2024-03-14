@@ -48,6 +48,11 @@ export const keysSlice = createSlice({
       state.accounts = accounts;
       if (!state.selectedAccount) {
         state.selectedAccount = accounts[0];
+        for (const key in state.accountsTBA) {
+          state.accountsTBA[key].forEach((item) => {
+            item.isEnabled = false;
+          });
+        }
         sendMessage({
           type: "set_selected_account",
           selectedAccount: accounts[0],
@@ -90,6 +95,13 @@ export const keysSlice = createSlice({
     setSelectedAccount: (state, action: PayloadAction<string>) => {
       console.log(action.payload);
       state.selectedAccount = action.payload;
+      if (state.accounts.includes(action.payload)) {
+        for (const key in state.accountsTBA) {
+          state.accountsTBA[key].forEach((item) => {
+            item.isEnabled = false;
+          });
+        }
+      }
       sendMessage({
         type: "set_selected_account",
         selectedAccount: action.payload,

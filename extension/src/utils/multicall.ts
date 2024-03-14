@@ -23,7 +23,7 @@ export const getContract = (chainId: ChainId, provider?: ProviderType) => {
 
 interface Call {
   address: string; // Address of the contract
-  name: string; // Function name on the contract (exemple: balanceOf)
+  name: string; // Function name on the contract (example: balanceOf)
   params?: any[]; // Function params
 }
 

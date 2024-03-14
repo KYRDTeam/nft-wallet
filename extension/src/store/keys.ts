@@ -93,7 +93,6 @@ export const keysSlice = createSlice({
       state.keyringController = keyringController;
     },
     setSelectedAccount: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
       state.selectedAccount = action.payload;
       if (state.accounts.includes(action.payload)) {
         for (const key in state.accountsTBA) {

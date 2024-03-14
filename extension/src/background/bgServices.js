@@ -21,6 +21,7 @@ export function listenConfirmAccountConnection({
         const enabledTBA = (accountsTBA?.[localSelectedAccount] || []).find(
           (item) => item?.isEnabled
         );
+        console.log(keysStorage, accountsTBA, localSelectedAccount, enabledTBA);
         res.result = !!enabledTBA
           ? [enabledTBA.address]
           : [localSelectedAccount];

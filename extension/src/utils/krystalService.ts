@@ -113,9 +113,7 @@ export async function fetchTokenBalances(
         `${krystalApiEndPoint}/all/v1/balance/token?addresses=ethereum:${address}&quoteSymbols=usd,btc&sparkline=true&chainIds=${chainId}`
       );
       const result = await response.json();
-      console.log(result);
       if (result.data[0].balances) {
-        console.log(result.data[0].balances);
         return result.data[0].balances;
       } else {
         return Promise.reject(result.error);
@@ -156,7 +154,7 @@ export async function fetchGasPrices(
   chainId: ChainId
 ): Promise<GasPrices | undefined> {
   try {
-    const response = await fetch(`${KRYSTAL_API[chainId]}/v1/gasPrice`);
+    const response = await fetch(`${KRYSTAL_API[chainId]}/v2/gasPrice`);
     const result = await response.json();
     const gasPrices = result.gasPrice;
     const priorityFees = result.priorityFee;

@@ -23,7 +23,7 @@ const ConfirmConnection = () => {
           setTrustedApps({
             address: account,
             page: page,
-          }),
+          })
         );
         resolve(true);
       });
@@ -44,7 +44,13 @@ const ConfirmConnection = () => {
   }
 
   return (
-    <Flex flexDir="column" justifyContent="space-between" alignItems="center" h="100vh" py={4}>
+    <Flex
+      flexDir="column"
+      justifyContent="space-between"
+      alignItems="center"
+      h="100vh"
+      py={4}
+    >
       <Tag px="3" fontSize="sm" mt={4}>
         {ellipsis(account || "", 12, 10)}
       </Tag>
@@ -78,11 +84,26 @@ const ConfirmConnection = () => {
         <Text textAlign="center" fontSize="14px" color="whiteAlpha.500">
           Only connect to websites you trust
         </Text>
-        <ButtonGroup width="100%" display="flex" alignItems="center" justifyContent="space-around" my={4}>
-          <Button colorScheme="gray" color="white" width="150px" onClick={handleRejectConnection}>
+        <ButtonGroup
+          width="100%"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-around"
+          my={4}
+        >
+          <Button
+            colorScheme="gray"
+            color="white"
+            width="150px"
+            onClick={handleRejectConnection}
+          >
             Cancel
           </Button>
-          <Button colorScheme="primary" width="150px" onClick={handleAcceptConnection}>
+          <Button
+            colorScheme="primary"
+            width="150px"
+            onClick={handleAcceptConnection}
+          >
             Connect
           </Button>
         </ButtonGroup>

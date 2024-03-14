@@ -37,8 +37,6 @@ export const TokenRow = ({
   const { chainId, currency } = useAppSelector(globalSelector);
   const history = useHistory();
 
-  console.log(data);
-
   const tokenPrice = useMemo(() => {
     const rawValue = get(data, `quotes.${currency}.price`, 0);
     return valueWithCurrency(

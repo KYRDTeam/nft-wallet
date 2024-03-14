@@ -45,7 +45,7 @@ export async function requestAccounts({
     let data = [];
     // let rootStorage = {};
     // let trustedApps = {};
-    let listApps = [];
+    // let listApps = [];
     const promise = new Promise(async (resolve, reject) => {
       if (isUnlocked) {
         resolve();
@@ -67,10 +67,12 @@ export async function requestAccounts({
         // listApps = trustedApps[selectedAccount ? selectedAccount : data[0]];
       })
       .then(async () => {
+        console.log(pageInfo);
         if (
-          pageInfo &&
-          listApps &&
-          listApps.find((app) => app.domain === pageInfo.domain)
+          pageInfo
+          // &&
+          // listApps &&
+          // listApps.find((app) => app.domain === pageInfo.domain)
         ) {
           res.result = await getPermittedAccounts(
             keyringController,

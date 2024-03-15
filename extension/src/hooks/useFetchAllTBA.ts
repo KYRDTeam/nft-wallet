@@ -12,7 +12,6 @@ export const useFetchAllTBA = ({ addresses, chainId }: { addresses: string[], ch
     const fetchData = async () => {
         setIsLoading(true)
         await Promise.all(addresses.map(async (address) => {
-            console.log(address)
             let tbaAddresses = await getTBAs(chainId, address, TBA_HELPER_CONTRACT)
             if (tbaAddresses) {
                 dispatch(

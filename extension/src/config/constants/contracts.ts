@@ -68,6 +68,8 @@ export const TBA_NFT: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: process.env.TBA_NFT || "",
   [ChainId.AVALANCHE]: process.env.TBA_NFT || "",
   [ChainId.ARBITRUM]: process.env.TBA_NFT || "",
-} 
+  [ChainId.POLYGON_ZKEVM]: process.env.TBA_NFT || "",
+  [ChainId.LINEA]: process.env.TBA_NFT || ""
+}
 
 export const TBA_HELPER_CONTRACT: string = process.env.REACT_APP_TBA_HELPER || "";

@@ -22,9 +22,10 @@ import {
   DrawerOverlay,
   Text,
   Skeleton,
+  DrawerFooter,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
-import Logo from "src/assets/images/logos/mb_logo.svg";
+import Logo from "src/assets/images/logos/nft-wallet.svg";
 import ImportIcon from "src/components/icons/menubar/ImportIcon";
 import SettingIcon from "src/components/icons/menubar/SettingIcon";
 import LockIcon from "src/components/icons/menubar/LockIcon";
@@ -40,6 +41,7 @@ import { NiceScroll } from "src/theme";
 import { globalSelector } from "src/store/global";
 import { hashSelector } from "src/store/hash";
 import AccountInfo from "./AccountInfo";
+import { ReactComponent as LogoPure } from "src/assets/images/logos/krystal-pure.svg";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -53,7 +55,9 @@ const Header = () => {
   const { hashList } = useAppSelector(hashSelector);
 
   const filterHashList = useMemo(() => {
-    const dataFilter = hashList.filter((e: any) => e.account === account && e.chainId === chainId);
+    const dataFilter = hashList.filter(
+      (e: any) => e.account === account && e.chainId === chainId
+    );
     return dataFilter;
   }, [account, hashList, chainId]);
 
@@ -79,7 +83,15 @@ const Header = () => {
           )}
         />
         <Flex>
-          <Tag pl="5px" pr="7px" py="2" cursor="pointer" mr={4} borderRadius="100%" _hover={{ opacity: "0.7" }}>
+          <Tag
+            pl="5px"
+            pr="7px"
+            py="2"
+            cursor="pointer"
+            mr={4}
+            borderRadius="100%"
+            _hover={{ opacity: "0.7" }}
+          >
             <Box as={NavLink} to="/history" position="relative">
               <HistorySvg width="20" stroke="#ffffff" />
               {!!filterHashList.length && (
@@ -93,7 +105,12 @@ const Header = () => {
             </Box>
           </Tag>
           <Center>
-            <Tag p={2} cursor="pointer" borderRadius="100%" _hover={{ opacity: "0.7" }}>
+            <Tag
+              p={2}
+              cursor="pointer"
+              borderRadius="100%"
+              _hover={{ opacity: "0.7" }}
+            >
               <Button
                 p={0}
                 borderRadius="md"
@@ -120,7 +137,7 @@ const Header = () => {
                       onClose();
                     }}
                   >
-                    <Image src={Logo} alt="Krystal logo" />
+                    <Image src={Logo} alt="Krystal logo" h={10} />
                   </Box>
                 </DrawerHeader>
                 <Divider />
@@ -172,7 +189,12 @@ const Header = () => {
                     >
                       <AddAccountModal
                         render={(onOpen) => (
-                          <Flex onClick={onOpen} w="100%" fontWeight="400" alignItems="center">
+                          <Flex
+                            onClick={onOpen}
+                            w="100%"
+                            fontWeight="400"
+                            alignItems="center"
+                          >
                             <AddIcon />
                             <Text ml="2">Add account</Text>
                           </Flex>
@@ -193,7 +215,12 @@ const Header = () => {
                     >
                       <ImportAccountModal
                         render={(onOpen) => (
-                          <Flex onClick={onOpen} w="100%" fontWeight="400" alignItems="center">
+                          <Flex
+                            onClick={onOpen}
+                            w="100%"
+                            fontWeight="400"
+                            alignItems="center"
+                          >
                             <ImportIcon />
                             <Text ml="2">Import account</Text>
                           </Flex>
@@ -284,6 +311,14 @@ const Header = () => {
                     </Flex>
                   </Box>
                 </DrawerBody>
+                <DrawerFooter>
+                  <Flex fontSize="sm" align="center" justify="center" w="100%">
+                    <Box mr="3" fontWeight="semibold">
+                      Powered by Krystal
+                    </Box>
+                    <LogoPure />
+                  </Flex>
+                </DrawerFooter>
               </DrawerContent>
             </Drawer>
           </Center>

@@ -4,7 +4,7 @@ export const NODE: {
   [chainId in ChainId]: ChainNodeType;
 } = {
   [ChainId.MAINNET]: {
-    rpcUrls: "https://mainnet.infura.io/v3/b14b5f54206846dcac9d091556a2a063",
+    rpcUrls: "https://eth.llamarpc.com",
     name: "Ethereum",
     platform: "ethereum",
     standard: "ERC-20",
@@ -14,12 +14,12 @@ export const NODE: {
     address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     scanApi: {
       endpoint: "https://api.etherscan.io/api",
-      key: "Z4PIDJWZJ4N3TM124ZG2V22ATWPQGSX6B2",
+      key: "",
     },
     EIP1559: true,
   },
   [ChainId.ROPSTEN]: {
-    rpcUrls: "https://ropsten.infura.io/v3/b14b5f54206846dcac9d091556a2a063",
+    rpcUrls: "https://rpc.ankr.com/eth_ropsten",
     name: "Ropsten",
     platform: "ethereum",
     standard: "ERC-20",
@@ -29,12 +29,12 @@ export const NODE: {
     address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     scanApi: {
       endpoint: "https://api-ropsten.etherscan.io/api",
-      key: "ESP4NCWFSIBGYAXMRXGKS6HC29P62S6VSE",
+      key: "",
     },
     EIP1559: true,
   },
   [ChainId.BSC]: {
-    rpcUrls: "https://bsc-dataseed.binance.org/",
+    rpcUrls: "https://binance.llamarpc.com",
     name: "BSC",
     platform: "binance-smart-chain",
     standard: "BEP-20",
@@ -44,12 +44,12 @@ export const NODE: {
     address: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     scanApi: {
       endpoint: "https://api.bscscan.com/api",
-      key: "C65KNM5RDGXMBPK1JVKVCT89N14UEVIVWQ",
+      key: "",
     },
     EIP1559: false,
   },
   [ChainId.BSC_TESTNET]: {
-    rpcUrls: "https://data-seed-prebsc-1-s1.binance.org:8545",
+    rpcUrls: "https://bsc-testnet-rpc.publicnode.com",
     name: "BSC test",
     platform: "binance-smart-chain",
     standard: "BEP-20",
@@ -59,13 +59,12 @@ export const NODE: {
     address: "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
     scanApi: {
       endpoint: "https://testnet.bscscan.com/api",
-      key: "C65KNM5RDGXMBPK1JVKVCT89N14UEVIVWQ",
+      key: "",
     },
     EIP1559: false,
   },
   [ChainId.POLYGON]: {
-    rpcUrls: "https://polygon-rpc.com/",
-    // rpcUrls: "https://polygon-mainnet.infura.io/v3/2343217699c44b45851935789f1f89e6",
+    rpcUrls: "https://polygon-pokt.nodies.app",
     name: "Polygon",
     platform: "polygon-pos",
     standard: "MATIC",
@@ -75,12 +74,12 @@ export const NODE: {
     address: "0xcccccccccccccccccccccccccccccccccccccccc",
     scanApi: {
       endpoint: "https://api.polygonscan.com/api",
-      key: "AIS4XGCHX84UEJY8W27M181J62H73YQHZA",
+      key: "",
     },
     EIP1559: true,
   },
   [ChainId.AVALANCHE]: {
-    rpcUrls: "https://api.avax.network/ext/bc/C/rpc",
+    rpcUrls: "https://avalanche.drpc.org",
     name: "Avalanche",
     platform: "avalanche",
     standard: "AVAX",
@@ -95,7 +94,7 @@ export const NODE: {
     EIP1559: true,
   },
   [ChainId.CRONOS]: {
-    rpcUrls: "https://evm-cronos.crypto.org",
+    rpcUrls: "https://cronos-evm-rpc.publicnode.com",
     name: "Cronos",
     platform: "cronos",
     standard: "CRC-20",
@@ -110,7 +109,7 @@ export const NODE: {
     EIP1559: false,
   },
   [ChainId.FANTOM]: {
-    rpcUrls: "https://rpcapi.fantom.network",
+    rpcUrls: "https://1rpc.io/ftm",
     name: "Fantom",
     platform: "fantom",
     standard: "Opera FTM",
@@ -125,13 +124,43 @@ export const NODE: {
     EIP1559: false,
   },
   [ChainId.ARBITRUM]: {
-    rpcUrls: "https://arb1.arbitrum.io/rpc",
+    rpcUrls: "https://arbitrum.drpc.org",
     name: "Arbitrum",
     platform: "ethereum",
     standard: "Arbitrum",
     currencySymbol: "ETH",
     scanUrl: "https://arbiscan.io",
     scanName: "Arbiscan",
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    scanApi: {
+      endpoint: "",
+      key: "",
+    },
+    EIP1559: false,
+  },
+  [ChainId.POLYGON_ZKEVM]: {
+    rpcUrls: "https://polygon-zkevm.drpc.org",
+    name: "Polygon zkEVM",
+    platform: "ethereum",
+    standard: "Polygon zkEVM",
+    currencySymbol: "ETH",
+    scanUrl: "https://zkevm.polygonscan.com",
+    scanName: "Polygon zkEVM Explorer",
+    address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    scanApi: {
+      endpoint: "",
+      key: "",
+    },
+    EIP1559: false,
+  },
+  [ChainId.LINEA]: {
+    rpcUrls: "https://linea.decubate.com",
+    name: "Linea",
+    platform: "ethereum",
+    standard: "Linea",
+    currencySymbol: "ETH",
+    scanUrl: "https://lineascan.build/",
+    scanName: "Lineascan",
     address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     scanApi: {
       endpoint: "",
@@ -149,6 +178,8 @@ export const MAINNET_CHAINS = [
   ChainId.CRONOS,
   ChainId.FANTOM,
   ChainId.ARBITRUM,
+  ChainId.POLYGON_ZKEVM,
+  ChainId.LINEA,
 ];
 
 export const SUPPORTED_CHAINS = [

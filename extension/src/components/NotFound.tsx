@@ -2,7 +2,7 @@ import { Image } from "@chakra-ui/image";
 import { Box, Center, Text } from "@chakra-ui/layout";
 import { NavLink } from "react-router-dom";
 
-import Logo from "../assets/images/logos/krystal.svg";
+import Logo from "../assets/images/logos/nft-wallet.svg";
 
 const Notfound: React.FC = () => {
   return (

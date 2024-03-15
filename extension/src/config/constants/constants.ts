@@ -10,6 +10,8 @@ export const KRYSTAL_APP: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
   [ChainId.AVALANCHE]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
   [ChainId.ARBITRUM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
+  [ChainId.LINEA]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
+  [ChainId.POLYGON_ZKEVM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
 };
 
 export const krystalApiEndPoint = process.env.REACT_APP_KRYSTAL_API || "";
@@ -24,6 +26,8 @@ export const KRYSTAL_API: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: `${krystalApiEndPoint}/fantom`,
   [ChainId.AVALANCHE]: `${krystalApiEndPoint}/avalanche`,
   [ChainId.ARBITRUM]: `${krystalApiEndPoint}/arbitrum`,
+  [ChainId.LINEA]: `${krystalApiEndPoint}/linea`,
+  [ChainId.POLYGON_ZKEVM]: `${krystalApiEndPoint}/zkevm`,
 };
 
 export const KRYSTAL_ADMIN_URL = process.env.REACT_APP_KRYSTAL_ADMIN_API || "";
@@ -38,6 +42,8 @@ export const LENDING_PLATFORM: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: "",
   [ChainId.AVALANCHE]: "",
   [ChainId.ARBITRUM]: "",
+  [ChainId.LINEA]: "",
+  [ChainId.POLYGON_ZKEVM]: "",
 };
 
 export const SUPPORTED_EARNING_CHAINS = [
@@ -105,6 +111,8 @@ export const BASE_CURRENCY: {
   [ChainId.FANTOM]: ["usd", "btc", "ftm"],
   [ChainId.AVALANCHE]: ["usd", "btc", "avax"],
   [ChainId.ARBITRUM]: ["usd", "btc", "eth"],
+  [ChainId.LINEA]: ["usd", "btc", "eth"],
+  [ChainId.POLYGON_ZKEVM]: ["usd", "btc", "eth"],
 };
 
 export const MINIMUM_LIQUIDITY = 100000;

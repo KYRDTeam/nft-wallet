@@ -1,6 +1,6 @@
 import { Box, Center, FlexProps } from "@chakra-ui/layout";
 import {ReactComponent as LoadingSVG} from "../assets/images/icons/loading.svg";
-import {ReactComponent as Krystal} from "../assets/images/logos/krystal.svg";
+import {ReactComponent as Krystal} from "../assets/images/logos/nft-wallet.svg";
 
 const LoadingPage = (props: FlexProps) => {
   return (

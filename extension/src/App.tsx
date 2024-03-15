@@ -37,6 +37,8 @@ import { DAPP_REQUEST_METHODS } from "./config/constants/dappRequestMethods";
 import { trustedAppsSelector } from "src/store/trustedApps";
 import useGetPageInfo from "src/hooks/useGetPageInfo";
 
+import bg from "src/assets/images/bg.png";
+
 const Campaign = lazy(() => import("./components/Campaign"));
 const Earn = lazy(() => import("./components/Earn"));
 const Explore = lazy(() => import("./components/Explore"));
@@ -169,9 +171,14 @@ const App: React.FC = () => {
   return (
     <>
       <ScrollToTop />
-      {!HIDDEN_ROUTE.includes(currentRoute) && <Header />}
-      <Flex>
+      <Flex
+        backgroundImage={bg}
+        backgroundSize="contain"
+        backgroundPosition="top"
+        backgroundRepeat="no-repeat"
+      >
         <Box flex="1" minW="0">
+        {!HIDDEN_ROUTE.includes(currentRoute) && <Header />}
           <AuthProvider>
             <Suspense fallback={<LoadingPage />}>
               <HttpRequest>

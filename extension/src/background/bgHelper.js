@@ -86,7 +86,8 @@ export function listenMessageFromPopup(cb) {
 
 export function getListTrustedApps(selectedAccount) {
   const rootStorage = JSON.parse(localStorage.getItem("persist:root") || "{}");
-  const trustedApps = JSON.parse(rootStorage.trustedApps || "{}").trustedApps || {};
+  const trustedApps =
+    JSON.parse(rootStorage.trustedApps || "{}").trustedApps || {};
   return trustedApps[selectedAccount] || [];
 }
 

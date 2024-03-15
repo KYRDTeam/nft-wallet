@@ -72,4 +72,5 @@ export const TBA_NFT: { [chainId in ChainId]: string } = {
   [ChainId.LINEA]: process.env.REACT_APP_TBA_NFT || ""
 }
 
-export const TBA_HELPER_CONTRACT: string = process.env.REACT_APP_TBA_HELPER || "";
+export const TBA_HELPER_CONTRACT: string =
+  process.env.REACT_APP_TBA_HELPER_ADDRESS || "";

@@ -16,11 +16,11 @@ const CreateWallet = () => {
       {isLoading ? null : (
         <Center h="calc(100vh - 60px)" flexDirection="column" px="8">
           <Logo width="225" height="55" />
-          <Image src={CreateIllu} />
           {vault ? (
             <Login />
           ) : (
             <>
+              <Image src={CreateIllu} />
               <Box w="100%" fontWeight="semibold" mb="5">
                 <CreatePassword
                   render={(open) => (

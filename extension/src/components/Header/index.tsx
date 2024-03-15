@@ -23,6 +23,7 @@ import {
   Text,
   Skeleton,
   DrawerFooter,
+  Icon,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import Logo from "src/assets/images/logos/nft-wallet.svg";
@@ -42,6 +43,7 @@ import { globalSelector } from "src/store/global";
 import { hashSelector } from "src/store/hash";
 import AccountInfo from "./AccountInfo";
 import { ReactComponent as LogoPure } from "src/assets/images/logos/krystal-pure.svg";
+import ExpandView from "../icons/ExpandView";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -127,8 +129,13 @@ const Header = () => {
             </Tag>
             <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
               <DrawerOverlay />
-              <DrawerContent w="300px" maxW="300px" height="100vh">
-                <DrawerCloseButton top="18px" />
+              <DrawerContent
+                w="350px"
+                maxW="350px"
+                height="100vh"
+                background="#080808"
+              >
+                <DrawerCloseButton top="24px" />
                 <DrawerHeader py="5" px="7">
                   <Box
                     cursor="pointer"
@@ -148,11 +155,14 @@ const Header = () => {
                   alignItems="flex-start"
                   p={0}
                 >
-                  <Flex w="100%" flexDirection="column" px={2} my={4}>
-                    <Text fontSize="lg" px="5">
-                      Select Account
-                    </Text>
-                    <NiceScroll maxH="210px" p={0}>
+                  <Flex w="100%" flexDirection="column" my={1}>
+                    <Flex justify="space-between" px={4} mt={2}>
+                      <Text fontSize="md">My Wallets</Text>
+                      <Text color="primary.200" cursor="pointer">
+                        Manage
+                      </Text>
+                    </Flex>
+                    <NiceScroll maxH="210px" p={0} px={4}>
                       {!!accountsName && (
                         <Box mt={2}>
                           {Object.keys(accountsName).map((account) => (
@@ -175,7 +185,7 @@ const Header = () => {
                     </NiceScroll>
                   </Flex>
                   <Divider />
-                  <Box px={7} pt={6}>
+                  <Box px={4} pt={6}>
                     <Flex
                       fontWeight="400"
                       cursor="pointer"
@@ -196,7 +206,7 @@ const Header = () => {
                             alignItems="center"
                           >
                             <AddIcon />
-                            <Text ml="2">Add account</Text>
+                            <Text ml="2">Create Wallet</Text>
                           </Flex>
                         )}
                         onCloseDrawer={onClose}
@@ -222,7 +232,7 @@ const Header = () => {
                             alignItems="center"
                           >
                             <ImportIcon />
-                            <Text ml="2">Import account</Text>
+                            <Text ml="2">Import Wallet</Text>
                           </Flex>
                         )}
                         onCloseDrawer={onClose}
@@ -248,28 +258,25 @@ const Header = () => {
                         <Text ml="2">View on {NODE[chainId].scanName}</Text>
                       </Link>
                     </Flex>
-                    {/* {isMobile && (
-                      <Flex
-                        onClick={() => global.chrome.runtime.openOptionsPage()}
-                        fontWeight="400"
-                        cursor="pointer"
-                        alignItems="center"
-                        color="#ffff"
-                        opacity={0.95}
-                        _hover={{
-                          color: "primary.300",
-                          stroke: "primary.300",
-                          svg: { stroke: "primary.300" },
-                        }}
-                        mb={5}
-                      >
-                        <Icon mr={2} w={4} h={4}>
-                          <ExpandView />
-                        </Icon>
-                        <Text>Expand view</Text>
-                      </Flex>
-                    )} */}
-
+                    <Flex
+                      onClick={() => global.chrome.runtime.openOptionsPage()}
+                      fontWeight="400"
+                      cursor="pointer"
+                      alignItems="center"
+                      color="#ffff"
+                      opacity={0.95}
+                      _hover={{
+                        color: "primary.300",
+                        stroke: "primary.300",
+                        svg: { stroke: "primary.300" },
+                      }}
+                      mb={5}
+                    >
+                      <Icon mr={2} w={4} h={4}>
+                        <ExpandView />
+                      </Icon>
+                      <Text>Expand view</Text>
+                    </Flex>
                     <Flex
                       _hover={{
                         color: "primary.300",

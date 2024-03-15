@@ -3,6 +3,10 @@ pragma solidity ^0.8.13;
 
 import {Script, console2} from "forge-std/Script.sol";
 import "../src/Free2MintNFTWallet.sol";
+import "@openzeppelin/contracts/utils/Create2.sol";
+import "../src/TBAHelper.sol";
+
+
 
 contract DeployFree2MintNFTWallet is Script {
     function setUp() public {}

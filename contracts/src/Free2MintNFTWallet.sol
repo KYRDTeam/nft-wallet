@@ -4,13 +4,32 @@ pragma solidity ^0.8.20;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Free2MintNFTWallet is ERC721, ERC721Enumerable {
-    constructor() ERC721("Free2MintNFTWallet", "FMW") {}
+contract Free2MintNFTWallet is ERC721, ERC721Enumerable, Ownable {
+    constructor()
+        ERC721("Free2MintNFTWallet", "FMW")
+        Ownable(tx.origin)
+    {}
 
     uint256 private _nextTokenId;
+    address private _tbaHelper;
+    bool private isInitialized = false;
 
-    function safeMint(address to) public returns (uint256 tokenId){
+    function initialize(address tbaHelper) public onlyOwner {
+        require(!isInitialized, 'Contract is already initialized');
+        isInitialized = true;
+        _tbaHelper = tbaHelper;
+    }
+
+    modifier onlyMinter() {
+        if (msg.sender != _tbaHelper) {
+            revert();
+        }
+        _;
+    }
+
+    function safeMint(address to) public onlyMinter returns (uint256 tokenId) {
         tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
     }

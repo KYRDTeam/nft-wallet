@@ -132,7 +132,7 @@ export const useSendTx = () => {
               updateHashList({
                 ...txObj,
                 hash,
-                account,
+                account: isTBA ? storeAccount : account,
                 chainId: globalChainId,
               })
             );

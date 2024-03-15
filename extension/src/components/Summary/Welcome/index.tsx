@@ -72,9 +72,6 @@ export const Welcome = () => {
           <Text display="inline" fontSize="5xl" fontWeight="bold">
             Krystal{" "}
           </Text>
-          <Text display={{ base: "block", lg: "inline" }} fontSize="2xl">
-            One Platform, All DeFi
-          </Text>
         </Box>
       </Box>
       <AddWatchedWalletModal

@@ -12,6 +12,8 @@ export enum ChainId {
   BSC = 56,
   BSC_TESTNET = 97,
   POLYGON = 137,
+  POLYGON_ZKEVM = 1101,
+  LINEA = 59144,
   CRONOS = 25,
   FANTOM = 250,
   AVALANCHE = 43114,
@@ -56,7 +58,15 @@ export enum Timer {
   ENDED = 3,
 }
 
-export type SupportedCurrencyType = "usd" | "btc" | "matic" | "bnb" | "eth" | "cro" | "ftm" | "avax";
+export type SupportedCurrencyType =
+  | "usd"
+  | "btc"
+  | "matic"
+  | "bnb"
+  | "eth"
+  | "cro"
+  | "ftm"
+  | "avax";
 
 export type Quote = {
   symbol: string;
@@ -436,7 +446,11 @@ export type NotificationType = {
   updatedAt: string;
 };
 
-export type AppSettingKey = "APP_HEADER_BAR" | "APP_SWAP_BOX" | "APP_SWAP_SUCCESS" | "LANDING_HEADER_BAR";
+export type AppSettingKey =
+  | "APP_HEADER_BAR"
+  | "APP_SWAP_BOX"
+  | "APP_SWAP_SUCCESS"
+  | "LANDING_HEADER_BAR";
 
 export type MultiSendRecipientType = {
   amount: string;

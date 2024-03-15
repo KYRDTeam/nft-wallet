@@ -12,6 +12,8 @@ export const multiCall: {
   [ChainId.CRONOS]: "",
   [ChainId.BSC_TESTNET]: "",
   [ChainId.ARBITRUM]: "",
+  [ChainId.POLYGON_ZKEVM]: "",
+  [ChainId.LINEA]: "",
 };
 
 export const SMART_WALLET_PROXY: { [chainId in ChainId]: string } = {
@@ -24,6 +26,8 @@ export const SMART_WALLET_PROXY: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: process.env.REACT_APP_SMART_WALLET_PROXY_FANTOM || "",
   [ChainId.AVALANCHE]: process.env.REACT_APP_SMART_WALLET_PROXY_AVAX || "",
   [ChainId.ARBITRUM]: process.env.REACT_APP_SMART_WALLET_PROXY_ARB || "",
+  [ChainId.POLYGON_ZKEVM]: process.env.REACT_APP_SMART_WALLET_PROXY_ZKEVM || "",
+  [ChainId.LINEA]: process.env.REACT_APP_SMART_WALLET_PROXY_LINEA || "",
 };
 
 export const PLATFORM_WALLET: { [chainId in ChainId]: string } = {
@@ -36,6 +40,8 @@ export const PLATFORM_WALLET: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: process.env.REACT_APP_PLATFORM_WALLET || "",
   [ChainId.AVALANCHE]: process.env.REACT_APP_PLATFORM_WALLET || "",
   [ChainId.ARBITRUM]: process.env.REACT_APP_PLATFORM_WALLET || "",
+  [ChainId.POLYGON_ZKEVM]: process.env.REACT_APP_PLATFORM_WALLET || "",
+  [ChainId.LINEA]: process.env.REACT_APP_PLATFORM_WALLET || "",
 };
 
 export const MULTI_SEND_CONTRACT: { [chainId in ChainId]: string } = {
@@ -48,4 +54,6 @@ export const MULTI_SEND_CONTRACT: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: process.env.REACT_APP_MULTISEND_CONTRACT || "",
   [ChainId.AVALANCHE]: process.env.REACT_APP_MULTISEND_CONTRACT || "",
   [ChainId.ARBITRUM]: process.env.REACT_APP_MULTISEND_CONTRACT || "",
+  [ChainId.POLYGON_ZKEVM]: process.env.REACT_APP_MULTISEND_CONTRACT || "",
+  [ChainId.LINEA]: process.env.REACT_APP_MULTISEND_CONTRACT || "",
 };

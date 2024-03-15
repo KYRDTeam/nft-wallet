@@ -27,6 +27,8 @@ const initialState: TokensState = {
     [ChainId.CRONOS]: [],
     [ChainId.FANTOM]: [],
     [ChainId.ROPSTEN]: [],
+    [ChainId.LINEA]: [],
+    [ChainId.POLYGON_ZKEVM]: [],
   },
   customTokens: {
     [ChainId.ARBITRUM]: [],
@@ -38,6 +40,8 @@ const initialState: TokensState = {
     [ChainId.CRONOS]: [],
     [ChainId.FANTOM]: [],
     [ChainId.ROPSTEN]: [],
+    [ChainId.LINEA]: [],
+    [ChainId.POLYGON_ZKEVM]: [],
   },
   isLoadingBalance: false,
   favoriteTokens: [],

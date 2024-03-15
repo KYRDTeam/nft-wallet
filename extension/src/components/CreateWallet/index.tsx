@@ -1,5 +1,5 @@
 import { Box, Button, Center } from "@chakra-ui/react";
-import { ReactComponent as Logo } from "src/assets/images/logos/krystal.svg";
+import { ReactComponent as Logo } from "src/assets/images/logos/nft-wallet.svg";
 import { ReactComponent as LogoPure } from "src/assets/images/logos/krystal-pure.svg";
 import { useAppSelector } from "src/hooks/useStore";
 import { keysSelector } from "src/store/keys";
@@ -15,9 +15,6 @@ const CreateWallet = () => {
       {isLoading ? null : (
         <Center h="calc(100vh - 60px)" flexDirection="column" px="8">
           <Logo width="250" height="55" />
-          <Box opacity="0.7" mt="2">
-            One Platform, All DeFi
-          </Box>
           {vault ? (
             <Login />
           ) : (

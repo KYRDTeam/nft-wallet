@@ -15,8 +15,8 @@ import {
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 
-import Logo from "../../assets/images/logos/krystal.svg";
-import PureLogo from "../../assets/images/logos/krystal-pure.svg";
+import Logo from "../../assets/images/logos/nft-wallet.svg";
+import PureLogo from "../../assets/images/logos/nft-wallet-pure.svg";
 import { ReactComponent as ExchangeIcon } from "../../assets/images/icons/exchange-icon.svg";
 import { ReactComponent as BellIcon } from "../../assets/images/icons/bell.svg";
 import { ReactComponent as SwapSvg } from "../../assets/images/icons/swap.svg";

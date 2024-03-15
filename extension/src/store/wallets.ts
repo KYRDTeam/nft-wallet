@@ -32,6 +32,8 @@ const initialState: WalletsState = {
     [ChainId.CRONOS]: {},
     [ChainId.FANTOM]: {},
     [ChainId.ROPSTEN]: {},
+    [ChainId.LINEA]: {},
+    [ChainId.POLYGON_ZKEVM]: {},
   },
   isForceFetchingTotalBalance: false,
   isCacheFetchingTotalBalance: false,
@@ -83,21 +85,33 @@ export const walletsSlice = createSlice({
           quotes: QuoteList<Quote>;
           usdValue: number;
         }[];
-      }>,
+      }>
     ) => {
       state.totalNetWorth = action.payload.totalNetWorth;
       state.chainWorth = action.payload.chainWorth;
     },
-    fetchNetWorth: (state, action: PayloadAction<{ address: string; isForceSync: boolean }>) => {},
-    setHiddenWorth: (state, action: PayloadAction<{ chainId: ChainId; quote: QuoteList<number> }>) => {
+    fetchNetWorth: (
+      state,
+      action: PayloadAction<{ address: string; isForceSync: boolean }>
+    ) => {},
+    setHiddenWorth: (
+      state,
+      action: PayloadAction<{ chainId: ChainId; quote: QuoteList<number> }>
+    ) => {
       const { chainId, quote } = action.payload;
       state.hiddenWorth[chainId] = quote;
     },
     syncHiddenWorth: (state, action: PayloadAction<{ chainId: ChainId }>) => {},
-    setCacheFetchingTotalBalanceState: (state, action: PayloadAction<boolean>) => {
+    setCacheFetchingTotalBalanceState: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
       state.isCacheFetchingTotalBalance = action.payload;
     },
-    setForceFetchingTotalBalanceState: (state, action: PayloadAction<boolean>) => {
+    setForceFetchingTotalBalanceState: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
       state.isForceFetchingTotalBalance = action.payload;
     },
   },

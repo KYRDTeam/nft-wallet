@@ -9,6 +9,8 @@ import PolygonPNG from "../../assets/images/tokens/polygon.png";
 import CronosSVG from "../../assets/images/tokens/cronos.svg";
 import FantomSVG from "../../assets/images/tokens/fantom.svg";
 import ArbitrumSVG from "../../assets/images/tokens/arbitrum.svg";
+import LineaSVG from "../../assets/images/tokens/linea.svg";
+import ZkEvmSVG from "../../assets/images/tokens/zkevm.svg";
 import { ChainId } from "../../config/types";
 
 interface ChainIconPropType extends ImageProps {
@@ -39,6 +41,10 @@ export default function ChainIcon({
         return CronosSVG;
       case ChainId.ARBITRUM:
         return ArbitrumSVG;
+      case ChainId.LINEA:
+        return LineaSVG;
+      case ChainId.POLYGON_ZKEVM:
+        return ZkEvmSVG;
       default: {
         return EthereumPNG;
       }

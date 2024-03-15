@@ -1,4 +1,12 @@
-import { Box, Flex, FormControl, FormLabel, Skeleton, Switch, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  FormControl,
+  FormLabel,
+  Skeleton,
+  Switch,
+  Text,
+} from "@chakra-ui/react";
 import { get, isEmpty, orderBy } from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { Token } from "src/config/types";
@@ -21,12 +29,14 @@ export const Tokens = ({ keyword }: { keyword: string }) => {
   useEffect(() => {
     setFilter({});
   }, [keyword]);
-  
+
   const tokenAvailableToDisplay = useMemo(() => {
     const keywordLowercase = keyword.toLowerCase();
 
     let tokenCloned = [...tokens].filter((token: Token) => {
-      const balance = new BigNumber(get(token, "balance", 0)).dividedBy(new BigNumber(10).pow(token.decimals || 18));
+      const balance = new BigNumber(get(token, "balance", 0)).dividedBy(
+        new BigNumber(10).pow(token.decimals || 18)
+      );
       return (
         !hiddenList.includes(token.address.toLowerCase()) &&
         balance.isGreaterThan(0) &&
@@ -39,13 +49,18 @@ export const Tokens = ({ keyword }: { keyword: string }) => {
     // the filter small value is disabled when has searching and off show all.
     if (!keyword && !isShowAllToken) {
       tokenCloned = tokenCloned.filter(
-        (token: Token) => get(token, "quotes.usd.value", 0) > MINIMUM_BALANCE_VALUE_TO_DISPLAY,
+        (token: Token) =>
+          get(token, "quotes.usd.value", 0) > MINIMUM_BALANCE_VALUE_TO_DISPLAY
       );
     }
 
-    return orderBy(tokenCloned, Object.keys(filter)[0], Object.values(filter)[0]);
+    return orderBy(
+      tokenCloned,
+      Object.keys(filter)[0],
+      Object.values(filter)[0]
+    );
   }, [filter, hiddenList, isShowAllToken, keyword, tokens]);
-  
+
   // const currentWorth: number = useMemo(() => {
   //   return tokenAvailableToDisplay.reduce((total: number, currentToken: Token) => {
   //     return total + get(currentToken, `quotes.${currency}.value`, 0);
@@ -84,17 +99,24 @@ export const Tokens = ({ keyword }: { keyword: string }) => {
         />
       </Flex> */}
 
-      <Box height={{ base: "calc( 100vh - 370px )" }}>
+      <Box height={{ base: "calc( 100vh - 375px )" }}>
         {isLoadingBalance && (
           <>
-            <Skeleton height="64px" mt="0" mb="2" mx={{ base: 2, md: 6 }} />
+            <Skeleton height="64px" mt="2" mb="2" mx={{ base: 2, md: 6 }} />
             <Skeleton height="64px" mt="0" mb="2" mx={{ base: 2, md: 6 }} />
             <Skeleton height="64px" mt="0" mb="2" mx={{ base: 2, md: 6 }} />
           </>
         )}
-        {!isLoadingBalance && !isEmpty(tokenAvailableToDisplay) && <TokenList tokens={tokenAvailableToDisplay} />}
+        {!isLoadingBalance && !isEmpty(tokenAvailableToDisplay) && (
+          <TokenList tokens={tokenAvailableToDisplay} />
+        )}
         {!isLoadingBalance && isEmpty(tokenAvailableToDisplay) && (
-          <Flex direction="column" justifyContent="center" alignItems="center" height="full">
+          <Flex
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            height="full"
+          >
             <TokenNotFoundIllus boxSize="40" mt={6} />
             <Text color="whiteAlpha.600" mt={4}>
               No asset found.
@@ -104,7 +126,11 @@ export const Tokens = ({ keyword }: { keyword: string }) => {
       </Box>
       <Flex height="50px" alignItems="center" mt={{ base: 0, xl: 0 }} ml={2}>
         {!keyword && (
-          <FormControl display="flex" alignItems="center" mb={{ base: 0, xl: 10 }}>
+          <FormControl
+            display="flex"
+            alignItems="center"
+            mb={{ base: 0, xl: 10 }}
+          >
             <Switch
               id="show-all-token"
               mr="2"
@@ -115,7 +141,12 @@ export const Tokens = ({ keyword }: { keyword: string }) => {
               }}
               size="sm"
             />
-            <FormLabel htmlFor="show-all-token" mb="0" color="whiteAlpha.600" fontSize="sm">
+            <FormLabel
+              htmlFor="show-all-token"
+              mb="0"
+              color="whiteAlpha.600"
+              fontSize="sm"
+            >
               Show All
             </FormLabel>
           </FormControl>

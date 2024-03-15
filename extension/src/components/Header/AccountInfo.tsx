@@ -1,8 +1,4 @@
-import {
-  Flex,
-  Text,
-  Image,
-} from "@chakra-ui/react";
+import { Flex, Text, Image } from "@chakra-ui/react";
 import { Tooltip } from "@chakra-ui/tooltip";
 // import { CopyIcon } from "@chakra-ui/icons";
 import { Tag } from "src/theme";
@@ -15,6 +11,8 @@ import { keysSelector } from "src/store/keys";
 import Copy from "src/assets/images/icons/copy.svg";
 // import { trustedAppsSelector } from "../../store/trustedApps";
 import useGetPageInfo from "src/hooks/useGetPageInfo";
+import { WalletIcon } from "../common/icons";
+import { EditIcon } from "@chakra-ui/icons";
 
 const AccountInfo = () => {
   const { account } = useWallet();
@@ -22,10 +20,19 @@ const AccountInfo = () => {
   const { hasCopied, onCopy } = useClipboard(account || "");
   // const { trustedApps } = useAppSelector(trustedAppsSelector);
   const { pageInfo } = useGetPageInfo();
- 
 
   return (
-    <Flex alignItems="center" mb={4}>
+    <Flex
+      alignItems="center"
+      mt={1}
+      mb={2}
+      mx={2}
+      pr={3}
+      py={1}
+      bg="#1E2020"
+      justify="space-between"
+      borderRadius="12px"
+    >
       <AccountDetailModal
         render={(onOpen) => (
           <Tag
@@ -35,6 +42,7 @@ const AccountInfo = () => {
             fontSize="sm"
             display="flex"
             mr={4}
+            bg="#1E2020"
           >
             {/* {!pageInfo?.domain ? (
               <></>
@@ -55,6 +63,7 @@ const AccountInfo = () => {
                 mr={2}
               ></Text>
             )} */}
+            <WalletIcon stroke="#ffffff" boxSize={4} mr={2} />
             {!!pageInfo?.domain && (
               <Text
                 backgroundColor="#1DE9B6"
@@ -88,14 +97,17 @@ const AccountInfo = () => {
           <Image
             src={Copy}
             alt="copy icon"
+            mr={2}
             w="4"
             h="4"
             cursor="pointer"
             onClick={onCopy}
           />
         </Tooltip>
+        <Tooltip label="Click to edit" placement="top">
+          <EditIcon boxSize={4} color="whiteAlpha.600" cursor="pointer" />
+        </Tooltip>
       </Flex>
-     
     </Flex>
   );
 };

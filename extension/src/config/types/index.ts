@@ -77,6 +77,7 @@ export type Quote = {
 };
 
 export type QuoteList<Q> = {
+  usdValue: number;
   avax: Q;
   bnb: Q;
   btc: Q;

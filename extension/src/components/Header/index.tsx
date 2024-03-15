@@ -74,10 +74,10 @@ const Header = () => {
   }
   return (
     <Box px="4">
-      <Flex py="4" justify="space-between" alignItems="center">
+      <Flex pt="4" pb={2} justify="space-between" alignItems="center" px={1}>
         <SelectChain
           render={(chainId) => (
-            <Tag w="135px" alignItems="center">
+            <Tag w="135px" alignItems="center" bg="#1E2020">
               {chainId && <ChainIcon chainId={chainId || 1} boxSize={5} />}
               <Box mx="2">{chainId && NODE[chainId]?.name}</Box>
               <ExchangeIcon />
@@ -93,6 +93,7 @@ const Header = () => {
             mr={4}
             borderRadius="100%"
             _hover={{ opacity: "0.7" }}
+            bg="#1E2020"
           >
             <Box as={NavLink} to="/history" position="relative">
               <HistorySvg width="20" stroke="#ffffff" />
@@ -112,6 +113,7 @@ const Header = () => {
               cursor="pointer"
               borderRadius="100%"
               _hover={{ opacity: "0.7" }}
+              bg="#1E2020"
             >
               <Button
                 p={0}
@@ -130,8 +132,8 @@ const Header = () => {
             <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
               <DrawerOverlay />
               <DrawerContent
-                w="350px"
-                maxW="350px"
+                w="320px"
+                maxW="320px"
                 height="100vh"
                 background="#080808"
               >
@@ -156,13 +158,13 @@ const Header = () => {
                   p={0}
                 >
                   <Flex w="100%" flexDirection="column" my={1}>
-                    <Flex justify="space-between" px={4} mt={2}>
+                    <Flex justify="space-between" px={5} mt={2}>
                       <Text fontSize="md">My Wallets</Text>
                       <Text color="primary.200" cursor="pointer">
                         Manage
                       </Text>
                     </Flex>
-                    <NiceScroll maxH="210px" p={0} px={4}>
+                    <NiceScroll maxH="300px" p={0} px={4}>
                       {!!accountsName && (
                         <Box mt={2}>
                           {Object.keys(accountsName).map((account) => (
@@ -185,7 +187,7 @@ const Header = () => {
                     </NiceScroll>
                   </Flex>
                   <Divider />
-                  <Box px={4} pt={6}>
+                  <Box px={5} pt={6}>
                     <Flex
                       fontWeight="400"
                       cursor="pointer"

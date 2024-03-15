@@ -543,7 +543,7 @@ export async function fetchNetWorth(
 > {
   try {
     const response = await fetch(
-      `${krystalApiEndPoint}/all/v1/account/totalBalances?address=${wallet}&forceSync=${isForceSync}`
+      `${krystalApiEndPoint}/all/v1/balance/totalBalances?address=${wallet}&forceSync=${isForceSync}`
     );
 
     const data = await response.json();

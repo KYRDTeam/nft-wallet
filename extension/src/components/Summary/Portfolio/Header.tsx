@@ -1,79 +1,150 @@
-import { Box, Button, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Button, Flex, Spinner, Text } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { NavLink } from "react-router-dom";
-import { useAppSelector } from "src/hooks/useStore";
-import { globalSelector } from "src/store/global";
+import { useAppDispatch, useAppSelector } from "src/hooks/useStore";
+import { globalSelector, setPrivateMode } from "src/store/global";
 import { PrivatePrice } from "src/components/common/PrivatePrice";
 import { formatNumberV2 } from "src/utils/helper";
 import { ChainId } from "src/config/types";
 import { NODE } from "src/config/constants/chain";
 import { useChainTokenSelector } from "src/hooks/useTokenSelector";
-import { getBalanceNumber } from "src/utils/formatBalance";
-import { SupportedCurrencyType } from "../../../config/types/index";
+import {
+  DownloadIcon,
+  EyeIcon,
+  EyeOffIcon,
+  TransferIcon,
+} from "src/components/common/icons";
+import { walletsSelector } from "../../../store/wallets";
+import QrCodeModal from "./QrCodeModal";
+import { ReactComponent as SwapIconSvg } from "src/assets/images/icons/swap.svg";
 
-export const Header = ({ keyword, setKeyword }: { keyword: string; setKeyword: (keyword: string) => void }) => {
-  const { chainId } = useAppSelector(globalSelector);
+export const Header = ({
+  keyword,
+  setKeyword,
+}: {
+  keyword: string;
+  setKeyword: (keyword: string) => void;
+}) => {
+  const { chainId, isPrivateMode } = useAppSelector(globalSelector);
   const { tokens, isLoadingBalance } = useChainTokenSelector();
+  const { totalNetWorth } = useAppSelector(walletsSelector);
+
+  console.log(totalNetWorth);
+
+  const dispatch = useAppDispatch();
 
   const nativeToken = useMemo(() => {
-      return tokens.find((token) => token.address === NODE[chainId as ChainId].address) || null;
+    return (
+      tokens.find(
+        (token) => token.address === NODE[chainId as ChainId].address
+      ) || null
+    );
   }, [chainId, tokens]);
 
-  const nativeBalance = useMemo(() => {
+  const usdValue = useMemo(() => {
     if (nativeToken) {
-      return formatNumberV2(getBalanceNumber(nativeToken.balance, nativeToken.decimals || 18), 4);
+      return formatNumberV2(totalNetWorth?.usdValue, 4);
     } else return "0";
-  }, [nativeToken]);
+  }, [nativeToken, totalNetWorth?.usdValue]);
 
   return (
-    <Flex alignItems="flex-start" justifyContent="space-between" direction="column">
+    <Flex
+      alignItems="flex-start"
+      justifyContent="space-between"
+      direction="column"
+    >
       <Box alignItems="center" position="relative" w="100%">
         <Flex alignItems="center" justifyContent="center">
-          <Box p="4" bg="gray.600" w="100%" borderRadius={16} h="150px">
-            <Flex direction="column" h="100%" justifyContent="flex-end">
-              <Flex fontSize="5xl" mr="2" alignItems="center" justifyContent="center" direction="column">
-                {isLoadingBalance && <Spinner size="xl" mb={2} />}
-                {!isLoadingBalance && (
-                  <Flex justifyContent="center" alignItems="center" position="relative" fontSize="4xl" mb={3}>
-                    <PrivatePrice
-                      value={nativeBalance}
-                      currency={NODE[chainId as ChainId].currencySymbol.toLowerCase() as SupportedCurrencyType}
-                    />
-                  </Flex>
+          <Flex direction="column" h="100%" justifyContent="flex-end">
+            <Flex justify="center" align="center">
+              Total Value
+              <Flex
+                align="center"
+                justify="center"
+                onClick={() => dispatch(setPrivateMode(!isPrivateMode))}
+                ml={2}
+                cursor="pointer"
+              >
+                {isPrivateMode ? (
+                  <EyeIcon boxSize={4} />
+                ) : (
+                  <EyeOffIcon boxSize={4} />
                 )}
               </Flex>
-              <Flex alignItems="center" justifyContent="space-around" mt={3}>
+            </Flex>
+            <Flex
+              fontSize="5xl"
+              mr="2"
+              alignItems="center"
+              justifyContent="center"
+              direction="column"
+            >
+              {isLoadingBalance && <Spinner size="xl" mb={2} />}
+              {!isLoadingBalance && (
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  position="relative"
+                  fontSize="4xl"
+                  fontWeight="semibold"
+                  mt={1}
+                  mb={2}
+                >
+                  <PrivatePrice value={usdValue} currency={"usd"} />
+                </Flex>
+              )}
+            </Flex>
+            <Flex alignItems="center" justifyContent="space-around">
+              <Flex direction="column" justify="center" align="center">
                 <Button
-                  w="100%"
-                  maxW="132px"
-                  height="38px"
-                  fontSize="15px"
-                  color="#0f0f0f"
-                  fontWeight="700"
-                  borderRadius={16}
-                  colorScheme="primary"
+                  w={12}
+                  h={12}
+                  px={4}
+                  mx={4}
+                  borderRadius="8px"
                   as={NavLink}
                   to="/transfer"
+                  bg="#1E2020"
                 >
-                  Transfer
+                  <TransferIcon boxSize="6" stroke="#ffffff" />
                 </Button>
+                <Text mt={2}>Transfer</Text>
+              </Flex>
+              <Flex direction="column" justify="center" align="center">
+                <QrCodeModal
+                  render={(onOpen) => (
+                    <Button
+                      w={12}
+                      h={12}
+                      px={4}
+                      mx={4}
+                      borderRadius="8px"
+                      bg="#1E2020"
+                      onClick={onOpen}
+                    >
+                      <DownloadIcon boxSize="6" stroke="#ffffff" />
+                    </Button>
+                  )}
+                />
+                <Text mt={2}>Receive</Text>
+              </Flex>
+              <Flex direction="column" justify="center" align="center">
                 <Button
-                  w="100%"
-                  maxW="132px"
-                  height="38px"
-                  fontSize="15px"
-                  color="#0f0f0f"
-                  fontWeight="700"
-                  borderRadius={16}
-                  colorScheme="primary"
+                  w={12}
+                  h={12}
+                  px={3}
+                  mx={4}
+                  borderRadius="8px"
                   as={NavLink}
                   to="/swap"
+                  bg="#1E2020"
                 >
-                  Swap
+                  <SwapIconSvg stroke="#FFFFFF" />
                 </Button>
+                <Text mt={2}>Swap</Text>
               </Flex>
             </Flex>
-          </Box>
+          </Flex>
         </Flex>
       </Box>
     </Flex>

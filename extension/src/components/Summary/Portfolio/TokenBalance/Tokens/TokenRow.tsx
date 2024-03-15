@@ -92,7 +92,7 @@ export const TokenRow = ({
         {...props}
       >
         <Flex alignItems="center" mr="2" w="150px">
-          <Box mr="2" display="block">
+          <Box mr="2" display="block" borderRadius="full" overflow="hidden">
             <Image
               boxSize="7"
               src={data.logo}

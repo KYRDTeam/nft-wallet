@@ -17,7 +17,7 @@ const SelectChain = ({ render }: { render: (chainId?: ChainId) => JSX.Element })
   return (
     <Menu key="1">
       <MenuButton>{render(chainId)}</MenuButton>
-      <MenuList bgColor="gray.600" width="18">
+      <MenuList bgColor="#1E2020" width="18">
         {SUPPORTED_CHAINS.map((targetChainId: ChainId) => {
           return (
             <MenuItem

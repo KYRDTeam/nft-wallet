@@ -1,5 +1,5 @@
 import { ChainId, TxParams } from "src/config/types";
-import { getWeb3, formatTxParams } from "./web3";
+import { getWeb3 } from "./web3";
 import TBAHelperABI from "src/config/abi/helpertba.json";
 import { AbiItem } from "web3-utils";
 import { TBA_HELPER_CONTRACT } from "src/config/constants/contracts";
@@ -20,7 +20,7 @@ export const createTBA = (chainId: ChainId, EOAWallet: any) => {
   }
 };
 
-export const modifyDataForTBA = async (
+export const modifyDataForTBA = (
   chainId: ChainId,
   params: TxParams,
   tba: string | undefined
@@ -45,16 +45,8 @@ export const modifyDataForTBA = async (
       .execute(to, value, data, operation)
       .encodeABI();
 
-    let result: TxParams = {
-      chainId: params.chainId,
-      data: txData,
-      from: params.from,
-      to: tba,
-      value: params.value,
-      type: params.type,
-    };
-    return await formatTxParams(chainId, result);
+    return txData;
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };

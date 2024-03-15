@@ -92,8 +92,9 @@ export const useSendTx = () => {
         let txObj = isTBA
           ? {
               ...params,
-              data: modifyDataForTBA(globalChainId, params, storeAccount),
               from: account,
+              to: storeAccount,
+              data: modifyDataForTBA(globalChainId, params, storeAccount),
             }
           : { ...params, from: account };
 
@@ -104,6 +105,7 @@ export const useSendTx = () => {
             ? {
                 ...params,
                 from: account,
+                to: storeAccount,
                 data: modifyDataForTBA(globalChainId, params, storeAccount),
               }
             : { ...params, from: account, data: data };
@@ -117,8 +119,10 @@ export const useSendTx = () => {
           }
         }
 
+        console.log(txObj);
+
         setEstimatingGas(true);
-        // await estimateGas(globalChainId, txObj);
+        await estimateGas(globalChainId, txObj);
         setEstimatingGas(false);
 
         setIsConfirmTx(true);

@@ -45,6 +45,7 @@ const SignAndSendTx = () => {
   }, [data]);
 
   const handleConfirm = useCallback(async () => {
+    console.log(data)
     await send({
       to: data.to,
       value: data.value,

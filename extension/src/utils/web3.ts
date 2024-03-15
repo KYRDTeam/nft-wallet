@@ -239,8 +239,10 @@ export const getDataTransferNFT = (
   provider?: ProviderType
 ) => {
   const web3 = getWeb3(chainId, provider);
-  const ABI = nftType === NFT_TYPE.ERC721 ? ERC721ABI : ERC1155ABI;
-
+  const ABI =
+    nftType === NFT_TYPE.ERC721 || nftType === NFT_TYPE.UNKNOWN
+      ? ERC721ABI
+      : ERC1155ABI;
   try {
     const tokenContract = new web3.eth.Contract(
       ABI as unknown as AbiItem,
@@ -248,7 +250,7 @@ export const getDataTransferNFT = (
     );
 
     let txData;
-    if (nftType === NFT_TYPE.ERC721) {
+    if (nftType === NFT_TYPE.ERC721 || nftType === NFT_TYPE.UNKNOWN) {
       txData = tokenContract.methods
         .safeTransferFrom(params.fromAddress, params.toAddress, params.tokenID)
         .encodeABI();
@@ -363,6 +365,7 @@ export const getNftBalance = async (
       }
 
       const responses = await multicall(chainId, ERC721ABI, calls);
+
       let tokens = responses.map((data: any) => {
         return {
           tokenID: get(data, "[0]").toString(),
@@ -371,7 +374,6 @@ export const getNftBalance = async (
       return tokens;
     }
   } catch (e) {
-    console.log(isERC721, e);
     return null;
   }
 };
@@ -397,5 +399,5 @@ export const getTBAs = async (
     console.log(e);
   }
 
-  return null;
+  return [];
 };

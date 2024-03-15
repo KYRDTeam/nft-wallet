@@ -20,16 +20,14 @@ export const useFetchAllTBA = () => {
             address,
             TBA_HELPER_CONTRACT
           );
-          if (tbaAddresses) {
-            dispatch(
-              setAllAccountTBAs({
-                account: address || "",
-                addresses: tbaAddresses,
-                tba: false,
-                chainId: chainId,
-              })
-            );
-          }
+          dispatch(
+            setAllAccountTBAs({
+              account: address || "",
+              addresses: tbaAddresses,
+              tba: false,
+              chainId: chainId,
+            })
+          );
         })
       );
     },

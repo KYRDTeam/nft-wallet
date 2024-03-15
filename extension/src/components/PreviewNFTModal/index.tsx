@@ -21,6 +21,8 @@ import { ChainId } from "src/config/types";
 import { Detail } from "./Detail";
 import { Transfer } from "./Transfer";
 import useCheckOwnerNFT from "./hooks/useCheckOwnerNFT";
+import { useWallet } from "src/hooks/useWallet";
+import { krystalApiEndPoint } from "src/config/constants/constants";
 
 type NFTDetailType = {
   collectibleName: string;
@@ -46,7 +48,7 @@ export const PreviewNFTModal = () => {
   const { collectibleAddress, tokenId } = useParams();
   const tokenID = useMemo(() => tokenId.split("?")[0], [tokenId]);
 
-  const [view, setView] = useState(ViewMode.DETAIL);
+  const [view, setView] = useState(ViewMode.TRANSFER);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
@@ -56,6 +58,8 @@ export const PreviewNFTModal = () => {
   const chainIdSearchParam = new URLSearchParams(location?.search).get(
     "chainId"
   );
+
+  const { account } = useWallet();
 
   const {
     loading: checkingOwnerNFT,
@@ -74,14 +78,20 @@ export const PreviewNFTModal = () => {
 
   // @ts-ignore
   const NFTchainId: ChainId = chainIdSearchParam || chainId;
+  // page=1&pageSize=24&search=&chainId=1
 
   const { data, loading } = useFetch(
-    `/v1/account/nftDetail?collectibleAddress=${collectibleAddress}&tokenID=${tokenID}`,
+    `${krystalApiEndPoint}/all/v1/balance/listNftInCollection?address=${account}&collectionAddress=${collectibleAddress}&tokenID=${tokenID}&chainId=${chainId}`,
     {},
     [collectibleAddress, tokenID]
   );
 
-  const NFTinfo: NFTDetailType = useMemo(() => get(data, "detail", {}), [data]);
+  const NFTinfo: NFTDetailType = useMemo(
+    () =>
+      get(data, "data.items", []).find((i: any) => i?.tokenID === tokenID) ||
+      {},
+    [data, tokenID]
+  );
 
   // close modal and redirect to home page
   useEffect(() => {

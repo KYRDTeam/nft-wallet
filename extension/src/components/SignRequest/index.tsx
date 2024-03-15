@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Flex, Heading, Text, Button, ButtonGroup, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Button,
+  ButtonGroup,
+  Image,
+} from "@chakra-ui/react";
 import { sendMessage } from "src/services/extension";
 import LoadingPage from "../LoadingPage";
 import { getEthBalance } from "src/utils/erc20";
 import { useWallet } from "src/hooks/useWallet";
 import { NODE } from "src/config/constants/chain";
-import { fromWei } from "web3-utils";
+import { fromWei, hexToUtf8 } from "web3-utils";
 import { useAppSelector } from "src/hooks/useStore";
 import { keysSelector } from "src/store/keys";
 import { closeCurrentWindow } from "src/background/bgHelper";
@@ -21,7 +29,10 @@ const SignRequest = () => {
 
   const handleSign = async () => {
     const { tx, address } = data;
-    const signedTx = await keyringController.signPersonalMessage({ data: tx, from: address }, {});
+    const signedTx = await keyringController.signPersonalMessage(
+      { data: tx, from: address },
+      {}
+    );
     sendMessage({ type: "send_tx_hash", hash: signedTx });
     closeCurrentWindow();
   };
@@ -34,7 +45,11 @@ const SignRequest = () => {
   }, []);
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
+    chrome.runtime.onMessage.addListener(async function (
+      request,
+      sender,
+      sendResponse
+    ) {
       if (request.type === "get_data_sign") {
         sendResponse(true);
         setData(request.data);
@@ -57,7 +72,12 @@ const SignRequest = () => {
   }
 
   return (
-    <Flex flexDir="column" alignItems="center" justifyContent="space-between" h="100vh">
+    <Flex
+      flexDir="column"
+      alignItems="center"
+      justifyContent="space-between"
+      h="100vh"
+    >
       <Box p={0} m={0} w="100%">
         <Heading as="h4" py="6" fontSize="2xl" textAlign="center" mb={4}>
           Signature Request
@@ -74,14 +94,20 @@ const SignRequest = () => {
               Balance:
             </Text>
             <Text textAlign="right">
-              {Number(fromWei(balance.toString())).toFixed(4)} {NODE[chainId].currencySymbol}
+              {Number(fromWei(balance.toString())).toFixed(4)}{" "}
+              {NODE[chainId].currencySymbol}
             </Text>
           </Box>
         </Flex>
         <Flex mb={8} px="4" justifyContent="space-between">
           <Text>Origin: </Text>
           <Flex>
-            <Image src={pageInfo?.icon} alt="Origin-icon" borderRadius="50%" boxSize="7" />
+            <Image
+              src={pageInfo?.icon}
+              alt="Origin-icon"
+              borderRadius="50%"
+              boxSize="7"
+            />
             <Text ml={2}>{`https://${pageInfo?.domain}`}</Text>
           </Flex>
         </Flex>
@@ -89,12 +115,26 @@ const SignRequest = () => {
           You are signing:
         </Text>
 
-        <Box backgroundColor="gray.700" borderRadius="16" px={{ base: 7, md: 8 }} py={4} mx={4} mb={4} textAlign="left">
-          <Text>Message: </Text>
-          <Text>{data.tx}</Text>
-        </Box>
+        <Box
+          backgroundColor="gray.700"
+          borderRadius="16"
+          px={{ base: 7, md: 8 }}
+          py={4}
+          mx={4}
+          mb={4}
+          textAlign="left"
+          dangerouslySetInnerHTML={{
+            __html: hexToUtf8(data.tx),
+          }}
+        />
       </Box>
-      <ButtonGroup width="100%" mb={8} display="flex" alignItems="center" justifyContent="space-around">
+      <ButtonGroup
+        width="100%"
+        mb={8}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-around"
+      >
         <Button
           colorScheme="gray"
           color="white"

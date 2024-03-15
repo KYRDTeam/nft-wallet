@@ -1,24 +1,39 @@
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { NFTItem } from "src/config/types";
 import NFTSvg from "src/assets/images/illus/NFT.svg";
 import { transparentize } from "@chakra-ui/theme-tools";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppSelector } from "src/hooks/useStore";
 import { globalSelector } from "src/store/global";
+import PureLogo from "src/assets/images/logos/nft-wallet-pure.svg";
+import { useWallet } from "src/hooks/useWallet";
+import { keysSelector } from "../../../../../store/keys";
+import { ellipsis } from "../../../../../utils/formatBalance";
+import { isNumber } from "lodash";
+import { useMemo } from "react";
 
 export const NFTitem = ({
   data,
   collectibleAddress,
   isMobile,
   onlyPreview = false,
+  idx,
 }: {
   data: NFTItem;
   collectibleAddress: string;
   isMobile: boolean;
   onlyPreview?: boolean;
+  idx?: number;
 }) => {
   let location = useLocation();
   const { chainId } = useAppSelector(globalSelector);
+  const { account } = useWallet();
+  const { accountsTBA } = useAppSelector(keysSelector);
+
+  const tbaAccount = useMemo(
+    () => !!account && isNumber(idx) && accountsTBA?.[account]?.[idx]?.address,
+    [account, accountsTBA, idx]
+  );
 
   return (
     <Box
@@ -58,29 +73,63 @@ export const NFTitem = ({
         position="relative"
         overflow="hidden"
       >
-        <Image
-          w="auto"
-          h="auto"
-          maxW="full"
-          maxHeight="full"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-          position="absolute"
-          mb={{ base: 1, md: 3 }}
-          src={data?.externalData?.image}
-          fallbackSrc={NFTSvg}
-        />
+        {collectibleAddress !== process.env.REACT_APP_TBA_NFT && (
+          <Image
+            w="auto"
+            h="auto"
+            maxW="full"
+            maxHeight="full"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            position="absolute"
+            mb={{ base: 1, md: 3 }}
+            src={data?.externalData?.image}
+            fallbackSrc={NFTSvg}
+          />
+        )}
+        {collectibleAddress === process.env.REACT_APP_TBA_NFT && (
+          <Flex
+            w="100%"
+            h="100%"
+            maxW="full"
+            maxHeight="full"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            position="absolute"
+            mb={{ base: 1, md: 3 }}
+            backgroundImage={PureLogo}
+            backgroundSize="cover"
+            backgroundPosition="center"
+            align="center"
+            justify="center"
+          >
+            <Text
+              color="primary.200"
+              fontWeight="semibold"
+              fontSize="xl"
+              mt={1}
+            >
+              #{data?.tokenID}
+            </Text>
+          </Flex>
+        )}
       </Box>
-      <Text
+      <Flex
         maxW="100%"
         textOverflow="ellipsis"
         whiteSpace="nowrap"
         overflow="hidden"
       >
-        {data?.externalData?.name}
-      </Text>
-      <Text color="whiteAlpha.600">#{data.tokenID}</Text>
+        <Text color="whiteAlpha.600" mr={2}>
+          #{data.tokenID}
+        </Text>
+        {collectibleAddress === process.env.REACT_APP_TBA_NFT &&
+          !!tbaAccount && (
+            <Text color="primary.200">{ellipsis(tbaAccount || "", 6, 4)}</Text>
+          )}
+      </Flex>
     </Box>
   );
 };

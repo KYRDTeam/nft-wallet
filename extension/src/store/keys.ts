@@ -148,6 +148,7 @@ export const keysSlice = createSlice({
     ) => {
       const addressKey =
         action.payload.account.toLowerCase() as keyof typeof state.accountsTBA;
+      state.accountsTBA[addressKey] = [];
       let accounts = action.payload.addresses.map((address) => {
         return {
           address: address.toLowerCase(),

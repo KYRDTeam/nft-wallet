@@ -79,6 +79,7 @@ export const useSendTx = () => {
 
   const send = useCallback(
     async (params: TxParams, buildTxFunc?: () => Promise<string>) => {
+      console.log(params);
       try {
         if (!account) return;
 

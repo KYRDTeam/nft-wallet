@@ -183,6 +183,6 @@ export const GAS_LIMIT_DEFAULT = "100000";
 
 export const SUPPORTED_TBA_CHAINS = [
   ChainId.POLYGON,
-  ChainId.LINEA,
-  ChainId.POLYGON_ZKEVM,
+  // ChainId.LINEA,
+  // ChainId.POLYGON_ZKEVM,
 ];

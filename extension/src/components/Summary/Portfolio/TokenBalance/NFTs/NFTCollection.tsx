@@ -17,7 +17,7 @@ export const NFTCollection = ({ data }: { data: NFTCollectionType }) => {
   const [isMobile] = useMediaQuery("(max-width: 720px)");
 
   return (
-    <Accordion defaultIndex={[0]} allowMultiple px="4">
+    <Accordion defaultIndex={[0]} allowMultiple>
       <AccordionItem border="0">
         <h2>
           <AccordionButton>
@@ -40,12 +40,13 @@ export const NFTCollection = ({ data }: { data: NFTCollectionType }) => {
         </h2>
         <AccordionPanel px="4" pb={4}>
           <SimpleGrid columns={isMobile ? 2 : 3} columnGap={4} p={0}>
-            {data.items.map((nft: NFTItem) => (
+            {data.items.map((nft: NFTItem, idx: number) => (
               <NFTitem
                 key={nft.tokenID}
                 data={nft}
                 collectibleAddress={data.collectibleAddress}
                 isMobile={isMobile}
+                idx={idx}
               />
             ))}
           </SimpleGrid>

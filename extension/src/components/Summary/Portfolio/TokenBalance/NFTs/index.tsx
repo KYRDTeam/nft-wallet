@@ -16,7 +16,6 @@ import { get, isEmpty } from "lodash";
 import { useMemo } from "react";
 import NFTNotFoundIllus from "src/components/common/icons/NFTNotFoundIllus";
 import { NFTCollectionType } from "src/config/types";
-import { useFetchNFT } from "src/hooks/useFetchNFT";
 import { useFetchTBANFT } from "src/hooks/useFetchTBANFT";
 import { useWallet } from "src/hooks/useWallet";
 import { NFTCollection } from "./NFTCollection";
@@ -47,7 +46,10 @@ export const NFTs = () => {
             <SimpleGrid columns={isMobile ? 2 : 3} columnGap={4} p={0}>
               <Skeleton height={{ base: "150px", md: "250px" }} mt="0" />
               <Skeleton height={{ base: "150px", md: "250px" }} mt="0" />
-              <Skeleton height={{ base: "150px", md: "250px" }} mt={{ base: 4, md: 0 }} />
+              <Skeleton
+                height={{ base: "150px", md: "250px" }}
+                mt={{ base: 4, md: 0 }}
+              />
             </SimpleGrid>
           </AccordionPanel>
         </AccordionItem>
@@ -57,7 +59,13 @@ export const NFTs = () => {
 
   if (isEmpty(collections)) {
     return (
-      <Flex w="full" height="400px" justifyContent="center" alignItems="center" direction="column">
+      <Flex
+        w="full"
+        height="400px"
+        justifyContent="center"
+        alignItems="center"
+        direction="column"
+      >
         <NFTNotFoundIllus boxSize="40" />
         <Text color="whiteAlpha.600" mt="6">
           No NFT found.

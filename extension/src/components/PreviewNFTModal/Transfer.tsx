@@ -11,13 +11,16 @@ import { useCallback, useMemo, useState } from "react";
 import { NFT_TYPE } from "src/config/constants/constants";
 import { useGasSetting } from "src/hooks/useGasSetting";
 import { useSendTx } from "src/hooks/useSendTx";
-import { useAppSelector } from "src/hooks/useStore";
+import { useAppDispatch, useAppSelector } from "src/hooks/useStore";
 import { useWallet } from "src/hooks/useWallet";
 import { globalSelector } from "src/store/global";
 import { getDataTransferNFT } from "src/utils/web3";
 import { RecentContact } from "../common/RecentContact";
+import TxModal from "../common/TxModal";
 import { NFTitem } from "../Summary/Portfolio/TokenBalance/NFTs/NFTitem";
 import { TransferNFTConfirmModal } from "./TransferNFTConfirmModal";
+import moment from "moment";
+import { setTbaRef } from "src/store/keys";
 
 export const Transfer = ({
   collectibleAddress,
@@ -36,8 +39,10 @@ export const Transfer = ({
   const [address, setAddress] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const { send, error: txError, loadingText } = useSendTx();
+  const { send, error: txError, loadingText, txHash } = useSendTx();
   const { view, gasPrice, priorityFee, gasLimit, gasFee } = useGasSetting();
+
+  const dispatch = useAppDispatch();
 
   const getTx = useCallback(() => {
     const txData = getDataTransferNFT(
@@ -46,7 +51,7 @@ export const Transfer = ({
         contractAddress: collectibleAddress,
         fromAddress: account || "",
         toAddress: address,
-        tokenID: data.tokenID,
+        tokenID: data?.tokenID,
         amount: type === NFT_TYPE.ERC1155 ? +amount : undefined,
       },
       type,
@@ -68,7 +73,7 @@ export const Transfer = ({
     amount,
     collectibleAddress,
     account,
-    data.tokenID,
+    data?.tokenID,
     ethereum,
     gasLimit,
     gasPrice,
@@ -102,7 +107,7 @@ export const Transfer = ({
     }
 
     if (type === NFT_TYPE.ERC1155) {
-      if (Number(amount) > +data.tokenBalance) {
+      if (Number(amount) > +data?.tokenBalance) {
         setError("Insufficient balance for the transfer");
         return false;
       }
@@ -113,14 +118,14 @@ export const Transfer = ({
       }
     }
     return true;
-  }, [address, amount, account, data.tokenBalance, type]);
+  }, [address, amount, account, data?.tokenBalance, type]);
 
   return (
     <>
       <Box w="xs" margin="0 auto">
         {!loading && (
           <NFTitem
-            key={data.tokenID}
+            key={data?.tokenID}
             data={data}
             onlyPreview
             collectibleAddress={collectibleAddress}
@@ -156,7 +161,7 @@ export const Transfer = ({
                 borderRadius="8"
                 mt="2"
                 onClick={() => {
-                  setAmount(data.tokenBalance || "0");
+                  setAmount(data?.tokenBalance || "0");
                 }}
               >
                 Max
@@ -164,7 +169,7 @@ export const Transfer = ({
             </InputRightElement>
           </InputGroup>
           <Text px="2" fontSize="md" color="whiteAlpha.500">
-            Balance: {data.tokenBalance}
+            Balance: {data?.tokenBalance}
           </Text>
         </Box>
       )}
@@ -214,6 +219,10 @@ export const Transfer = ({
         }}
       />
       <Box h="6" />
+      <TxModal
+        txHash={txHash}
+        callbackSuccess={() => dispatch(setTbaRef(moment().toString()))}
+      />
     </>
   );
 };

@@ -64,7 +64,7 @@ export const NODE: {
     EIP1559: false,
   },
   [ChainId.POLYGON]: {
-    rpcUrls: "https://polygon-pokt.nodies.app",
+    rpcUrls: "https://polygon.gateway.tenderly.co/",
     name: "Polygon",
     platform: "polygon-pos",
     standard: "MATIC",

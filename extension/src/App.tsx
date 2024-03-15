@@ -38,6 +38,7 @@ import { trustedAppsSelector } from "src/store/trustedApps";
 import useGetPageInfo from "src/hooks/useGetPageInfo";
 
 import bg from "src/assets/images/bg.png";
+import { useFetchAllTBA } from "./hooks/useFetchAllTBA";
 
 const Campaign = lazy(() => import("./components/Campaign"));
 const Earn = lazy(() => import("./components/Earn"));
@@ -90,6 +91,7 @@ const App: React.FC = () => {
   useFetchGasPrices();
   useMarket();
   useFetchAppSettings();
+  useFetchAllTBA();
 
   const onLoadRef = useRef(true);
 

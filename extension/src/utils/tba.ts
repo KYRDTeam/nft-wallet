@@ -5,21 +5,18 @@ import { AbiItem } from "web3-utils";
 import { TBA_HELPER_CONTRACT } from "src/config/constants/contracts";
 import TBAV3ABI from "src/config/abi/tbav3impl.json";
 
-export const createTBA = async (chainId: ChainId, EOAWallet: any) => {
+export const createTBA = (chainId: ChainId, EOAWallet: any) => {
   try {
     const web3 = getWeb3(chainId);
     const tbaHelperContract = new web3.eth.Contract(
       TBAHelperABI as unknown as AbiItem,
       TBA_HELPER_CONTRACT
     );
-    const txData = await tbaHelperContract.methods.createAccount().encodeABI();
-    const txParam = formatTxParams(chainId, {
-      data: txData,
-      from: EOAWallet,
-    });
-    return txParam;
+    const txData = tbaHelperContract.methods.createAccount().encodeABI();
+
+    return txData;
   } catch (error) {
-    return Promise.reject(error);
+    throw error;
   }
 };
 

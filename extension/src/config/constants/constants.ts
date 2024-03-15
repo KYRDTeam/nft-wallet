@@ -180,3 +180,9 @@ export const CANCEL = "cancel";
 export const SPEED_UP = "speed_up";
 
 export const GAS_LIMIT_DEFAULT = "25000";
+
+export const SUPPORTED_TBA_CHAINS = [
+  ChainId.POLYGON,
+  ChainId.LINEA,
+  ChainId.POLYGON_ZKEVM,
+];

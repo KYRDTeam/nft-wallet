@@ -13,7 +13,10 @@ interface KeysState {
   selectedAccount?: string;
   accounts: string[];
   accountsName: { [key: string]: string };
-  accountsTBA: { [key: string]: { address: string; isEnabled: boolean; chainId: ChainId }[] };
+  accountsTBA: {
+    [key: string]: { address: string; isEnabled: boolean; chainId: ChainId }[];
+  };
+  tbaFetchRef: string;
 }
 
 const initialState: KeysState = {
@@ -23,6 +26,7 @@ const initialState: KeysState = {
   accountsName: {},
   accountsTBA: {},
   selectedAccount: "",
+  tbaFetchRef: "",
 };
 
 export const keysSlice = createSlice({
@@ -115,10 +119,15 @@ export const keysSlice = createSlice({
     },
     setAccountsTBA: (
       state,
-      action: PayloadAction<{ account: string; address: string; tba: boolean; chainId: ChainId }>
+      action: PayloadAction<{
+        account: string;
+        address: string;
+        tba: boolean;
+        chainId: ChainId;
+      }>
     ) => {
-      const addressKey = action.payload
-        .account.toLowerCase() as keyof typeof state.accountsTBA;
+      const addressKey =
+        action.payload.account.toLowerCase() as keyof typeof state.accountsTBA;
       if (isEmpty(state.accountsTBA[addressKey])) {
         state.accountsTBA[addressKey] = [];
       }
@@ -130,31 +139,43 @@ export const keysSlice = createSlice({
     },
     setAllAccountTBAs: (
       state,
-      action: PayloadAction<{ account: string; addresses: string[]; tba: boolean; chainId: ChainId; }>
+      action: PayloadAction<{
+        account: string;
+        addresses: string[];
+        tba: boolean;
+        chainId: ChainId;
+      }>
     ) => {
-      const addressKey = action.payload.account.toLowerCase() as keyof typeof state.accountsTBA;
-      let accounts = action.payload.addresses.map(address => {
+      const addressKey =
+        action.payload.account.toLowerCase() as keyof typeof state.accountsTBA;
+      let accounts = action.payload.addresses.map((address) => {
         return {
           address: address.toLowerCase(),
           isEnabled: action.payload.tba,
-          chainId: action.payload.chainId
+          chainId: action.payload.chainId,
         };
-      })
-      state.accountsTBA[addressKey] = accounts
+      });
+      state.accountsTBA[addressKey] = accounts;
     },
     enableTBA: (
       state,
       action: PayloadAction<{ account: string; address: string }>
     ) => {
-      const addressKey = action.payload
-        .account as keyof typeof state.accountsTBA;
-      state.accountsTBA[addressKey].forEach((item) => {
-        if (item.address === action.payload.address) {
-          item.isEnabled = true;
-        } else {
-          item.isEnabled = false;
-        }
+      Object.keys(state.accountsTBA).forEach((key) => {
+        state.accountsTBA[key].forEach((item) => {
+          if (
+            item.address === action.payload.address &&
+            key === action.payload.account
+          ) {
+            item.isEnabled = true;
+          } else {
+            item.isEnabled = false;
+          }
+        });
       });
+    },
+    setTbaRef: (state, action: PayloadAction<string>) => {
+      state.tbaFetchRef = action.payload;
     },
   },
 });
@@ -173,6 +194,7 @@ export const {
   setAccountsTBA,
   setAllAccountTBAs,
   enableTBA,
+  setTbaRef,
 } = keysSlice.actions;
 
 export const keysSelector = (state: RootState) => state.keys;

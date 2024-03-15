@@ -28,7 +28,11 @@ export default function CopyBtn({
         src={Copy}
         alt="copy icon"
         cursor="pointer"
-        onClick={onCopy}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onCopy();
+        }}
         w={3}
         h={3}
         {...props}

@@ -1,7 +1,12 @@
 import { Box, Collapse, Flex, Image, Text } from "@chakra-ui/react";
 import { ellipsis } from "src/utils/formatBalance";
 import { useAppSelector } from "src/hooks/useStore";
-import { enableTBA, keysSelector, setSelectedAccount } from "src/store/keys";
+import {
+  enableTBA,
+  keysSelector,
+  setSelectedAccount,
+  setTbaRef,
+} from "src/store/keys";
 import { useAppDispatch } from "src/hooks/useStore";
 import { useCallback } from "react";
 import { fetchNetWorth } from "src/store/wallets";
@@ -20,11 +25,22 @@ import {
   Button,
 } from "@chakra-ui/react";
 // import { CopyIcon } from "@chakra-ui/icons";
-import { setAccountsTBA } from "src/store/keys";
 import { createTBA } from "src/utils/tba";
-import { globalSelector } from "src/store/global";
+import { globalSelector, setChainId } from "src/store/global";
 import { Tooltip } from "@chakra-ui/tooltip";
 import PureLogo from "../../assets/images/logos/nft-wallet-pure.svg";
+import { useSendTx } from "src/hooks/useSendTx";
+import { TBA_HELPER_CONTRACT } from "../../config/constants/contracts";
+import { useState } from "react";
+import { usePrice } from "src/hooks/useTokens";
+import { NODE } from "src/config/constants/chain";
+import TxModal from "../common/TxModal";
+import { useMemo } from "react";
+import { useEffect } from "react";
+import { calculateTxFee, formatNumber } from "src/utils/helper";
+import { estimateGas } from "src/utils/web3";
+import GasSettings from "../common/GasSettings";
+import moment from "moment";
 
 interface AccountProps {
   account: string;
@@ -45,6 +61,38 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
   } = useDisclosure();
   const { chainId } = useAppSelector(globalSelector);
 
+  const { send, error: txError, loadingText, txHash } = useSendTx();
+
+  const [gasPrice, setGasPrice] = useState<string>();
+  const [priorityFee, setPriorityFee] = useState<string>();
+  const [gasLimit, setGasLimit] = useState<string>();
+  const [defaultGasLimit, setDefaultGasLimit] = useState("70000");
+  const { getPrice } = usePrice();
+  const nativeUsdPrice = getPrice(NODE[chainId].address);
+
+  const gasFee = useMemo(
+    () => calculateTxFee(gasPrice || 0, gasLimit || 0),
+    [gasPrice, gasLimit]
+  );
+
+  useEffect(() => {
+    if (isOpen && gasPrice && gasLimit === defaultGasLimit) {
+      const data = createTBA(chainId, account);
+      estimateGas(chainId, {
+        from: account,
+        to: TBA_HELPER_CONTRACT,
+        data,
+        gasPrice,
+      })
+        .then((gas) => {
+          const val = (gas * 1.2).toFixed();
+          setGasLimit(val);
+          setDefaultGasLimit(val);
+        })
+        .catch(console.log);
+    }
+  }, [account, chainId, defaultGasLimit, gasLimit, gasPrice, isOpen]);
+
   const handleSelect = useCallback(() => {
     if (currentAccount !== account) {
       dispatch(setSelectedAccount(account));
@@ -54,26 +102,27 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
   }, [account, currentAccount, dispatch, onClose]);
 
   const handleSelectTBA = useCallback(
-    (address: string) => {
-      dispatch(enableTBA({ account, address }));
-      dispatch(setSelectedAccount(address));
-      dispatch(fetchNetWorth({ address, isForceSync: false }));
+    (i) => {
+      dispatch(enableTBA({ account, address: i.address }));
+      dispatch(setSelectedAccount(i.address));
+      dispatch(fetchNetWorth({ address: i.address, isForceSync: false }));
+      dispatch(setChainId(i.chainId));
       onClose();
     },
     [account, dispatch, onClose]
   );
 
   const handleCreateTBA = useCallback(async () => {
-    // const address = await createTBA(chainId);
-    // dispatch(
-    //   setAccountsTBA({
-    //     account: account || "",
-    //     address,
-    //     tba: false,
-    //     chainId: chainId,
-    //   })
-    // );
-  }, [account, chainId, dispatch]);
+    const txData = createTBA(chainId, account);
+
+    send({
+      to: TBA_HELPER_CONTRACT,
+      data: txData,
+      gasPrice,
+      gasLimit,
+      priorityFee,
+    });
+  }, [account, chainId, gasLimit, gasPrice, priorityFee, send]);
 
   return (
     <Flex
@@ -154,7 +203,7 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
       >
         <Flex>
           Smart Accounts
-          {accountsTBA?.[account]?.length && (
+          {!!accountsTBA?.[account]?.length && (
             <Text ml={1} borderRadius="8px" background="#1E2020" px={1.5}>
               {accountsTBA?.[account]?.length}
             </Text>
@@ -174,7 +223,7 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
             py={1}
             px={2}
             cursor="pointer"
-            onClick={() => handleSelectTBA(item?.address)}
+            onClick={() => handleSelectTBA(item)}
             borderRadius="12px"
             border="1px solid"
             borderColor="whiteAlpha.300"
@@ -222,7 +271,12 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
         <Flex
           align="center"
           justify="center"
-          onClick={onOpenModal}
+          onClick={() => {
+            if (selectedAccount !== account) {
+              dispatch(setSelectedAccount(account));
+            }
+            onOpenModal();
+          }}
           cursor="pointer"
           mt={2}
           fontWeight="semibold"
@@ -233,7 +287,6 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
             h={4}
             mr={2}
             cursor="pointer"
-            onClick={onOpenModal}
           />
           Create Smart Account
         </Flex>
@@ -253,12 +306,44 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Button colorScheme="primary" onClick={handleCreateTBA}>
+            <Flex justify="space-between" w="100%">
+              <Box opacity="0.75">Gas Fee</Box>
+              <Box textAlign="right">
+                {formatNumber(gasFee)} {NODE[chainId].currencySymbol} (
+                {formatNumber(+gasFee * nativeUsdPrice)} USD)
+                <GasSettings
+                  gasPrice={gasPrice}
+                  setGasPrice={setGasPrice}
+                  gasLimit={gasLimit}
+                  setGasLimit={setGasLimit}
+                  priorityFee={priorityFee}
+                  setPriorityFee={setPriorityFee}
+                  defaultGasLimit={defaultGasLimit}
+                />
+              </Box>
+            </Flex>
+            {txHash && <Text>TxHash: {txHash}</Text>}
+            <Button
+              colorScheme="primary"
+              onClick={handleCreateTBA}
+              loadingText={loadingText || "Building tx"}
+              disabled={!!loadingText}
+              isLoading={!!loadingText}
+            >
               Create
             </Button>
+            {txError && (
+              <Text color="red.600" fontSize="sm" mt="2" w="full">
+                {txError}
+              </Text>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
+      <TxModal
+        txHash={txHash}
+        callbackSuccess={() => dispatch(setTbaRef(moment().toString()))}
+      />
     </Flex>
   );
 };

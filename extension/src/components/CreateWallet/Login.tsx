@@ -33,15 +33,6 @@ const Login = () => {
           accounts.push(...keyring.accounts);
         });
         dispatch(setAccounts(accounts));
-        console.log(
-          selectedAccount &&
-            (accounts.includes(selectedAccount) ||
-              flatten(
-                Object.values(accountsTBA).map((item) =>
-                  item.map((i) => i.address)
-                )
-              ).includes(selectedAccount))
-        );
         if (
           selectedAccount &&
           (accounts.includes(selectedAccount) ||

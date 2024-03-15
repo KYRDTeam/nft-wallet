@@ -9,11 +9,13 @@ import { estimateGas, sendRawTx, getCurrentNonce } from "../utils/web3";
 import { useAppSelector } from "./useStore";
 import { useWallet } from "./useWallet";
 import { hashSelector } from "../store/hash";
+import { keysSelector } from "src/store/keys";
+import { modifyDataForTBA } from "src/utils/tba";
 
 export const useSendTx = () => {
   const { chainId, switchChain, signTransaction } = useWallet();
   const { chainId: globalChainId } = useAppSelector(globalSelector);
-  const { account } = useWallet();
+  const { account: storeAccount } = useWallet();
   const [isBuildingTx, setIsBuildingTx] = useState(false);
   const [isSwitchingChain, setIsSwitchingChain] = useState(false);
   const [estimatingGas, setEstimatingGas] = useState(false);
@@ -21,6 +23,22 @@ export const useSendTx = () => {
   const [error, setError] = useState("");
   const [txHash, setTxHash] = useState("");
   const { hashList } = useAppSelector(hashSelector);
+  const { accountsTBA, accounts } = useAppSelector(keysSelector);
+  const [isTBA, setIsTBA] = useState(false);
+
+  const account = useMemo(() => {
+    if (accounts.includes(storeAccount || "")) {
+      return storeAccount;
+    }
+    let acc = undefined;
+    Object.keys(accountsTBA).forEach((e) => {
+      if (!!accountsTBA[e].find((f) => f.address === storeAccount)) {
+        acc = e;
+        setIsTBA(true);
+      }
+    });
+    return acc;
+  }, [accounts, accountsTBA, storeAccount]);
 
   const dispatch = useDispatch();
 
@@ -30,7 +48,9 @@ export const useSendTx = () => {
         const nonce = await getCurrentNonce(globalChainId, from);
         const currentNonce = Number(nonce);
 
-        const dataFilter = hashList.filter((e: any) => e.account === account && e.chainId === globalChainId);
+        const dataFilter = hashList.filter(
+          (e: any) => e.account === account && e.chainId === globalChainId
+        );
 
         const listNewNonce = dataFilter.map((e: any) => Number(e.nonce)).sort();
         if (listNewNonce.length === 0) {
@@ -45,12 +65,16 @@ export const useSendTx = () => {
           return currentNonce;
         }
 
-        return currentNonce + dataFilter.slice(indexCurrentNonce + 1, listNewNonce.length).length + 1;
+        return (
+          currentNonce +
+          dataFilter.slice(indexCurrentNonce + 1, listNewNonce.length).length +
+          1
+        );
       } catch (err) {
         console.log(err);
       }
     },
-    [account, globalChainId, hashList],
+    [account, globalChainId, hashList]
   );
 
   const send = useCallback(
@@ -61,16 +85,28 @@ export const useSendTx = () => {
         setError("");
         if (chainId !== globalChainId) {
           setIsSwitchingChain(true);
-          await switchChain(globalChainId);
+          switchChain(globalChainId);
           setIsSwitchingChain(false);
         }
 
-        let txObj = { ...params, from: account };
+        let txObj = isTBA
+          ? {
+              ...params,
+              data: modifyDataForTBA(params.data, storeAccount),
+              from: account,
+            }
+          : { ...params, from: account };
 
         if (buildTxFunc) {
           setIsBuildingTx(true);
           const data = await buildTxFunc();
-          txObj = { ...params, from: account, data: data };
+          txObj = isTBA
+            ? {
+                ...params,
+                from: account,
+                data: modifyDataForTBA(data, storeAccount),
+              }
+            : { ...params, from: account, data: data };
           setIsBuildingTx(false);
         }
 
@@ -91,7 +127,15 @@ export const useSendTx = () => {
 
         await sendRawTx(globalChainId, rawTx, (hash: any) => {
           setTxHash(hash);
-          !!hash && dispatch(updateHashList({ ...txObj, hash, account, chainId: globalChainId }));
+          !!hash &&
+            dispatch(
+              updateHashList({
+                ...txObj,
+                hash,
+                account,
+                chainId: globalChainId,
+              })
+            );
         });
       } catch (error: any) {
         console.log(error);
@@ -102,7 +146,17 @@ export const useSendTx = () => {
         setIsConfirmTx(false);
       }
     },
-    [account, chainId, globalChainId, getNextNonce, signTransaction, switchChain, dispatch],
+    [
+      account,
+      chainId,
+      globalChainId,
+      isTBA,
+      storeAccount,
+      signTransaction,
+      switchChain,
+      getNextNonce,
+      dispatch,
+    ]
   );
 
   useEffect(() => {
@@ -129,37 +183,60 @@ export const useSendTx = () => {
   return { send, loadingText, txHash, resetState, error };
 };
 
-export const useTransfer = (gasPrice?: string, gasLimit?: string, priorityFee?: string) => {
+export const useTransfer = (
+  gasPrice?: string,
+  gasLimit?: string,
+  priorityFee?: string
+) => {
   const { chainId } = useAppSelector(globalSelector);
-  const { send, loadingText, txHash, resetState: resetTransferState, error } = useSendTx();
+  const {
+    send,
+    loadingText,
+    txHash,
+    resetState: resetTransferState,
+    error,
+  } = useSendTx();
 
-  const gasFee = useMemo(() => calculateTxFee(gasPrice || 0, gasLimit || 0), [gasPrice, gasLimit]);
+  const gasFee = useMemo(
+    () => calculateTxFee(gasPrice || 0, gasLimit || 0),
+    [gasPrice, gasLimit]
+  );
 
   const transfer = useCallback(
     (recipient: string, amount: string, token?: Token) => {
-      const isMaxNativeAmount = token?.isNative && +token.humanizeBalance <= +amount + +gasFee * 1.05;
+      const isMaxNativeAmount =
+        token?.isNative && +token.humanizeBalance <= +amount + +gasFee * 1.05;
 
-      const amountToSend = isMaxNativeAmount ? Number(amount) - Number(gasFee) * 1.05 : amount;
+      const amountToSend = isMaxNativeAmount
+        ? Number(amount) - Number(gasFee) * 1.05
+        : amount;
 
       send(
         {
           to: token?.isNative ? recipient : token?.address,
-          value: token?.isNative ? toBigAmount(amountToSend, token.decimals) : "0",
+          value: token?.isNative
+            ? toBigAmount(amountToSend, token.decimals)
+            : "0",
           gasPrice,
           gasLimit,
           priorityFee,
         },
         async () => {
           if (token) {
-            const data = getTransferTokenObj(chainId, token?.address, recipient, toBigAmount(amount, token?.decimals));
+            const data = getTransferTokenObj(
+              chainId,
+              token?.address,
+              recipient,
+              toBigAmount(amount, token?.decimals)
+            );
             return data || "";
           } else {
             return "";
           }
-        },
+        }
       );
     },
-    [chainId, gasPrice, gasLimit, priorityFee, gasFee, send],
+    [chainId, gasPrice, gasLimit, priorityFee, gasFee, send]
   );
 
   return { transfer, loadingText, txHash, resetTransferState, error };

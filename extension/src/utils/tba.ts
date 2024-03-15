@@ -1,6 +1,6 @@
 import { ChainId, TxParams } from "src/config/types";
 import { getWeb3, formatTxParams } from "./web3";
-import TBAHelperABI from "src/config/abi/tbahelper.json";
+import TBAHelperABI from "src/config/abi/helpertba.json";
 import { AbiItem } from "web3-utils";
 import { TBA_HELPER_CONTRACT } from "src/config/constants/contracts";
 import TBAV3ABI from "src/config/abi/tbav3impl.json";

@@ -12,7 +12,7 @@ import { NFT_INTERFACE, NFT_TYPE } from "src/config/constants/constants";
 import ERC721ABI from "src/config/abi/ERC721.json";
 import ERC1155ABI from "src/config/abi/ERC1155.json";
 import ERC20ABI from "src/config/abi/erc20.json";
-import TBAHelperABI from "src/config/abi/tbahelper.json";
+import TBAHelperABI from "src/config/abi/helpertba.json";
 import multicall from "./multicall";
 import { AbiItem, toHex } from "web3-utils";
 import BigNumber from "bignumber.js";
@@ -340,41 +340,41 @@ export const getNftBalance = async (
   try {
     const tokenContract = new web3.eth.Contract(
       ERC721ABI as unknown as AbiItem,
-      tokenAddress,
+      tokenAddress
     );
     isERC721 = await tokenContract.methods
       .supportsInterface(NFT_INTERFACE.ERC721)
       .call();
 
     if (!isERC721) {
-      return
+      return;
     }
 
     const balance = await tokenContract.methods.balanceOf(userAddress).call();
-    let balanceBN = new BigNumber(balance)
+    let balanceBN = new BigNumber(balance);
     if (balanceBN.isGreaterThan(new BigNumber(0))) {
-      let calls = []
+      let calls = [];
       for (let i = 0; i < balanceBN.toNumber(); i++) {
         calls.push({
           address: tokenAddress,
           name: "tokenOfOwnerByIndex",
           params: [userAddress, i],
-        })
+        });
       }
 
-      const responses = await multicall(chainId, ERC721ABI, calls)
+      const responses = await multicall(chainId, ERC721ABI, calls);
       let tokens = responses.map((data: any) => {
         return {
-          tokenID: get(data, "[0]").toString()
-        }
-      })
-      return tokens
+          tokenID: get(data, "[0]").toString(),
+        };
+      });
+      return tokens;
     }
   } catch (e) {
     console.log(isERC721, e);
-    return null
+    return null;
   }
-}
+};
 
 export const getTBAs = async (
   chainId: ChainId,
@@ -386,14 +386,16 @@ export const getTBAs = async (
   try {
     const helperContract = new web3.eth.Contract(
       TBAHelperABI as unknown as AbiItem,
-      tbaHelperAddress,
+      tbaHelperAddress
     );
 
-    const addresses = await helperContract.methods.accountsOf(userAddress).call();
-    return addresses
+    const addresses = await helperContract.methods
+      .accountsOf(userAddress)
+      .call();
+    return addresses;
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 
-  return null
-}
+  return null;
+};

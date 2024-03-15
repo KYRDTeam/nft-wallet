@@ -17,7 +17,7 @@ contract Free2MintNFTWallet is ERC721, ERC721Enumerable, Ownable {
     bool private isInitialized = false;
 
     function initialize(address tbaHelper) public onlyOwner {
-        require(!isInitialized, 'Contract is already initialized');
+        require(!isInitialized, 'Contract is already initialized!!!');
         isInitialized = true;
         _tbaHelper = tbaHelper;
     }

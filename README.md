@@ -17,12 +17,12 @@ you can pre-compute nft and tba helper contract deployment address by using the 
 forge script contracts/script/ComputeAddresses.s.sol
 ```
 
-Free2Mint deploy address should be `0x230Bb5168364FE4Ba80E4146820b406257562609`
-TBAHelper Address should be `0x0222DC3948248Aec0e1F16FCC6f946B431D154Da`
+Free2Mint deploy address should be `0xD629BB82c2217cE32Ff91143aed0816E26BaF397`
+TBAHelper Address should be `0x18e49629A34bf735ED1816216ac754921AF26080`
 
 ## Verify contact
 
 ```bash
-forge verify-contract --chain-id 137 0x230Bb5168364FE4Ba80E4146820b406257562609 contracts/src/Free2MintNFTWallet.sol:Free2MintNFTWallet
-forge verify-contract --chain-id 137 0x0222DC3948248Aec0e1F16FCC6f946B431D154Da contracts/src/TBAHelper.sol:TBAHelper
+forge verify-contract --chain-id 137 0xD629BB82c2217cE32Ff91143aed0816E26BaF397 contracts/src/Free2MintNFTWallet.sol:Free2MintNFTWallet
+forge verify-contract --chain-id 137 0x18e49629A34bf735ED1816216ac754921AF26080 contracts/src/TBAHelper.sol:TBAHelper
 ```

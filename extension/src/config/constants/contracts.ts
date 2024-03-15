@@ -59,17 +59,17 @@ export const MULTI_SEND_CONTRACT: { [chainId in ChainId]: string } = {
 };
 
 export const TBA_NFT: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: process.env.TBA_NFT || "",
-  [ChainId.ROPSTEN]: process.env.TBA_NFT || "",
-  [ChainId.BSC]: process.env.TBA_NFT || "",
-  [ChainId.BSC_TESTNET]: process.env.TBA_NFT || "",
-  [ChainId.POLYGON]: process.env.TBA_NFT || "",
-  [ChainId.CRONOS]: process.env.TBA_NFT || "",
-  [ChainId.FANTOM]: process.env.TBA_NFT || "",
-  [ChainId.AVALANCHE]: process.env.TBA_NFT || "",
-  [ChainId.ARBITRUM]: process.env.TBA_NFT || "",
-  [ChainId.POLYGON_ZKEVM]: process.env.TBA_NFT || "",
-  [ChainId.LINEA]: process.env.TBA_NFT || ""
+  [ChainId.MAINNET]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.ROPSTEN]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.BSC]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.BSC_TESTNET]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.POLYGON]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.CRONOS]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.FANTOM]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.AVALANCHE]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.ARBITRUM]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.POLYGON_ZKEVM]: process.env.REACT_APP_TBA_NFT || "",
+  [ChainId.LINEA]: process.env.REACT_APP_TBA_NFT || ""
 }
 
 export const TBA_HELPER_CONTRACT: string = process.env.REACT_APP_TBA_HELPER || "";

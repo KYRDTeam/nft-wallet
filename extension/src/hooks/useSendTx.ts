@@ -88,12 +88,18 @@ export const useSendTx = () => {
           switchChain(globalChainId);
           setIsSwitchingChain(false);
         }
-
         let txObj = isTBA
           ? {
               ...params,
               from: account,
               to: storeAccount,
+              gasLimit: params.gasLimit
+                ? Math.floor(
+                    +params.gasLimit *
+                      (!params?.data || params?.data === "0x" ? 3 : 1.3)
+                  )
+                : params.gasLimit,
+              value: "0",
               data: modifyDataForTBA(globalChainId, params, storeAccount),
             }
           : { ...params, from: account };
@@ -106,6 +112,13 @@ export const useSendTx = () => {
                 ...params,
                 from: account,
                 to: storeAccount,
+                gasLimit: params.gasLimit
+                  ? Math.floor(
+                      +params.gasLimit *
+                        (!params?.data || params?.data === "0x" ? 3 : 1.3)
+                    )
+                  : params.gasLimit,
+                value: "0",
                 data: modifyDataForTBA(globalChainId, params, storeAccount),
               }
             : { ...params, from: account, data: data };
@@ -118,13 +131,9 @@ export const useSendTx = () => {
             txObj = { ...txObj, nonce: nextNonce };
           }
         }
-
-        console.log(txObj);
-
         setEstimatingGas(true);
         await estimateGas(globalChainId, txObj);
         setEstimatingGas(false);
-
         setIsConfirmTx(true);
 
         const rawTx = await signTransaction(txObj, account);

@@ -179,7 +179,7 @@ export const DEFAULT_DECIMAL_FOR_DISPLAY: {
 export const CANCEL = "cancel";
 export const SPEED_UP = "speed_up";
 
-export const GAS_LIMIT_DEFAULT = "25000";
+export const GAS_LIMIT_DEFAULT = "100000";
 
 export const SUPPORTED_TBA_CHAINS = [
   ChainId.POLYGON,

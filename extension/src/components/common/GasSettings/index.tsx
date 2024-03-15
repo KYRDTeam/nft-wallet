@@ -60,7 +60,7 @@ export default function GasSettings({
   const { gasPrices, priorityFees, baseFee } = useAppSelector(globalSelector);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [gasType, setGasType] = useState<GasType>(isTypeCustom ? "Custom" : "Standard");
+  const [gasType, setGasType] = useState<GasType>("Super Fast");
   const [isCustomGasLimit, setIsCustomGasLimit] = useState(customGasLimit);
   const [error, setError] = useState("");
 

@@ -42,7 +42,7 @@ export const modifyDataForTBA = (
     );
 
     const txData = tbaContract.methods
-      .execute(to, value, data, operation)
+      .execute(to, value, data || "0x", operation)
       .encodeABI();
 
     return txData;

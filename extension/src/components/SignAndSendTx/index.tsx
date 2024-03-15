@@ -35,7 +35,10 @@ const SignAndSendTx = () => {
   const { getPrice } = usePrice();
   const srcUsdPrice = getPrice(NODE[chainId]?.address);
   const nativeUsdPrice = getPrice(NODE[chainId].address);
-  const gasFee = useMemo(() => calculateTxFee(gasPrice || 0, gasLimit || 0), [gasPrice, gasLimit]);
+  const gasFee = useMemo(
+    () => calculateTxFee(gasPrice || 0, gasLimit || 0),
+    [gasPrice, gasLimit]
+  );
 
   const amount = useMemo(() => {
     if (!data) {
@@ -45,12 +48,11 @@ const SignAndSendTx = () => {
   }, [data]);
 
   const handleConfirm = useCallback(async () => {
-    console.log(data)
     await send({
       to: data.to,
       value: data.value,
       gasPrice,
-      gasLimit: data.gasLimit,
+      gasLimit: Math.floor(data.gasLimit * 1.3),
       priorityFee,
       nonce: data.nonce,
       data: data.data,
@@ -65,7 +67,11 @@ const SignAndSendTx = () => {
   }, []);
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    chrome.runtime.onMessage.addListener(function (
+      request,
+      sender,
+      sendResponse
+    ) {
       if (request.type === "get_data_tx") {
         sendResponse(true);
         setData(request.data);
@@ -84,7 +90,9 @@ const SignAndSendTx = () => {
   useEffect(() => {
     if (!!data) {
       setGasLimit(data.gasLimit);
-      setPriorityFee((+hexToNumberString(data.maxPriorityFeePerGas) / 10 ** 9).toString());
+      setPriorityFee(
+        (+hexToNumberString(data.maxPriorityFeePerGas) / 10 ** 9).toString()
+      );
       setGasPrice((+hexToNumberString(data.maxFeePerGas) / 10 ** 9).toString());
       setIsLoading(false);
     }
@@ -95,7 +103,12 @@ const SignAndSendTx = () => {
   }
 
   return (
-    <Flex flexDir="column" alignItems="center" justifyContent="space-between" h="100vh">
+    <Flex
+      flexDir="column"
+      alignItems="center"
+      justifyContent="space-between"
+      h="100vh"
+    >
       <Box width="100%">
         <Flex justifyContent="start" mt={4} px={4}>
           <Tag alignItems="center" px={3}>
@@ -113,7 +126,12 @@ const SignAndSendTx = () => {
           <Flex justifyContent="space-between" alignItems="center" mt={2}>
             <Box>
               <Text mb={2}>{pageInfo && `https://${pageInfo.domain}/`}</Text>
-              <Box border="1px solid" p={2} borderColor="whiteAlpha.600" borderRadius="4">
+              <Box
+                border="1px solid"
+                p={2}
+                borderColor="whiteAlpha.600"
+                borderRadius="4"
+              >
                 <Text
                   color="primary.300"
                   mr="2"
@@ -197,7 +215,13 @@ const SignAndSendTx = () => {
           {error.slice(0, 80)}
         </Center>
       </SlideFade>
-      <ButtonGroup width="100%" mb={8} display="flex" alignItems="center" justifyContent="space-around">
+      <ButtonGroup
+        width="100%"
+        mb={8}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-around"
+      >
         <Button
           colorScheme="gray"
           color="white"

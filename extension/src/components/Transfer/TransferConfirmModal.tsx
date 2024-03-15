@@ -39,7 +39,13 @@ interface TransferConfirmModalProps {
   callBackSuccess?: () => void;
 }
 
-const TransferConfirmModal = ({ token, amount, recipientAddr, render, callBackSuccess }: TransferConfirmModalProps) => {
+const TransferConfirmModal = ({
+  token,
+  amount,
+  recipientAddr,
+  render,
+  callBackSuccess,
+}: TransferConfirmModalProps) => {
   const { chainId } = useAppSelector(globalSelector);
   const { account } = useWallet();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,14 +57,17 @@ const TransferConfirmModal = ({ token, amount, recipientAddr, render, callBackSu
   const { accountsName } = useAppSelector(keysSelector);
   const { contacts } = useAppSelector(contactSelector);
 
-  const { transfer, loadingText, txHash, resetTransferState, error } = useTransfer(gasPrice, gasLimit, priorityFee);
+  const { transfer, loadingText, txHash, resetTransferState, error } =
+    useTransfer(gasPrice, gasLimit, priorityFee);
 
   const { getPrice } = usePrice();
   const srcUsdPrice = getPrice(token?.address);
   const nativeUsdPrice = getPrice(NODE[chainId].address);
 
   const recipientName = useMemo(() => {
-    const accExist = contacts.find((contact: any) => contact.address === recipientAddr);
+    const accExist = contacts.find(
+      (contact: any) => contact.address === recipientAddr
+    );
 
     if (!!accExist) {
       return accExist.name;
@@ -68,7 +77,12 @@ const TransferConfirmModal = ({ token, amount, recipientAddr, render, callBackSu
 
   useEffect(() => {
     if (isOpen && token && gasPrice && gasLimit === defaultGasLimit) {
-      const data = getTransferTokenObj(chainId, token.address, recipientAddr, toBigAmount(amount, token.decimals));
+      const data = getTransferTokenObj(
+        chainId,
+        token.address,
+        recipientAddr,
+        toBigAmount(amount, token.decimals)
+      );
       estimateGas(chainId, {
         from: account,
         to: token.isNative ? recipientAddr : token.address,
@@ -76,15 +90,28 @@ const TransferConfirmModal = ({ token, amount, recipientAddr, render, callBackSu
         gasPrice,
       })
         .then((gas) => {
-          const val = (gas * 1.2).toFixed();
+          const val = (gas * 3).toFixed();
           setGasLimit(val);
           setDefaultGasLimit(val);
         })
         .catch(console.log);
     }
-  }, [isOpen, defaultGasLimit, token, gasPrice, account, amount, recipientAddr, chainId, gasLimit]);
+  }, [
+    isOpen,
+    defaultGasLimit,
+    token,
+    gasPrice,
+    account,
+    amount,
+    recipientAddr,
+    chainId,
+    gasLimit,
+  ]);
 
-  const gasFee = useMemo(() => calculateTxFee(gasPrice || 0, gasLimit || 0), [gasPrice, gasLimit]);
+  const gasFee = useMemo(
+    () => calculateTxFee(gasPrice || 0, gasLimit || 0),
+    [gasPrice, gasLimit]
+  );
 
   const handleConfirm = useCallback(async () => {
     transfer(recipientAddr, amount, token);
@@ -108,10 +135,23 @@ const TransferConfirmModal = ({ token, amount, recipientAddr, render, callBackSu
         <ModalOverlay backdropFilter="blur(3px) !important;" />
         <ModalContent bgColor="gray.900">
           <ModalHeader p="7">Transfer Confirmation</ModalHeader>
-          <ModalCloseButton top="27px" right="17px" bg="transparent" border="0" color="white" />
+          <ModalCloseButton
+            top="27px"
+            right="17px"
+            bg="transparent"
+            border="0"
+            color="white"
+          />
           <ModalBody px="7" maxH="calc( 100vh - 180px )" overflowY="auto">
             <Flex alignItems="center" wordBreak="break-word">
-              <Box as={Gravatar} email={recipientAddr} size={30} mr="2" borderRadius="50%" protocol="http://" />
+              <Box
+                as={Gravatar}
+                email={recipientAddr}
+                size={30}
+                mr="2"
+                borderRadius="50%"
+                protocol="http://"
+              />
               <Box>
                 <Text noOfLines={1} title={recipientName} color="#F3F8F7">
                   {recipientName}
@@ -122,8 +162,9 @@ const TransferConfirmModal = ({ token, amount, recipientAddr, render, callBackSu
               </Box>
             </Flex>
             <Box mt="5" color="yellow.400" fontSize="xs">
-              Please sure this address supports {NODE[chainId].name} network. You will lose your assets if this address
-              doesn't support {NODE[chainId].name} compatible retrieval.
+              Please sure this address supports {NODE[chainId].name} network.
+              You will lose your assets if this address doesn't support{" "}
+              {NODE[chainId].name} compatible retrieval.
             </Box>
             <Divider my="5" />
             <Flex justify="space-between">
@@ -215,7 +256,8 @@ const TransferConfirmModal = ({ token, amount, recipientAddr, render, callBackSu
         txDetail={() => (
           <Box mt="2">
             <Text>
-              {formatCurrency(amount)} {token?.symbol} to {ellipsis(recipientAddr, 18, 5)}
+              {formatCurrency(amount)} {token?.symbol} to{" "}
+              {ellipsis(recipientAddr, 18, 5)}
             </Text>
           </Box>
         )}

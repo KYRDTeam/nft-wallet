@@ -1,24 +1,20 @@
-import { useWallet } from "./useWallet";
-import { getNftBalance } from 'src/utils/web3';
+import { getNftBalance, getTBAs } from 'src/utils/web3';
 import { useEffect, useState } from "react";
 import { ChainId } from "src/config/types";
-
+import { TBA_NFT } from "src/config/constants/contracts";
 
 export const useFetchTBANFT = ({ address, chainId }: { address: string, chainId: ChainId }) => {
     const [data, setData] = useState({})
     const [loading, setIsLoading] = useState(false);
 
-    const collectionAddress = "0xca6eacF9912571EEdaE32A4C4740208aa499197f"
+    const collectionAddress = TBA_NFT[chainId]
     const collectionName = "TBA"
 
     const fetchData = async () => {
         setIsLoading(true)
 
         let balance = await getNftBalance(chainId, address, collectionAddress)
-        if (!balance) {
-            setData({})
-            
-        } else {
+        if (balance) {
             let data = {
                 balances: [{
                     collectibleAddress: collectionAddress,

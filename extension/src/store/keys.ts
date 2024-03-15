@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sendMessage } from "src/services/extension";
 import type { RootState } from "../store";
 import { isEmpty } from "lodash";
+import { ChainId } from "src/config/types";
 
 const KeyringController = require("eth-keyring-controller");
 interface KeysState {
@@ -12,7 +13,7 @@ interface KeysState {
   selectedAccount?: string;
   accounts: string[];
   accountsName: { [key: string]: string };
-  accountsTBA: { [key: string]: { address: string; isEnabled: boolean }[] };
+  accountsTBA: { [key: string]: { address: string; isEnabled: boolean; chainId: ChainId }[] };
 }
 
 const initialState: KeysState = {
@@ -114,17 +115,32 @@ export const keysSlice = createSlice({
     },
     setAccountsTBA: (
       state,
-      action: PayloadAction<{ account: string; address: string; tba: boolean }>
+      action: PayloadAction<{ account: string; address: string; tba: boolean; chainId: ChainId }>
     ) => {
       const addressKey = action.payload
-        .account as keyof typeof state.accountsTBA;
+        .account.toLowerCase() as keyof typeof state.accountsTBA;
       if (isEmpty(state.accountsTBA[addressKey])) {
         state.accountsTBA[addressKey] = [];
       }
       state.accountsTBA[addressKey].push({
         address: action.payload.address,
         isEnabled: action.payload.tba,
+        chainId: action.payload.chainId,
       });
+    },
+    setAllAccountTBAs: (
+      state,
+      action: PayloadAction<{ account: string; addresses: string[]; tba: boolean; chainId: ChainId; }>
+    ) => {
+      const addressKey = action.payload.account.toLowerCase() as keyof typeof state.accountsTBA;
+      let accounts = action.payload.addresses.map(address => {
+        return {
+          address: address.toLowerCase(),
+          isEnabled: action.payload.tba,
+          chainId: action.payload.chainId
+        };
+      })
+      state.accountsTBA[addressKey] = accounts
     },
     enableTBA: (
       state,
@@ -155,6 +171,7 @@ export const {
   resetState,
   resetKeyringController,
   setAccountsTBA,
+  setAllAccountTBAs,
   enableTBA,
 } = keysSlice.actions;
 

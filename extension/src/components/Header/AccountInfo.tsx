@@ -45,6 +45,7 @@ const AccountInfo = () => {
         account: account || "",
         address,
         tba: false,
+        chainId: chainId
       })
     );
   }, [account, chainId, dispatch]);

@@ -12,6 +12,7 @@ import { NFT_INTERFACE, NFT_TYPE } from "src/config/constants/constants";
 import ERC721ABI from "src/config/abi/ERC721.json";
 import ERC1155ABI from "src/config/abi/ERC1155.json";
 import ERC20ABI from "src/config/abi/erc20.json";
+import TBAHelperABI from "src/config/abi/tbahelper.json";
 import multicall from "./multicall";
 import { AbiItem, toHex } from "web3-utils";
 import BigNumber from "bignumber.js";
@@ -373,4 +374,26 @@ export const getNftBalance = async (
     console.log(isERC721, e);
     return null
   }
+}
+
+export const getTBAs = async (
+  chainId: ChainId,
+  userAddress: string,
+  tbaHelperAddress: string,
+  provider?: ProviderType
+) => {
+  const web3 = getWeb3(chainId, provider);
+  try {
+    const helperContract = new web3.eth.Contract(
+      TBAHelperABI as unknown as AbiItem,
+      tbaHelperAddress,
+    );
+
+    const addresses = await helperContract.methods.accountsOf(userAddress).call();
+    return addresses
+  } catch (e) {
+    console.log(e)
+  }
+
+  return null
 }

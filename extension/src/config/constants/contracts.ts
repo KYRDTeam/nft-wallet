@@ -49,3 +49,17 @@ export const MULTI_SEND_CONTRACT: { [chainId in ChainId]: string } = {
   [ChainId.AVALANCHE]: process.env.REACT_APP_MULTISEND_CONTRACT || "",
   [ChainId.ARBITRUM]: process.env.REACT_APP_MULTISEND_CONTRACT || "",
 };
+
+export const TBA_NFT: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: process.env.TBA_NFT || "",
+  [ChainId.ROPSTEN]: process.env.TBA_NFT || "",
+  [ChainId.BSC]: process.env.TBA_NFT || "",
+  [ChainId.BSC_TESTNET]: process.env.TBA_NFT || "",
+  [ChainId.POLYGON]: process.env.TBA_NFT || "",
+  [ChainId.CRONOS]: process.env.TBA_NFT || "",
+  [ChainId.FANTOM]: process.env.TBA_NFT || "",
+  [ChainId.AVALANCHE]: process.env.TBA_NFT || "",
+  [ChainId.ARBITRUM]: process.env.TBA_NFT || "",
+} 
+
+export const TBA_HELPER_CONTRACT: string = process.env.REACT_APP_TBA_HELPER || "";

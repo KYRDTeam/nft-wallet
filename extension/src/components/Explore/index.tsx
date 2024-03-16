@@ -19,8 +19,6 @@ import { Image } from "@chakra-ui/image";
 
 import { ReactComponent as SwapIconSvg } from "src/assets/images/icons/explore/swap.svg";
 import { ReactComponent as TransferIconSvg } from "src/assets/images/icons/explore/transfer.svg";
-// import { ReactComponent as RewardSvg } from "src/assets/images/icons/explore/reward.svg";
-// import { ReactComponent as ReferralSvg } from "src/assets/images/icons/explore/refferal_icon_explorer.svg";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import { Skeleton } from "@chakra-ui/skeleton";
 
@@ -114,18 +112,6 @@ const Summary = () => {
             </BoxLink>
             MultiSend
           </Box>
-          {/* <Box textAlign="center">
-            <BoxLink to="/rewards" mb="4">
-              <RewardSvg stroke="#FFFFFF" />
-            </BoxLink>
-            Reward
-          </Box>
-          <Box textAlign="center">
-            <BoxLink to="/referral" mb="4">
-              <ReferralSvg stroke="#FFFFFF" />
-            </BoxLink>
-            Referral
-          </Box> */}
         </SimpleGrid>
 
         <Box fontSize="xl" mb={8}>

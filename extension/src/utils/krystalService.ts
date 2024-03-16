@@ -113,7 +113,7 @@ export async function fetchTokenBalances(
         `${krystalApiEndPoint}/all/v1/balance/token?addresses=ethereum:${address}&quoteSymbols=usd,btc&sparkline=true&chainIds=${chainId}`
       );
       const result = await response.json();
-      if (result.data[0].balances) {
+      if (result?.data?.[0]?.balances) {
         return result.data[0].balances;
       } else {
         return Promise.reject(result.error);
@@ -461,24 +461,6 @@ export async function login(
     return data.token;
   } catch (e) {
     return "";
-  }
-}
-
-export async function fetchRewardTier(): Promise<any | false> {
-  try {
-    const response = await fetch(
-      `${krystalApiEndPoint}/all/v1/account/referralTiers`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-      }
-    );
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    return false;
   }
 }
 

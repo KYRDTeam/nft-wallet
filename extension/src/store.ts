@@ -1,7 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./store/global";
 import walletsReducer from "./store/wallets";
-import earnReducer from "./store/earn";
 import tokensReducer from "./store/tokens";
 import keysReducer from "./store/keys";
 import hashReducer from "./store/hash";
@@ -41,7 +40,6 @@ const reducers = combineReducers({
   wallets: walletsReducer,
   keys: persistReducer(keysPersistConfig, keysReducer),
   tokens: tokensReducer,
-  earn: earnReducer,
   hash: hashReducer,
   trustedApps: trustedAppsReducer,
   contacts: contactReducer,

@@ -77,7 +77,7 @@ const Header = () => {
       <Flex pt="4" pb={2} justify="space-between" alignItems="center" px={1}>
         <SelectChain
           render={(chainId) => (
-            <Tag w="135px" alignItems="center" bg="#1E2020">
+            <Tag alignItems="center" bg="#1E2020">
               {chainId && <ChainIcon chainId={chainId || 1} boxSize={5} />}
               <Box mx="2">{chainId && NODE[chainId]?.name}</Box>
               <ExchangeIcon />

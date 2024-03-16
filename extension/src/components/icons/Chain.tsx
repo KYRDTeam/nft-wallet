@@ -41,9 +41,9 @@ export default function ChainIcon({
         return CronosSVG;
       case ChainId.ARBITRUM:
         return ArbitrumSVG;
-      case ChainId.LINEA:
+      case ChainId.LINEA_TESTNET:
         return LineaSVG;
-      case ChainId.POLYGON_ZKEVM:
+      case ChainId.POLYGON_ZKEVM_TESTNET:
         return ZkEvmSVG;
       default: {
         return EthereumPNG;
@@ -51,5 +51,5 @@ export default function ChainIcon({
     }
   }, [chainId]);
 
-  return <Image src={IconWrap} {...props} />;
+  return <Image src={IconWrap} {...props} borderRadius="4px" />;
 }

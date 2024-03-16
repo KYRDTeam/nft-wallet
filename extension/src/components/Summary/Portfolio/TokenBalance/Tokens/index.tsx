@@ -33,22 +33,24 @@ export const Tokens = ({ keyword }: { keyword: string }) => {
   const tokenAvailableToDisplay = useMemo(() => {
     const keywordLowercase = keyword.toLowerCase();
 
-    let tokenCloned = [...tokens].filter((token: Token) => {
-      const balance = new BigNumber(get(token, "balance", 0)).dividedBy(
-        new BigNumber(10).pow(token.decimals || 18)
-      );
-      return (
-        !hiddenList.includes(token.address.toLowerCase()) &&
-        balance.isGreaterThan(0) &&
-        (token.name.toLowerCase().includes(keywordLowercase) ||
-          token.address.toLowerCase().includes(keywordLowercase) ||
-          token.symbol.toLowerCase().includes(keywordLowercase))
-      );
-    });
+    let tokenCloned = isEmpty(tokens)
+      ? []
+      : [...tokens].filter((token: Token) => {
+          const balance = new BigNumber(get(token, "balance", 0)).dividedBy(
+            new BigNumber(10).pow(token.decimals || 18)
+          );
+          return (
+            !hiddenList.includes(token.address.toLowerCase()) &&
+            balance.isGreaterThan(0) &&
+            (token.name.toLowerCase().includes(keywordLowercase) ||
+              token.address.toLowerCase().includes(keywordLowercase) ||
+              token.symbol.toLowerCase().includes(keywordLowercase))
+          );
+        });
 
     // the filter small value is disabled when has searching and off show all.
     if (!keyword && !isShowAllToken) {
-      tokenCloned = tokenCloned.filter(
+      tokenCloned = tokenCloned?.filter(
         (token: Token) =>
           get(token, "quotes.usd.value", 0) > MINIMUM_BALANCE_VALUE_TO_DISPLAY
       );

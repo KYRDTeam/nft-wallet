@@ -5,7 +5,6 @@ import { EarnBalanceToken, Platform, RateType, Token } from "../config/types";
 import { globalSelector, setGasPrices } from "../store/global";
 import { calculatePriceDifference, calculateTxFee, roundNumber, toBigAmount } from "../utils/helper";
 import {
-  buildClaimTx,
   buildSwapAndDepositTx,
   buildSwapTx,
   buildWithdrawTx,
@@ -274,37 +273,4 @@ export const useWithdraw = (
   }, [account, gasPrice, gasLimit, priorityFee, receiveContract, send, buildTx]);
 
   return { buildTx, withdraw, loadingText, txHash, resetState, error };
-};
-
-export const useClaimEarnToken = (platform?: string, gasPrice?: string, gasLimit?: string, priorityFee?: string) => {
-  const { chainId } = useAppSelector(globalSelector);
-  const { account } = useWallet();
-  const { send, loadingText, txHash, resetState, error } = useSendTx();
-  const [receiveContract, setReceiveContract] = useState<string>();
-  const [data, setData] = useState<string>();
-
-  const buildTx = useCallback(async () => {
-    const builtData = await buildClaimTx(chainId, {
-      lendingPlatform: platform,
-      userAddress: account,
-    });
-    setReceiveContract(builtData.to);
-    setData(builtData.data);
-    return builtData;
-  }, [chainId, platform, account]);
-
-  const claim = useCallback(() => {
-    if (receiveContract && data) {
-      send({
-        from: account,
-        to: receiveContract,
-        data: data,
-        gasPrice,
-        gasLimit,
-        priorityFee,
-      });
-    }
-  }, [account, gasPrice, gasLimit, priorityFee, data, receiveContract, send]);
-
-  return { buildTx, claim, loadingText, txHash, resetState, error };
 };

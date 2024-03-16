@@ -26,8 +26,6 @@ import GasSettings from "../common/GasSettings";
 import InfoField from "../common/InfoField";
 import Rate from "../common/Rate/Rate";
 import TxModal from "../common/TxModal";
-import { transparentize } from "@chakra-ui/theme-tools";
-import { get } from "lodash";
 import { NavLink } from "react-router-dom";
 import { DEFAULT_GAS_LIMIT } from "src/config/constants/constants";
 
@@ -56,7 +54,7 @@ const SwapConfirmModal = ({
   render,
   callbackSuccess,
 }: SwapConfirmModalProps) => {
-  const { chainId, appSettings } = useAppSelector(globalSelector);
+  const { chainId } = useAppSelector(globalSelector);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [rateUpdated, setRateUpdated] = useState(false);
   const [isSwapAnyway, setIsSwapAnyway] = useState(false);
@@ -73,7 +71,8 @@ const SwapConfirmModal = ({
   const nativeUsdPrice = getPrice(NODE[chainId].address);
 
   useEffect(() => {
-    if (!isSwapAnyway && isOpen) setIsSwapAnyway(!!priceDifference && priceDifference >= -20);
+    if (!isSwapAnyway && isOpen)
+      setIsSwapAnyway(!!priceDifference && priceDifference >= -20);
   }, [priceDifference, isOpen, isSwapAnyway]);
 
   useEffect(() => {
@@ -82,11 +81,21 @@ const SwapConfirmModal = ({
     }
   }, [isOpen, rateUpdated, prevDestAmount, destAmount]);
 
-  const { swap, loadingText, txHash, resetSwapState, error } = useSwap(gasPrice, gasLimit, priorityFee);
+  const { swap, loadingText, txHash, resetSwapState, error } = useSwap(
+    gasPrice,
+    gasLimit,
+    priorityFee
+  );
 
-  const minDestAmount = useMemo(() => +destAmount - +destAmount * (+slippage / 100), [destAmount, slippage]);
+  const minDestAmount = useMemo(
+    () => +destAmount - +destAmount * (+slippage / 100),
+    [destAmount, slippage]
+  );
 
-  const gasFee = useMemo(() => calculateTxFee(gasPrice || 0, gasLimit || 0), [gasPrice, gasLimit]);
+  const gasFee = useMemo(
+    () => calculateTxFee(gasPrice || 0, gasLimit || 0),
+    [gasPrice, gasLimit]
+  );
 
   const gasLimitAsFail = rate?.estimatedGas === "50000000";
 
@@ -107,29 +116,6 @@ const SwapConfirmModal = ({
     }
   }, [txHash, handleCloseModal]);
 
-  const messageCampaign = useMemo(() => {
-    if (get(appSettings, "APP_SWAP_SUCCESS.content")) {
-      return (
-        <Box
-          w="full"
-          minH="50px"
-          mt="4"
-          borderRadius="12"
-          py="4"
-          className="alert-banner"
-          bg={transparentize("primary.300", 0.3) as any}
-          wordBreak="break-word"
-          mb="2"
-          dangerouslySetInnerHTML={{
-            __html: get(appSettings, "APP_SWAP_SUCCESS.content"),
-          }}
-          px={{ base: 4, md: 8 }}
-        />
-      );
-    }
-    return null;
-  }, [appSettings]);
-
   return (
     <>
       {render(onOpen)}
@@ -143,8 +129,17 @@ const SwapConfirmModal = ({
             <Flex justifyContent="space-between" align="center">
               <Flex justify="center" align="flex-start" direction="column">
                 <Flex fontSize="lg" fontWeight={400}>
-                  <Tooltip label={formatNumber(srcAmount, 4)} placement="top" hasArrow>
-                    <Text maxW="100px" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
+                  <Tooltip
+                    label={formatNumber(srcAmount, 4)}
+                    placement="top"
+                    hasArrow
+                  >
+                    <Text
+                      maxW="100px"
+                      textOverflow="ellipsis"
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                    >
                       {formatNumber(srcAmount, 4)}
                     </Text>
                   </Tooltip>
@@ -159,8 +154,17 @@ const SwapConfirmModal = ({
               <ArrowForwardIcon boxSize="6" opacity="0.5" />
               <Flex justify="center" align="flex-end" direction="column">
                 <Flex fontSize="lg" fontWeight={400}>
-                  <Tooltip label={formatNumber(destAmount, 4)} placement="top" hasArrow>
-                    <Text maxW="100px" textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
+                  <Tooltip
+                    label={formatNumber(destAmount, 4)}
+                    placement="top"
+                    hasArrow
+                  >
+                    <Text
+                      maxW="100px"
+                      textOverflow="ellipsis"
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                    >
                       {formatNumber(destAmount, 4)}
                     </Text>
                   </Tooltip>
@@ -176,7 +180,12 @@ const SwapConfirmModal = ({
             <Divider my="5" background="#fff7f71f" />
             <Flex justify="space-between">
               <Text color="whiteAlpha.700">Rate:</Text>
-              <Rate srcToken={srcToken} destToken={destToken} rate={rate} showReverse={true} />
+              <Rate
+                srcToken={srcToken}
+                destToken={destToken}
+                rate={rate}
+                showReverse={true}
+              />
             </Flex>
             {rateUpdated && (
               <Flex justify="flex-end" align="center">
@@ -186,7 +195,13 @@ const SwapConfirmModal = ({
               </Flex>
             )}
           </ModalHeader>
-          <ModalCloseButton bg="transparent" border="0" color="white" top="18px" right="18px" />
+          <ModalCloseButton
+            bg="transparent"
+            border="0"
+            color="white"
+            top="18px"
+            right="18px"
+          />
           <ModalBody maxH="calc(100vh - 290px)" overflowY="auto" px="0" py="0">
             <Box background="gray.700" px="7" py="6">
               <InfoField
@@ -248,7 +263,8 @@ const SwapConfirmModal = ({
               <Flex justify="center" align="center" direction="column" mt="4">
                 {priceDifference && priceDifference < -20 && (
                   <Text color="red.400" textAlign="center" fontSize="sm">
-                    Price impact is high. You may want to reduce your swap amount for a better rate.
+                    Price impact is high. You may want to reduce your swap
+                    amount for a better rate.
                   </Text>
                 )}
                 {!priceDifference && (
@@ -301,12 +317,12 @@ const SwapConfirmModal = ({
 
       <TxModal
         txHash={txHash}
-        messageSuccess={messageCampaign}
         txType="SWAP"
         txDetail={() => (
           <Box mt="2">
             <Text>
-              {formatCurrency(srcAmount)} {srcToken?.symbol} to {formatCurrency(destAmount)} {destToken?.symbol}
+              {formatCurrency(srcAmount)} {srcToken?.symbol} to{" "}
+              {formatCurrency(destAmount)} {destToken?.symbol}
             </Text>
           </Box>
         )}
@@ -321,7 +337,13 @@ const SwapConfirmModal = ({
             )} */}
             {receipt && receipt.status && (
               <>
-                <Button as={NavLink} to="/transfer" w="120px" mr="5" colorScheme="primary">
+                <Button
+                  as={NavLink}
+                  to="/transfer"
+                  w="120px"
+                  mr="5"
+                  colorScheme="primary"
+                >
                   Transfer
                 </Button>
                 <Button onClick={onClose} w="120px" colorScheme="primary">
@@ -341,7 +363,13 @@ const SwapConfirmModal = ({
                 >
                   Cancel
                 </Button>
-                <Button as={Link} href="https://t.me/KrystalDefi" w="120px" target="_blank" colorScheme="primary">
+                <Button
+                  as={Link}
+                  href="https://t.me/KrystalDefi"
+                  w="120px"
+                  target="_blank"
+                  colorScheme="primary"
+                >
                   Go to Support
                 </Button>
               </>

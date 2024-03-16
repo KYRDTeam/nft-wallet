@@ -19,7 +19,6 @@ import { PreviewNFTModal } from "./components/PreviewNFTModal";
 import { useAppSelector } from "./hooks/useStore";
 import { useDispatch } from "react-redux";
 import { useFetchGasPrices } from "./hooks/useKrystalServices";
-import { useFetchEarnList } from "./hooks/useTokens";
 import { useMarket } from "./hooks/useMarket";
 import HttpRequest from "./contexts/HttpRequest";
 import LoadingPage from "./components/LoadingPage";
@@ -40,18 +39,13 @@ import useGetPageInfo from "src/hooks/useGetPageInfo";
 import bg from "src/assets/images/bg.png";
 import { useFetchAllTBA } from "./hooks/useFetchAllTBA";
 
-const Campaign = lazy(() => import("./components/Campaign"));
-const Earn = lazy(() => import("./components/Earn"));
 const Explore = lazy(() => import("./components/Explore"));
 const History = lazy(() => import("./components/History"));
 const Market = lazy(() => import("./components/Market"));
 const MultiSend = lazy(() => import("./components/MultiSend"));
 const Notification = lazy(() => import("./components/Notification"));
-const Referral = lazy(() => import("./components/Referral"));
-const Reward = lazy(() => import("./components/Reward"));
 const Settings = lazy(() => import("./components/Settings"));
 const Summary = lazy(() => import("./components/Summary"));
-const Supply = lazy(() => import("./components/Earn/Supply"));
 const Swap = lazy(() => import("./components/Swap"));
 const Token = lazy(() => import("./components/TokenDetailRenew"));
 const Transfer = lazy(() => import("./components/Transfer"));
@@ -86,7 +80,6 @@ const App: React.FC = () => {
   const { trustedApps } = useAppSelector(trustedAppsSelector);
   usePersistAccount();
   useFetchCurrencyRate();
-  useFetchEarnList();
   useFetchTokens();
   useFetchGasPrices();
   useMarket();
@@ -180,7 +173,7 @@ const App: React.FC = () => {
         backgroundRepeat="no-repeat"
       >
         <Box flex="1" minW="0">
-        {!HIDDEN_ROUTE.includes(currentRoute) && <Header />}
+          {!HIDDEN_ROUTE.includes(currentRoute) && <Header />}
           <AuthProvider>
             <Suspense fallback={<LoadingPage />}>
               <HttpRequest>
@@ -190,17 +183,11 @@ const App: React.FC = () => {
                     <Route path="/transfer" exact component={Transfer} />
                     <Route path="/multi-send" exact component={MultiSend} />
                     <Route path="/summary" exact component={Summary} />
-                    <Route path="/r/:referralCode" exact component={Summary} />
                     <Route path="/swap" exact component={Swap} />
                     <Route path="/token" exact component={Token} />
-                    <Route path="/earn" exact component={Earn} />
-                    <Route path="/supply" exact component={Supply} />
                     <Route path="/explore" exact component={Explore} />
                     <Route path="/market" exact component={Market} />
                     <Route path="/history" exact component={History} />
-                    <Route path="/campaign" exact component={Campaign} />
-                    <Route path="/referral" exact component={Referral} />
-                    <Route path="/rewards" exact component={Reward} />
                     <Route path="/settings" exact component={Settings} />
                     <Route
                       path="/notifications"

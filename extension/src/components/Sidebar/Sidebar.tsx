@@ -22,12 +22,9 @@ import { ReactComponent as BellIcon } from "../../assets/images/icons/bell.svg";
 import { ReactComponent as SwapSvg } from "../../assets/images/icons/swap.svg";
 import { ReactComponent as SummarySvg } from "../../assets/images/icons/summary.svg";
 import { ReactComponent as MarketSvg } from "../../assets/images/icons/market.svg";
-import { ReactComponent as EarnSvg } from "../../assets/images/icons/earn.svg";
 import { ReactComponent as ExploreSvg } from "../../assets/images/icons/explore.svg";
 import { ReactComponent as SettingSvg } from "../../assets/images/icons/setting.svg";
-import { ReactComponent as CampaignSvg } from "../../assets/images/icons/campaign.svg";
 import { ReactComponent as HistorySvg } from "../../assets/images/icons/history.svg";
-import { ReactComponent as KrystalPointSvg } from "../../assets/images/icons/refferal_icon.svg";
 import { ReactComponent as RocketIconSvg } from "../../assets/images/icons/rocket.svg";
 
 import { ChainIcon } from "../icons";
@@ -164,12 +161,6 @@ const Sidebar = (props: SidebarProp & BoxProps) => {
             Swap
           </Text>
         </Flex>
-        <Flex as={NavLink} to="/earn" py="3" onClick={props.closedrawer}>
-          <EarnSvg width="24" stroke="#ffffff" />
-          <Text fontWeight="semibold" ml="3">
-            Earn
-          </Text>
-        </Flex>
         <Flex
           as={Link}
           href="https://go.krystal.app"
@@ -203,18 +194,6 @@ const Sidebar = (props: SidebarProp & BoxProps) => {
           <HistorySvg width="24" stroke="#ffffff" />
           <Text fontWeight="semibold" ml="3">
             History
-          </Text>
-        </Flex>
-        <Flex as={NavLink} to="/referral" py="3" onClick={props.closedrawer}>
-          <KrystalPointSvg width="20" height="20" stroke="#ffffff" />
-          <Text fontWeight="semibold" ml="3">
-            Referral
-          </Text>
-        </Flex>
-        <Flex as={NavLink} to="/campaign" py="3" onClick={props.closedrawer}>
-          <CampaignSvg width="24" stroke="#ffffff" />
-          <Text fontWeight="semibold" ml="3">
-            Campaign
           </Text>
         </Flex>
         <Flex as={NavLink} to="/settings" py="3" onClick={props.closedrawer}>

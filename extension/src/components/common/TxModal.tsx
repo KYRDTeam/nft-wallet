@@ -35,7 +35,7 @@ const TxModal = ({
   resetData,
 }: {
   txHash: string;
-  txType?: "SWAP" | "TRANSFER" | "EARN" | "WITHDRAW" | "CLAIM" | undefined;
+  txType?: "SWAP" | "TRANSFER" | "WITHDRAW" | "CLAIM" | undefined;
   txDetail?: (e?: any) => React.ReactNode;
   txRating?: boolean;
   messageSuccess?: React.ReactNode;
@@ -124,9 +124,6 @@ const TxModal = ({
       }
       case "SWAP": {
         return <Text>Successfully Swapped!</Text>;
-      }
-      case "EARN": {
-        return <Text>Successfully earned!</Text>;
       }
       case "WITHDRAW": {
         return <Text>Successfully Withdrawn!</Text>;

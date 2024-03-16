@@ -12,8 +12,8 @@ export enum ChainId {
   BSC = 56,
   BSC_TESTNET = 97,
   POLYGON = 137,
-  POLYGON_ZKEVM = 1101,
-  LINEA = 59144,
+  POLYGON_ZKEVM_TESTNET = 1442,
+  LINEA_TESTNET = 59140,
   CRONOS = 25,
   FANTOM = 250,
   AVALANCHE = 43114,
@@ -279,48 +279,6 @@ export type TxParams = {
 
 export type TxReceipt = {
   status: boolean;
-};
-
-export type ReferralData = {
-  codeStats: ReferralCode[];
-  bonusVol: number;
-  nextRewardAmount: number;
-  rewardAmount: number;
-  rewardToken: any;
-  totalVol: number;
-  bonusRatio: number;
-  volForNextReward: number;
-};
-
-export type ReferralCode = {
-  totalRefer: number;
-  vol: number;
-  ratio: number;
-};
-
-export type RewardTier = {
-  level: number;
-  volume: number;
-  reward: number;
-};
-
-export type RewardType = {
-  amount: number;
-  quote: { symbol: string; value: number; rate: number };
-  rewardImage: string;
-  rewardName: string;
-  rewardSymbol: string;
-  rewardType: string;
-  source: string;
-  status: string;
-  timestamp: number;
-};
-
-export type TradingScore = {
-  index: number;
-  trader: string;
-  score: number;
-  reward: any;
 };
 
 export type ExploreData = {

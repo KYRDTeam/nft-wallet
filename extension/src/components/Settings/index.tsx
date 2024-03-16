@@ -3,7 +3,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { AddCustomTokenModal } from "../common/AddCustomTokenModal";
 import {
-  PadAndGuardIcon,
   PadAndHammerIcon,
   PadAndPencilIcon,
   StackIcon,
@@ -165,17 +164,6 @@ const Settings = () => {
               >
                 Privacy Policy
               </ButtonLink>
-              <ButtonLink
-                as={Link}
-                target="_blank"
-                icon={<PadAndGuardIcon stroke="whiteAlpha.900" />}
-                href="https://files.krystal.app/referral.pdf"
-              >
-                Referral Policy
-              </ButtonLink>
-              {/* <ButtonLink icon={<BellIcon stroke="whiteAlpha.900" />} to="/notifications">
-                Notifications
-              </ButtonLink> */}
             </>
           </Block>
         </Box>

@@ -1,5 +1,4 @@
 import { Container } from "@chakra-ui/react";
-import RegisterReferralCode from "./RegisterReferralCode";
 
 import { Portfolio } from "./Portfolio";
 import CreateWallet from "../CreateWallet";
@@ -12,7 +11,6 @@ const Summary = () => {
     <Container maxW={{ base: "full", lg: "container.xl" }}>
       {!account && <CreateWallet />}
       {!!account && <Portfolio />}
-      <RegisterReferralCode />
     </Container>
   );
 };

@@ -15,7 +15,6 @@ interface GlobalState {
   isFetchingMarket: boolean;
   isPrivateMode: boolean;
   isShowChains: boolean;
-  isShowPreviewEarnPage: boolean;
   market: { [address: string]: TokenMarketType };
   priorityFees?: GasPrices;
   baseCurrencyRate: { [currency in SupportedCurrencyType]: number };
@@ -30,7 +29,6 @@ const initialState: GlobalState = {
   isFetchingMarket: false,
   isPrivateMode: false,
   isShowChains: true,
-  isShowPreviewEarnPage: true,
   market: {},
   baseCurrencyRate: {
     usd: 1,
@@ -51,9 +49,6 @@ export const globalSlice = createSlice({
   reducers: {
     setChainId: (state, action: PayloadAction<ChainId>) => {
       state.chainId = action.payload;
-    },
-    setPreviewEarnPage: (state, action: PayloadAction<boolean>) => {
-      state.isShowPreviewEarnPage = action.payload;
     },
     setGasPrices: (
       state,
@@ -120,7 +115,6 @@ export const {
   setFetchingMarket,
   setGasPrices,
   setMarket,
-  setPreviewEarnPage,
   setPrivateMode,
   toggleShowChains,
 } = globalSlice.actions;

@@ -8,7 +8,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 import { globalSelector, setChainId } from "../../store/global";
 import { ChainIcon } from "../icons";
 
-const SelectChain = ({ render }: { render: (chainId?: ChainId) => JSX.Element }) => {
+const SelectChain = ({
+  render,
+}: {
+  render: (chainId?: ChainId) => JSX.Element;
+}) => {
   const { setQuery } = useQuery();
 
   const dispatch = useAppDispatch();

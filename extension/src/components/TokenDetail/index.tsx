@@ -31,11 +31,9 @@ import TokenChart from "./TokenChart";
 import { useSetTokenUrl } from "./useSetTokenUrl";
 import { transparentize } from "@chakra-ui/theme-tools";
 import TokenStats from "./TokenStats";
-import { earnSelector } from "src/store/earn";
 
 const TokenDetail = () => {
   const { chainId } = useAppSelector(globalSelector);
-  const { earnList } = useAppSelector(earnSelector);
 
   const [token, setToken] = useState<Token>();
   const [tokenDetail, setTokenDetail] = useState<TokenDetailType>();
@@ -126,12 +124,6 @@ const TokenDetail = () => {
     }
     return { color, isIncrease, change };
   }, [chartDays, tokenDetail]);
-
-  const isAvailableToEarn = useMemo(() => {
-    return !!earnList.find(
-      (earnToken) => earnToken.address.toLowerCase() === token?.address
-    );
-  }, [earnList, token?.address]);
 
   const history = useHistory();
 
@@ -293,20 +285,6 @@ const TokenDetail = () => {
               >
                 Swap
               </Button>
-              {isAvailableToEarn && (
-                <Button
-                  as={NavLink}
-                  to={`/supply?chainId=${chainId}&address=${token?.address}`}
-                  w="24"
-                  color="gray.900"
-                  bg={priceChangeData.color}
-                  _hover={{
-                    bg: transparentize(priceChangeData.color, 0.7) as any,
-                  }}
-                >
-                  Earn
-                </Button>
-              )}
             </Center>
           </Box>
         </GridItem>

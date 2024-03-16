@@ -64,7 +64,8 @@ export const NODE: {
     EIP1559: false,
   },
   [ChainId.POLYGON]: {
-    rpcUrls: "https://polygon.gateway.tenderly.co/",
+    rpcUrls:
+      "https://polygon.blockpi.network/v1/rpc/93239dd8b83772ae7d6c48dcaa3f8e2a748a755f",
     name: "Polygon",
     platform: "polygon-pos",
     standard: "MATIC",
@@ -138,13 +139,13 @@ export const NODE: {
     },
     EIP1559: false,
   },
-  [ChainId.POLYGON_ZKEVM]: {
+  [ChainId.POLYGON_ZKEVM_TESTNET]: {
     rpcUrls: "https://polygon-zkevm.drpc.org",
-    name: "Polygon zkEVM",
+    name: "Polygon zkEVM Testnet",
     platform: "ethereum",
     standard: "Polygon zkEVM",
     currencySymbol: "ETH",
-    scanUrl: "https://zkevm.polygonscan.com",
+    scanUrl: "https://testnet-zkevm.polygonscan.com",
     scanName: "Polygon zkEVM Explorer",
     address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     scanApi: {
@@ -153,14 +154,14 @@ export const NODE: {
     },
     EIP1559: false,
   },
-  [ChainId.LINEA]: {
-    rpcUrls: "https://linea.decubate.com",
-    name: "Linea",
+  [ChainId.LINEA_TESTNET]: {
+    rpcUrls: "https://rpc.goerli.linea.build",
+    name: "Linea Testnet",
     platform: "ethereum",
     standard: "Linea",
     currencySymbol: "ETH",
-    scanUrl: "https://lineascan.build/",
-    scanName: "Lineascan",
+    scanUrl: "https://explorer.goerli.linea.build",
+    scanName: "Linea Blockscout",
     address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     scanApi: {
       endpoint: "",
@@ -178,12 +179,12 @@ export const MAINNET_CHAINS = [
   ChainId.CRONOS,
   ChainId.FANTOM,
   ChainId.ARBITRUM,
-  ChainId.POLYGON_ZKEVM,
-  ChainId.LINEA,
 ];
 
 export const SUPPORTED_CHAINS = [
   ...MAINNET_CHAINS,
   ChainId.ROPSTEN,
   ChainId.BSC_TESTNET,
+  ChainId.POLYGON_ZKEVM_TESTNET,
+  ChainId.LINEA_TESTNET,
 ];

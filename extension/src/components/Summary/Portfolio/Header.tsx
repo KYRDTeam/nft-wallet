@@ -27,15 +27,13 @@ export const Header = ({
 }) => {
   const { chainId, isPrivateMode } = useAppSelector(globalSelector);
   const { tokens, isLoadingBalance } = useChainTokenSelector();
-  const { totalNetWorth } = useAppSelector(walletsSelector);
-
-  console.log(totalNetWorth);
+  const { chainWorth } = useAppSelector(walletsSelector);
 
   const dispatch = useAppDispatch();
 
   const nativeToken = useMemo(() => {
     return (
-      tokens.find(
+      tokens?.find(
         (token) => token.address === NODE[chainId as ChainId].address
       ) || null
     );
@@ -43,9 +41,12 @@ export const Header = ({
 
   const usdValue = useMemo(() => {
     if (nativeToken) {
-      return formatNumberV2(totalNetWorth?.usdValue, 4);
+      return formatNumberV2(
+        chainWorth?.find((i) => i.chainID === chainId)?.usdValue,
+        4
+      );
     } else return "0";
-  }, [nativeToken, totalNetWorth?.usdValue]);
+  }, [chainId, chainWorth, nativeToken]);
 
   return (
     <Flex

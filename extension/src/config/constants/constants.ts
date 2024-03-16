@@ -10,8 +10,9 @@ export const KRYSTAL_APP: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
   [ChainId.AVALANCHE]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
   [ChainId.ARBITRUM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.LINEA]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.POLYGON_ZKEVM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
+  [ChainId.LINEA_TESTNET]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
+  [ChainId.POLYGON_ZKEVM_TESTNET]:
+    process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
 };
 
 export const krystalApiEndPoint = process.env.REACT_APP_KRYSTAL_API || "";
@@ -26,8 +27,8 @@ export const KRYSTAL_API: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: `${krystalApiEndPoint}/fantom`,
   [ChainId.AVALANCHE]: `${krystalApiEndPoint}/avalanche`,
   [ChainId.ARBITRUM]: `${krystalApiEndPoint}/arbitrum`,
-  [ChainId.LINEA]: `${krystalApiEndPoint}/linea`,
-  [ChainId.POLYGON_ZKEVM]: `${krystalApiEndPoint}/zkevm`,
+  [ChainId.LINEA_TESTNET]: `${krystalApiEndPoint}/linea`,
+  [ChainId.POLYGON_ZKEVM_TESTNET]: `${krystalApiEndPoint}/zkevm`,
 };
 
 export const KRYSTAL_ADMIN_URL = process.env.REACT_APP_KRYSTAL_ADMIN_API || "";
@@ -42,16 +43,9 @@ export const LENDING_PLATFORM: { [chainId in ChainId]: string } = {
   [ChainId.FANTOM]: "",
   [ChainId.AVALANCHE]: "",
   [ChainId.ARBITRUM]: "",
-  [ChainId.LINEA]: "",
-  [ChainId.POLYGON_ZKEVM]: "",
+  [ChainId.LINEA_TESTNET]: "",
+  [ChainId.POLYGON_ZKEVM_TESTNET]: "",
 };
-
-export const SUPPORTED_EARNING_CHAINS = [
-  ChainId.MAINNET,
-  ChainId.ROPSTEN,
-  ChainId.BSC,
-  ChainId.POLYGON,
-];
 
 export const DEFAULT_GAS_LIMIT = {
   SWAP_ARBITRUM: "2000000",
@@ -111,8 +105,8 @@ export const BASE_CURRENCY: {
   [ChainId.FANTOM]: ["usd", "btc", "ftm"],
   [ChainId.AVALANCHE]: ["usd", "btc", "avax"],
   [ChainId.ARBITRUM]: ["usd", "btc", "eth"],
-  [ChainId.LINEA]: ["usd", "btc", "eth"],
-  [ChainId.POLYGON_ZKEVM]: ["usd", "btc", "eth"],
+  [ChainId.LINEA_TESTNET]: ["usd", "btc", "eth"],
+  [ChainId.POLYGON_ZKEVM_TESTNET]: ["usd", "btc", "eth"],
 };
 
 export const MINIMUM_LIQUIDITY = 100000;
@@ -183,6 +177,6 @@ export const GAS_LIMIT_DEFAULT = "100000";
 
 export const SUPPORTED_TBA_CHAINS = [
   ChainId.POLYGON,
-  // ChainId.LINEA,
-  // ChainId.POLYGON_ZKEVM,
+  // ChainId.LINEA_TESTNET,
+  // ChainId.POLYGON_ZKEVM_TESTNET,
 ];

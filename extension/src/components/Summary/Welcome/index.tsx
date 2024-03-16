@@ -12,9 +12,7 @@ import React from "react";
 import ConnectWallet from "../../Sidebar/ConnectWallet";
 
 import { ReactComponent as SwapIllustrationSvg } from "./illustration/swap.svg";
-import { ReactComponent as EarnIllustrationSvg } from "./illustration/earn.svg";
 import { ReactComponent as PortfolioIllustrationSvg } from "./illustration/portfolio.svg";
-import { ReactComponent as RewardsIllustrationSvg } from "./illustration/reward.svg";
 
 import ApkPng from "./download/apk.png";
 import ApplePng from "./download/apple.png";
@@ -102,13 +100,6 @@ export const Welcome = () => {
           as={NavLink}
           to="/swap"
         />
-        <Card
-          title="Earn"
-          subTitle="Earn interest from idle assets in real time"
-          image={<EarnIllustrationSvg />}
-          as={NavLink}
-          to="/earn"
-        />
         <ConnectWallet
           renderConnectBtn={(onOpen) => (
             <Card
@@ -119,14 +110,6 @@ export const Welcome = () => {
             />
           )}
           renderWalletInfo={<></>}
-        />
-
-        <Card
-          title="Get Rewards"
-          subTitle="Enjoy bonus rewards by participating in Krystal activities"
-          image={<RewardsIllustrationSvg />}
-          as={NavLink}
-          to="/rewards"
         />
       </SimpleGrid>
       <SimpleGrid

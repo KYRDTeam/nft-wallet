@@ -22,6 +22,7 @@ import { Transfer } from "./Transfer";
 import useCheckOwnerNFT from "./hooks/useCheckOwnerNFT";
 import { useWallet } from "src/hooks/useWallet";
 import { krystalApiEndPoint } from "src/config/constants/constants";
+import useFetch from "use-http";
 
 type NFTDetailType = {
   collectibleName: string;

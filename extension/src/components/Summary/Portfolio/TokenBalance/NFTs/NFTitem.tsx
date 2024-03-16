@@ -4,7 +4,7 @@ import NFTSvg from "src/assets/images/illus/NFT.svg";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppSelector } from "src/hooks/useStore";
 import { globalSelector } from "src/store/global";
-import PureLogo from "src/assets/images/logos/nft-wallet-pure.svg";
+import NFTImg from "./NFT.png";
 import { useWallet } from "src/hooks/useWallet";
 import { keysSelector } from "../../../../../store/keys";
 import { ellipsis } from "../../../../../utils/formatBalance";
@@ -101,21 +101,34 @@ export const NFTitem = ({
             transform="translate(-50%, -50%)"
             position="absolute"
             mb={{ base: 1, md: 3 }}
-            backgroundImage={PureLogo}
+            backgroundImage={NFTImg}
             backgroundSize="cover"
             backgroundPosition="center"
-            align="center"
-            justify="center"
             borderRadius="16px"
           >
-            <Text
-              color="primary.200"
-              fontWeight="semibold"
-              fontSize="lg"
-              mt={1}
-            >
-              #{data?.tokenID}
-            </Text>
+            <Flex position="relative" w="100%" justify="flex-end">
+              <Text
+                color="primary.200"
+                fontWeight="semibold"
+                fontSize="lg"
+                mt={1}
+                mr={2}
+              >
+                #{data?.tokenID}
+              </Text>
+              {collectibleAddress === process.env.REACT_APP_TBA_NFT &&
+                !!tbaAccount && (
+                  <Text
+                    color="whiteAlpha.900"
+                    position="absolute"
+                    bottom="5px"
+                    left="27px"
+                    fontSize="15px"
+                  >
+                    {ellipsis(tbaAccount || "", 6, 4)}
+                  </Text>
+                )}
+            </Flex>
           </Flex>
         )}
       </Box>

@@ -4,7 +4,7 @@
 
 Web3 projects are issuing points to attract users, but their point system is mostly stored off-chain and tied to EOA wallets. That means in order to transfer points to others, one must provide the EOA wallet private key and that's a very insecure process.
 
-Here we are building a unique browser extension for smart contract wallets that are linked with NFTs in the way that owner of the NFT can control the wallet and transferring wallet is now as easy as transferring an NFT. User can use our extension to create smart contract wallets and interact with dApps smoothly.
+Here we are building a unique browser extension for smart contract wallets that are linked with NFTs in the way that owner of the NFT can control the wallet and transferring wallet is now as easy as transferring an NFT. You can use our extension to create smart contract wallets then connect to dApps and make transactions just like you're on Metamask or Rabby.
 
 # Contracts
 

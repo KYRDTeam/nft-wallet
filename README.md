@@ -20,6 +20,46 @@ _Key features:_
 - We modify browser extension connection flow to let smart accounts connect to any dApps without the need of account's private key.
 - We modify browser extension transaction flow to let smart accounts make transactions from data sent by any dApps without the need of account's private key.
 
+# Extension
+
+## Get started
+
+Requirements:
+- Node 16
+
+Install dependencies:
+```
+$ yarn
+```
+
+Build extension
+```
+$ yarn build
+```
+
+After this step, a folder `build` is generated. To add this to Chrome extension locally, first enable developer mode and load the `build` folder
+
+![Load chrome extension](extension/screenshots/upload_extension.gif)
+
+Build for development
+```
+$ yarn start
+```
+Then import folder `dev` instead of `build`
+
+## Functionalities
+1. Create smart account
+
+![Create smart account](extension/screenshots/create_account.gif)
+
+2. Interact with dapps, make transactions
+
+![Make transaction](extension/screenshots/make_transaction.gif)
+
+3. Transfer wallet
+
+![Transfer wallet](extension/screenshots/transfer_wallet.gif)
+
 # Contracts
 
 ## Deploy:
@@ -57,7 +97,7 @@ This contract is to mint new wallet. Every nft has minted from this contract is 
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Linea Goerli  | 59140    | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://goerli.lineascan.build/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397)        |
 | Polygon       | 137      | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://polygonscan.com/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397)               |
-| Polygon zkEvm | 1442     | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://testnet-zkevm.polygonscan.com/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397) |
+| Polygon zkEvm Testnet | 1442     | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://testnet-zkevm.polygonscan.com/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397) |
 
 **TBA Helper**
 
@@ -67,7 +107,7 @@ Token bound account helper for mint new wallet
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Linea Goerli  | 59140    | [0x18e49629A34bf735ED1816216ac754921AF26080](https://goerli.lineascan.build/address/0x18e49629A34bf735ED1816216ac754921AF26080)        |
 | Polygon       | 137      | [0x18e49629A34bf735ED1816216ac754921AF26080](https://polygonscan.com/address/0x18e49629A34bf735ED1816216ac754921AF26080)               |
-| Polygon zkEvm | 1442     | [0x18e49629A34bf735ED1816216ac754921AF26080](https://testnet-zkevm.polygonscan.com/address/0x18e49629A34bf735ED1816216ac754921AF26080) |
+| Polygon zkEvm Testnet | 1442     | [0x18e49629A34bf735ED1816216ac754921AF26080](https://testnet-zkevm.polygonscan.com/address/0x18e49629A34bf735ED1816216ac754921AF26080) |
 
 **ERC-6551 Registry**
 
@@ -75,7 +115,7 @@ Token bound account helper for mint new wallet
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Linea Goerli  | 59140    | [0x000000006551c19487814612e58FE06813775758](https://goerli.lineascan.build/address/0x000000006551c19487814612e58FE06813775758)        |
 | Polygon       | 137      | [0x000000006551c19487814612e58FE06813775758](https://polygonscan.com/address/0x000000006551c19487814612e58FE06813775758)               |
-| Polygon zkEvm | 1442     | [0x000000006551c19487814612e58FE06813775758](https://testnet-zkevm.polygonscan.com/address/0x000000006551c19487814612e58FE06813775758) |
+| Polygon zkEvm Testnet | 1442     | [0x000000006551c19487814612e58FE06813775758](https://testnet-zkevm.polygonscan.com/address/0x000000006551c19487814612e58FE06813775758) |
 
 **Tokenbound Account Proxy**
 
@@ -85,7 +125,7 @@ Use this address as the `implementation` parameter when calling `createAccount` 
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Linea Goerli  | 59140    | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://goerli.lineascan.build/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F)        |
 | Polygon       | 137      | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://polygonscan.com/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F)               |
-| Polygon zkEvm | 1442     | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://testnet-zkevm.polygonscan.com/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F) |
+| Polygon zkEvm Testnet | 1442     | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://testnet-zkevm.polygonscan.com/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F) |
 
 **Tokenbound Account Implementation**
 
@@ -95,4 +135,4 @@ Use this address as the `implementation` parameter when calling `initialize` on 
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Linea Goerli  | 59140    | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://goerli.lineascan.build/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC)        |
 | Polygon       | 137      | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://polygonscan.com/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC)               |
-| Polygon zkEvm | 1442     | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://testnet-zkevm.polygonscan.com/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC) |
+| Polygon zkEvm Testnet | 1442     | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://testnet-zkevm.polygonscan.com/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC) |

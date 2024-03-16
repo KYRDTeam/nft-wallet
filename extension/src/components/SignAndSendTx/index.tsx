@@ -218,6 +218,7 @@ const SignAndSendTx = () => {
       <ButtonGroup
         width="100%"
         mb={8}
+        pb={4}
         display="flex"
         alignItems="center"
         justifyContent="space-around"

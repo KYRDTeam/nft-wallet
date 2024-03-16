@@ -1,6 +1,6 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { Box, Button, ButtonGroup, Flex, Text } from "@chakra-ui/react";
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState, useMemo, Fragment } from "react";
 import { Tag } from "src/theme";
 import { ellipsis, formatCurrency } from "src/utils/formatBalance";
 import GasSettings from "../common/GasSettings";
@@ -20,6 +20,7 @@ import { calculateTxFee, formatNumber } from "src/utils/helper";
 import { ChainIcon } from "src/components/icons";
 import { GAS_LIMIT_DEFAULT } from "src/config/constants/constants";
 import useGetPageInfo from "src/hooks/useGetPageInfo";
+import { keysSelector } from "../../store/keys";
 
 const SignAndSendTx = () => {
   const { chainId } = useAppSelector(globalSelector);
@@ -29,6 +30,7 @@ const SignAndSendTx = () => {
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const { pageInfo, loading: loadingGetPageInfo } = useGetPageInfo();
+  const { accountsTBA } = useAppSelector(keysSelector);
 
   const { send, txHash, resetState, loadingText, error } = useSendTx();
 
@@ -46,6 +48,12 @@ const SignAndSendTx = () => {
     }
     return fromWei(hexToNumberString(data.value));
   }, [data]);
+
+  const rootAccount = useMemo(() => {
+    return Object.keys(accountsTBA).find((account) =>
+      accountsTBA?.[account]?.find((acc) => acc?.address === data?.from)
+    );
+  }, [accountsTBA, data?.from]);
 
   const handleConfirm = useCallback(async () => {
     await send({
@@ -110,16 +118,31 @@ const SignAndSendTx = () => {
       h="100vh"
     >
       <Box width="100%">
-        <Flex justifyContent="start" mt={4} px={4}>
+        <Flex justifyContent="space-between" mt={4} px={4}>
           <Tag alignItems="center" px={3}>
             {chainId && <ChainIcon chainId={chainId || 1} boxSize={5} />}
             <Box ml={2}>{chainId && NODE[chainId]?.name}</Box>
           </Tag>
+          {rootAccount && (
+            <Tag alignItems="center" px={3}>
+              Interact with Smart Account
+            </Tag>
+          )}
         </Flex>
-        <Flex justifyContent="space-around" alignItems="center" mt={4}>
-          <Tag>{ellipsis(data.from, 8, 8)}</Tag>
+        <Flex justifyContent="space-between" alignItems="center" mt={4} px={4}>
+          {!!rootAccount && (
+            <Fragment>
+              <Tag>{ellipsis(rootAccount, 6, 4)}</Tag>
+              <ArrowForwardIcon w="20px" h="20px" />
+            </Fragment>
+          )}
+          <Tag>
+            {ellipsis(data.from, !!rootAccount ? 6 : 8, !!rootAccount ? 4 : 8)}
+          </Tag>
           <ArrowForwardIcon w="20px" h="20px" />
-          <Tag>{ellipsis(data.to, 8, 8)}</Tag>
+          <Tag>
+            {ellipsis(data.to, !!rootAccount ? 6 : 8, !!rootAccount ? 4 : 8)}
+          </Tag>
         </Flex>
         <Box bg="gray.700" mt={4} px={7} py={6} borderRadius="13px" mx={4}>
           <Text>{URL}</Text>
@@ -139,7 +162,7 @@ const SignAndSendTx = () => {
                   href={`${NODE[chainId].scanUrl}/address/${data.to}`}
                   target="_blank"
                 >{`${ellipsis(data.to)} `}</Text>
-                : CONTRACT INTERACTION
+                : {data.data === "0x" ? "TRANSFER" : "CONTRACT INTERACTION"}
               </Box>
               <Text fontSize="lg" fontWeight="semibold"></Text>
             </Box>

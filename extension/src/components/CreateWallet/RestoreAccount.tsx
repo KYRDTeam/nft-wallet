@@ -120,7 +120,7 @@ const RestoreAccount = ({ render, case: _case }: RestoreAccountProps) => {
         isOpen={isOpen}
         initialFocusRef={initialRef}
       >
-        <ModalContent fontSize="md" bg="black">
+        <ModalContent fontSize="md" bg="#0F1010">
           <ModalHeader textAlign="center">
             {_case === "FORGOT_PASSWORD" ? "Reset Password" : "Import Wallet"}
           </ModalHeader>

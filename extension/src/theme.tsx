@@ -248,7 +248,7 @@ export const TextDeep = (props: BoxProps) => <Box opacity="0.5" {...props} />;
 
 export const Tag = (props: FlexProps) => (
   <Flex
-    bg="gray.500"
+    bg="#1E2020"
     borderRadius="13px"
     px="2"
     h="32px"

@@ -63,7 +63,7 @@ const CreatePassword = ({
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
       >
-        <ModalContent bg="black">
+        <ModalContent bg="#0F1010">
           <ModalHeader mt={3}>Create New Wallet</ModalHeader>
           <ModalCloseButton />
           <ModalBody display="flex" pb="10" pt="0">

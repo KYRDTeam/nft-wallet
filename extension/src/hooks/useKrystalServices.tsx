@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/layout";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { SMART_WALLET_PROXY } from "../config/constants/contracts";
-import { EarnBalanceToken, Platform, RateType, Token } from "../config/types";
+import { Platform, RateType, Token } from "../config/types";
 import { globalSelector, setGasPrices } from "../store/global";
 import { calculatePriceDifference, calculateTxFee, roundNumber, toBigAmount } from "../utils/helper";
 import {
@@ -232,7 +232,7 @@ export const useSwapAndDeposit = (
 
 export const useWithdraw = (
   amount: string,
-  token?: EarnBalanceToken,
+  token?: any,
   platform?: string,
   gasPrice?: string,
   gasLimit?: string,

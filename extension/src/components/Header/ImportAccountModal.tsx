@@ -108,16 +108,29 @@ const ImportAccountModal = ({
   return (
     <>
       {render(onOpen)}
-      <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered size="full" initialFocusRef={initialRef}>
+      <Modal
+        isOpen={isOpen}
+        onClose={handleCloseModal}
+        isCentered
+        size="full"
+        initialFocusRef={initialRef}
+      >
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent bg="black">
+        <ModalContent bg="#0F1010">
           <ModalHeader pt="6" fontSize="xl">
             Import Account
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody px="6" display="flex" flexDirection="column" justifyContent="flex-start" alignItems="flex-start">
+          <ModalBody
+            px="6"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
             <Text>
-              Imported accounts will not be associated with your originally created account with Secret Recovery Phrase.
+              Imported accounts will not be associated with your originally
+              created account with Secret Recovery Phrase.
             </Text>
             <FormControl my={3}>
               <Text mt={4} fontSize="md">
@@ -197,11 +210,27 @@ const ImportAccountModal = ({
               </Text>
             )}
           </ModalBody>
-          <ModalFooter py="6" justifyContent="space-between" alignItems="center" display="flex" mx={4}>
-            <Button colorScheme="gray" onClick={handleCloseModal} color="white" minW="150px">
+          <ModalFooter
+            py="6"
+            justifyContent="space-between"
+            alignItems="center"
+            display="flex"
+            mx={4}
+          >
+            <Button
+              colorScheme="gray"
+              onClick={handleCloseModal}
+              color="white"
+              minW="150px"
+            >
               Cancel
             </Button>
-            <Button colorScheme="primary" onClick={handleSubmitPrivateKey} disabled={!acceptTerms} minW="150px">
+            <Button
+              colorScheme="primary"
+              onClick={handleSubmitPrivateKey}
+              disabled={!acceptTerms}
+              minW="150px"
+            >
               Confirm
             </Button>
           </ModalFooter>

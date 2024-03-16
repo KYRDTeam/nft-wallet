@@ -112,6 +112,7 @@ export const keysSlice = createSlice({
     },
     lock: (state) => {
       state.password = "";
+      state.selectedAccount = "";
       state.accounts = [];
       state.keyringController.setLocked();
       sendMessage({ type: "set_password", password: "" });

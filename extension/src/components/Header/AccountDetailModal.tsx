@@ -1,8 +1,20 @@
 import { Button } from "@chakra-ui/button";
 import { useClipboard, useDisclosure } from "@chakra-ui/hooks";
 import { Box, Center, Link, Flex } from "@chakra-ui/layout";
-import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from "@chakra-ui/modal";
-import { CheckIcon, CopyIcon, DeleteIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/modal";
+import {
+  CheckIcon,
+  CopyIcon,
+  DeleteIcon,
+  ExternalLinkIcon,
+} from "@chakra-ui/icons";
 import QRCode from "qrcode.react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useCustomToast from "src/hooks/useCustomToast";
@@ -11,19 +23,31 @@ import ExportSecret from "./ExportSecret";
 import { NODE } from "src/config/constants/chain";
 import { useAppSelector } from "src/hooks/useStore";
 import { globalSelector } from "src/store/global";
-import { FormControl, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react";
+import {
+  FormControl,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Text,
+} from "@chakra-ui/react";
 import { useAppDispatch } from "../../hooks/useStore";
 import { keysSelector, setAccountsName } from "src/store/keys";
 import DeleteAccountConfirmModal from "./DeleteAccountConfirmModal";
 
-const AccountDetailModal = ({ render }: { render: (onOpen: () => void) => JSX.Element }) => {
+const AccountDetailModal = ({
+  render,
+}: {
+  render: (onOpen: () => void) => JSX.Element;
+}) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { account } = useWallet();
   const { accountsName } = useAppSelector(keysSelector);
   const { chainId } = useAppSelector(globalSelector);
   const { hasCopied, onCopy } = useClipboard(account || "");
   const accountKey = account as keyof typeof accountsName;
-  const [newAccountName, setNewAccountName] = useState(accountsName[accountKey] || "");
+  const [newAccountName, setNewAccountName] = useState(
+    accountsName[accountKey] || ""
+  );
   const [errMsg, setErrMsg] = useState("");
   const toast = useCustomToast();
   const dispatch = useAppDispatch();
@@ -62,7 +86,7 @@ const AccountDetailModal = ({ render }: { render: (onOpen: () => void) => JSX.El
         handleChangeAccountName();
       }
     },
-    [handleChangeAccountName],
+    [handleChangeAccountName]
   );
 
   useEffect(() => {
@@ -83,14 +107,26 @@ const AccountDetailModal = ({ render }: { render: (onOpen: () => void) => JSX.El
   return (
     <>
       {render(onOpen)}
-      <Modal isOpen={isOpen} onClose={handleClose} isCentered size="full" initialFocusRef={initialRef}>
+      <Modal
+        isOpen={isOpen}
+        onClose={handleClose}
+        isCentered
+        size="full"
+        initialFocusRef={initialRef}
+      >
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent bg="black">
+        <ModalContent bg="#0F1010">
           <ModalHeader textAlign="center" pt="4" fontSize="xl">
             Wallet Details
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody px="8" display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">
+          <ModalBody
+            px="8"
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <FormControl>
               <Text mx={2}>Change Wallet title</Text>
               <InputGroup size="md" mx={2}>
@@ -110,7 +146,14 @@ const AccountDetailModal = ({ render }: { render: (onOpen: () => void) => JSX.El
                   onKeyPress={(e: any) => handleEnter(e)}
                 />
                 <InputRightElement mt={2}>
-                  <Button onClick={handleChangeAccountName} bg="#0F0F0F" borderRadius="10px" px={2} h="30px" mr={10}>
+                  <Button
+                    onClick={handleChangeAccountName}
+                    bg="#0F0F0F"
+                    borderRadius="10px"
+                    px={2}
+                    h="30px"
+                    mr={10}
+                  >
                     <CheckIcon color="primary.300" />
                   </Button>
                 </InputRightElement>
@@ -118,7 +161,15 @@ const AccountDetailModal = ({ render }: { render: (onOpen: () => void) => JSX.El
             </FormControl>
             {errMsg && <Text color="red.500">{errMsg}</Text>}
             <Center flexDir="column" w="100%">
-              <Box as={QRCode} value={account || ""} p="3" bg="white" borderRadius="xl" mb={6} mt={8} />
+              <Box
+                as={QRCode}
+                value={account || ""}
+                p="3"
+                bg="white"
+                borderRadius="xl"
+                mb={6}
+                mt={8}
+              />
               <Box
                 p={2}
                 w="95%"
@@ -130,12 +181,23 @@ const AccountDetailModal = ({ render }: { render: (onOpen: () => void) => JSX.El
                 transition="all .3s ease 0s"
               >
                 {account} <CopyIcon mx={1} />{" "}
-                <Link href={`${NODE[chainId].scanUrl}/address/${account}`} isExternal textDecoration="none !important">
+                <Link
+                  href={`${NODE[chainId].scanUrl}/address/${account}`}
+                  isExternal
+                  textDecoration="none !important"
+                >
                   <ExternalLinkIcon />
                 </Link>
               </Box>
             </Center>
-            <Flex justifyContent="center" alignItems="center" flexDirection="column" display="flex" w="100%" mb={6}>
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="column"
+              display="flex"
+              w="100%"
+              mb={6}
+            >
               {/* <Button w="95%" colorScheme="gray" color="white">
                 <Link href={`${NODE[chainId].scanUrl}/address/${account}`} isExternal textDecoration="none !important">
                   View on {NODE[chainId].scanName}

@@ -1,49 +1,39 @@
-import { Flex, Text, Image } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { Tooltip } from "@chakra-ui/tooltip";
-// import { CopyIcon } from "@chakra-ui/icons";
 import { Tag } from "src/theme";
 import AccountDetailModal from "src/components/Header/AccountDetailModal";
-import { useClipboard } from "@chakra-ui/hooks";
 import { useWallet } from "src/hooks/useWallet";
 import { ellipsis } from "src/utils/formatBalance";
 import { useAppSelector } from "src/hooks/useStore";
 import { keysSelector } from "src/store/keys";
-import Copy from "src/assets/images/icons/copy.svg";
-// import { trustedAppsSelector } from "../../store/trustedApps";
 import useGetPageInfo from "src/hooks/useGetPageInfo";
 import { WalletIcon } from "../common/icons";
 import { EditIcon } from "@chakra-ui/icons";
+import CopyBtn from "../common/CopyBtn";
 
 const AccountInfo = () => {
   const { account } = useWallet();
   const { accountsName } = useAppSelector(keysSelector);
-  const { hasCopied, onCopy } = useClipboard(account || "");
   // const { trustedApps } = useAppSelector(trustedAppsSelector);
   const { pageInfo } = useGetPageInfo();
 
   return (
-    <Flex
-      alignItems="center"
-      mt={1}
-      mb={2}
-      mx={2}
-      pr={3}
-      py={1}
-      bg="#1E2020"
-      justify="space-between"
-      borderRadius="12px"
-    >
-      <AccountDetailModal
-        render={(onOpen) => (
-          <Tag
-            px="3"
-            cursor="pointer"
-            onClick={onOpen}
-            fontSize="sm"
-            display="flex"
-            mr={4}
-            bg="#1E2020"
-          >
+    <AccountDetailModal
+      render={(onOpen) => (
+        <Flex
+          alignItems="center"
+          mt={1}
+          mb={2}
+          mx={2}
+          pr={3}
+          py={1}
+          bg="#1E2020"
+          justify="space-between"
+          borderRadius="12px"
+          onClick={onOpen}
+          cursor="pointer"
+        >
+          <Tag px="3" fontSize="sm" display="flex" mr={4} bg="#1E2020">
             {/* {!pageInfo?.domain ? (
               <></>
             ) : trustedApps[account || ""]?.find(
@@ -79,36 +69,15 @@ const AccountInfo = () => {
               {ellipsis(account || "", 9, 4)}
             </Text>
           </Tag>
-        )}
-      />
-      <Flex align="center">
-        <Tooltip
-          label={hasCopied ? "Copied!" : "Copy"}
-          placement="bottom"
-          bg="gray.500"
-          color="whiteAlpha.700"
-          hasArrow
-          mt={2}
-          closeDelay={500}
-          _hover={{
-            opacity: 0.7,
-          }}
-        >
-          <Image
-            src={Copy}
-            alt="copy icon"
-            mr={2}
-            w="4"
-            h="4"
-            cursor="pointer"
-            onClick={onCopy}
-          />
-        </Tooltip>
-        <Tooltip label="Click to edit" placement="top">
-          <EditIcon boxSize={4} color="whiteAlpha.600" cursor="pointer" />
-        </Tooltip>
-      </Flex>
-    </Flex>
+          <Flex align="center">
+            <CopyBtn data={account || ""} w={4} h={4} mr={2} />
+            <Tooltip label="Click to edit" placement="top">
+              <EditIcon boxSize={4} color="whiteAlpha.600" cursor="pointer" />
+            </Tooltip>
+          </Flex>
+        </Flex>
+      )}
+    />
   );
 };
 

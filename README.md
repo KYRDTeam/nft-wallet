@@ -11,14 +11,14 @@ _Key features:_
 
 - Create smart account (NFT-linked smart contract wallet) from an EOA wallet
 - Connect smart account to dApps and interact with their smart contracts
-- Transfer smart account to other address by transfer linked NFT
+- Transfer smart account to other address via NFT transfer
 
 ## Technical solution
 
-- We adopted [ERC-6551](https://eips.ethereum.org/EIPS/eip-6551) **Token bound account** for our smart accounts.
-- We use [ERC-721](https://eips.ethereum.org/EIPS/eip-721) **NFT** to link with smart accounts.
-- We modify browser extension connection flow to let smart accounts connect to any dApps without the need of account's private key.
-- We modify browser extension transaction flow to let smart accounts make transactions from data sent by any dApps without the need of account's private key.
+In our extension, we:
+- adopt [ERC-6551](https://eips.ethereum.org/EIPS/eip-6551) **Token bound accounts** which enable ERC-721 NFT to function as smart contract wallet.
+- modify browser extension connection flow to make smart wallet connect to dApps as if it is an EOA wallet.
+- wrap transaction data sent from dApps in order for smart wallet to make arbitrary calls to any contracts.
 
 ## Functionalities
 

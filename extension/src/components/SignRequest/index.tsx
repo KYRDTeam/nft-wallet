@@ -26,14 +26,23 @@ const SignRequest = () => {
   const [data, setData] = useState<any>();
   const [balance, setBalance] = useState<any>(0);
   const { chainId, account } = useWallet();
-  const { keyringController } = useAppSelector(keysSelector);
+  const { keyringController, accountsTBA } = useAppSelector(keysSelector);
+
+  const rootAccount = useMemo(() => {
+    return Object.keys(accountsTBA).find((storeAccount) =>
+      accountsTBA?.[storeAccount]?.find(
+        (acc) =>
+          acc?.address === (account === data?.tx ? data?.tx : data?.address)
+      )
+    );
+  }, [account, accountsTBA, data?.address, data?.tx]);
 
   const handleSign = async () => {
     const { tx, address } = data;
     const signedTx = await keyringController.signPersonalMessage(
       account === tx
-        ? { data: address, from: tx }
-        : { data: tx, from: address },
+        ? { data: address, from: rootAccount ? rootAccount : tx }
+        : { data: tx, from: rootAccount ? rootAccount : address },
       {}
     );
     sendMessage({ type: "send_tx_hash", hash: signedTx });

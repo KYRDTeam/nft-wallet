@@ -17,8 +17,7 @@ $ yarn build
 
 After this step, a folder `build` is generated. To add this to Chrome extension locally, first enable developer mode and load the `build` folder
 
-![Load chrome extension](screenshots/load-chrome-extension.gif)
-
+![Load chrome extension](screenshots/upload_extension.gif)
 
 Build for development
 ```
@@ -29,8 +28,8 @@ Then import folder `dev` instead of `build`
 # Functionalities
 1. Create smart account
 
-![Create smart account](screenshots/create-smart-wallet.gif)
+![Create smart account](screenshots/create_account.gif)
 
 2. Interact with dapps, make transactions
 
-![Make transaction](screenshots/make-transaction.gif)
+![Make transaction](screenshots/make_transaction.gif)

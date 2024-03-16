@@ -30,9 +30,10 @@ const SignRequest = () => {
 
   const rootAccount = useMemo(() => {
     return Object.keys(accountsTBA).find((storeAccount) =>
-      accountsTBA?.[storeAccount]?.find(
+      accountsTBA?.[storeAccount?.toLowerCase()]?.find(
         (acc) =>
-          acc?.address === (account === data?.tx ? data?.tx : data?.address)
+          acc?.address ===
+          (account === data?.tx ? data?.tx : data?.address)?.toLowerCase()
       )
     );
   }, [account, accountsTBA, data?.address, data?.tx]);

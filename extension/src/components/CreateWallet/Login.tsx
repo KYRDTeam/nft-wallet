@@ -40,7 +40,7 @@ const Login = () => {
               Object.values(accountsTBA).map((item) =>
                 item.map((i) => i.address)
               )
-            ).includes(selectedAccount))
+            ).includes(selectedAccount?.toLowerCase()))
         ) {
           dispatch(setSelectedAccount(selectedAccount));
         }

@@ -51,7 +51,9 @@ const SignAndSendTx = () => {
 
   const rootAccount = useMemo(() => {
     return Object.keys(accountsTBA).find((account) =>
-      accountsTBA?.[account]?.find((acc) => acc?.address === data?.from)
+      accountsTBA?.[account?.toLowerCase()]?.find(
+        (acc) => acc?.address === data?.from?.toLowerCase()
+      )
     );
   }, [accountsTBA, data?.from]);
 

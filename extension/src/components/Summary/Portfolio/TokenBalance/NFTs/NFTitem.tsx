@@ -30,7 +30,10 @@ export const NFTitem = ({
   const { accountsTBA } = useAppSelector(keysSelector);
 
   const tbaAccount = useMemo(
-    () => !!account && isNumber(idx) && accountsTBA?.[account]?.[idx]?.address,
+    () =>
+      !!account &&
+      isNumber(idx) &&
+      accountsTBA?.[account?.toLowerCase()]?.[idx]?.address,
     [account, accountsTBA, idx]
   );
 

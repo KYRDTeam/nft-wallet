@@ -84,7 +84,7 @@ export function useWallet() {
       (accounts.includes(selectedAccount) ||
         flatten(
           Object.values(accountsTBA).map((item) => item.map((i) => i.address))
-        ).includes(selectedAccount))
+        ).includes(selectedAccount?.toLowerCase()))
         ? selectedAccount
         : undefined,
     activate: (a?: any, b?: (e?: any) => {}) => {},

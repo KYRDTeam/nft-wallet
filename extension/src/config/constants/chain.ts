@@ -140,7 +140,7 @@ export const NODE: {
     EIP1559: false,
   },
   [ChainId.POLYGON_ZKEVM_TESTNET]: {
-    rpcUrls: "https://polygon-zkevm.drpc.org",
+    rpcUrls: "https://polygon-zkevm-testnet.drpc.org",
     name: "Polygon zkEVM Testnet",
     platform: "ethereum",
     standard: "Polygon zkEVM",
@@ -152,7 +152,7 @@ export const NODE: {
       endpoint: "",
       key: "",
     },
-    EIP1559: false,
+    EIP1559: true,
   },
   [ChainId.LINEA_TESTNET]: {
     rpcUrls: "https://rpc.goerli.linea.build",
@@ -167,7 +167,7 @@ export const NODE: {
       endpoint: "",
       key: "",
     },
-    EIP1559: false,
+    EIP1559: true,
   },
 };
 

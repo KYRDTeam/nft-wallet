@@ -80,7 +80,7 @@ export const Header = ({
               justifyContent="center"
               direction="column"
             >
-              {isLoadingBalance && <Spinner size="xl" mb={2} />}
+              {isLoadingBalance && <Spinner size="xl" my={4} />}
               {!isLoadingBalance && (
                 <Flex
                   justifyContent="center"

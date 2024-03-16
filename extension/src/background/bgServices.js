@@ -18,7 +18,7 @@ export function listenConfirmAccountConnection({
         const accountsTBA = JSON.parse(keysStorage.accountsTBA || "[]");
         const localSelectedAccount =
           JSON.parse(keysStorage.selectedAccount || null) ?? data[0];
-        const enabledTBA = (accountsTBA?.[localSelectedAccount] || []).find(
+        const enabledTBA = (accountsTBA?.[localSelectedAccount?.toLowerCase()] || []).find(
           (item) => item?.isEnabled
         );
         res.result = !!enabledTBA

@@ -14,14 +14,14 @@ const CreateWallet = () => {
   return (
     <>
       {isLoading ? null : (
-        <Center h="calc(100vh - 60px)" flexDirection="column" px="8">
-          <Logo width="225" height="55" />
+        <Center h="calc(100vh - 60px)" flexDirection="column" px="8" mt={3}>
+          <Logo height="50px" />
           {vault ? (
             <Login />
           ) : (
             <>
-              <Image src={CreateIllu} />
-              <Box w="100%" fontWeight="semibold" mb="5">
+              <Image src={CreateIllu} w="95%" mb={8} />
+              <Box w="100%" fontWeight="semibold" mb={4}>
                 <CreatePassword
                   render={(open) => (
                     <Button

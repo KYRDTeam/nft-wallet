@@ -41,6 +41,9 @@ import { calculateTxFee, formatNumber } from "src/utils/helper";
 import { estimateGas } from "src/utils/web3";
 import GasSettings from "../common/GasSettings";
 import moment from "moment";
+import SelectChain from "../common/SelectChain";
+import { Tag } from "src/theme";
+import { ReactComponent as ExchangeIcon } from "src/assets/images/icons/exchange-icon.svg";
 
 interface AccountProps {
   account: string;
@@ -151,7 +154,7 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
           transition="all .3s ease 0s"
         >
           <Flex align="center">
-            <Image src={PureLogo} w={5} h={5} />
+            <Image src={PureLogo} w={4} h={4} />
             <Text display="block" fontSize="16px" mx={1}>
               {accountName}
             </Text>
@@ -203,9 +206,9 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
       >
         <Flex>
           Smart Accounts
-          {!!accountsTBA?.[account]?.length && (
+          {!!accountsTBA?.[account?.toLowerCase()]?.length && (
             <Text ml={1} borderRadius="8px" background="#1E2020" px={1.5}>
-              {accountsTBA?.[account]?.length}
+              {accountsTBA?.[account?.toLowerCase()]?.length}
             </Text>
           )}
         </Flex>
@@ -216,7 +219,7 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
         )}
       </Flex>
       <Collapse in={isOpen} animateOpacity>
-        {accountsTBA?.[account]?.map((item) => (
+        {accountsTBA?.[account?.toLowerCase()]?.map((item) => (
           <Flex
             align="center"
             justifyContent="space-between"
@@ -291,7 +294,7 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
           Create Smart Account
         </Flex>
       </Collapse>
-      <Modal isOpen={isOpenModal} onClose={onCloseModal} isCentered>
+      <Modal isOpen={isOpenModal} onClose={onCloseModal}>
         <ModalOverlay backdropFilter="blur(3px) !important;" />
         <ModalContent bg="#0F1010">
           <ModalHeader textAlign="center" pt="4" fontSize="xl">
@@ -306,6 +309,15 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
             justifyContent="space-between"
             alignItems="center"
           >
+            <SelectChain
+              render={(chainId) => (
+                <Tag alignItems="center" bg="#1E2020" mb={2}>
+                  {chainId && <ChainIcon chainId={chainId || 1} boxSize={5} />}
+                  <Box mx="2">{chainId && NODE[chainId]?.name}</Box>
+                  <ExchangeIcon />
+                </Tag>
+              )}
+            />
             <Flex justify="space-between" w="100%">
               <Box opacity="0.75">Gas Fee</Box>
               <Box textAlign="right">

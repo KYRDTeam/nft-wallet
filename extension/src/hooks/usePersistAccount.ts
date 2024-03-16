@@ -33,7 +33,7 @@ export const usePersistAccount = () => {
       (selectedAccount in accounts ||
         flatten(
           Object.values(accountsTBA).map((item) => item.map((i) => i.address))
-        ).includes(selectedAccount))
+        ).includes(selectedAccount?.toLowerCase()))
     ) {
       dispatch(setSelectedAccount(selectedAccount));
     }

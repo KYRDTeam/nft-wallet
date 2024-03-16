@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sendMessage } from "src/services/extension";
 import type { RootState } from "../store";
 import { ChainId } from "src/config/types";
+import { groupBy } from "lodash";
 
 const KeyringController = require("eth-keyring-controller");
 interface KeysState {
@@ -119,24 +120,26 @@ export const keysSlice = createSlice({
     },
     setAllAccountTBAs: (
       state,
-      action: PayloadAction<{
-        account: string;
-        addresses: string[];
-        tba: boolean;
-        chainId: ChainId;
-      }>
+      action: PayloadAction<
+        {
+          account: string;
+          address: string;
+          tba: boolean;
+          chainId: ChainId;
+        }[]
+      >
     ) => {
-      const addressKey =
-        action.payload.account.toLowerCase() as keyof typeof state.accountsTBA;
-      state.accountsTBA[addressKey] = [];
-      let accounts = action.payload.addresses.map((address) => {
-        return {
-          address: address.toLowerCase(),
-          isEnabled: action.payload.tba,
-          chainId: action.payload.chainId,
-        };
-      });
-      state.accountsTBA[addressKey] = accounts;
+      const addressKeys = groupBy(action.payload, "account");
+      for (const key in addressKeys) {
+        state.accountsTBA[key.toLowerCase()] = [];
+        state.accountsTBA[key.toLowerCase()] = addressKeys[key].map((item) => {
+          return {
+            address: item.address.toLowerCase(),
+            isEnabled: item.tba,
+            chainId: item.chainId,
+          };
+        });
+      }
     },
     enableTBA: (
       state,

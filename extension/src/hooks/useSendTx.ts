@@ -32,7 +32,11 @@ export const useSendTx = () => {
     }
     let acc = undefined;
     Object.keys(accountsTBA).forEach((e) => {
-      if (!!accountsTBA[e].find((f) => f.address === storeAccount)) {
+      if (
+        !!accountsTBA[e?.toLowerCase()].find(
+          (f) => f.address === storeAccount?.toLowerCase()
+        )
+      ) {
         acc = e;
         setIsTBA(true);
       }

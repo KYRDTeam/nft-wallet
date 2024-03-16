@@ -11,7 +11,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { EtherScanIcon, ShareIcon, TransferIcon } from "../common/icons";
-import useFetch from "use-http";
 import { get } from "lodash";
 import useCustomToast from "src/hooks/useCustomToast";
 import { NODE } from "src/config/constants/chain";

@@ -1,7 +1,7 @@
-<div style="display: flex; justify-content: center;"><img src="./extension/img/logo.png"/></div>
-<h1 style="text-align: center;margin-top: 10px">NFT Wallet</h1>
+<div style="display: flex; justify-content: center; width: 100%;"><img src="./extension/img/logo.png"/></div>
+<h1 style="text-align: center;margin-top: 10px; width: 100%;">NFT Wallet</h1>
 
-<h4 style="text-align: center;margin-top: 10px;font-weight:semibold">Browser extension for NFT-linked smart contract wallet</h4>
+<h4 style="text-align: center;margin-top: 10px;font-weight:semibold; width: 100%;">Browser extension for NFT-linked smart contract wallet</h4>
 
 Web3 projects are issuing points to attract users, but their point system is mostly stored off-chain and tied to EOA (Externally Owned Accounts) wallets. That means in order to transfer points to others, one must provide the EOA wallet private key and that's a very insecure process.
 
@@ -116,29 +116,36 @@ Use this address as the `implementation` parameter when calling `initialize` on 
 
 ## Get started
 
-Requirements:
+### Requirements:
 
 - Node 16
+- Yarn
 
-Install dependencies:
+### Install dependencies:
 
-```
+```bash
 $ yarn
 ```
 
-Build extension
+### Environment variables
 
-```
+- About Krystal related environment variables, please contact us to get the values
+- About Multicall and Mutlisend, please use any multicall/multisend contracts on chain you want to use
+- About TBA related env, please refer below list of addresses in **contracts** section
+
+### Build extension
+
+```bash
 $ yarn build
 ```
 
-After this step, a folder `build` is generated. To add this to Chrome extension locally, first enable developer mode and load the `build` folder
+After this step, a folder `build` is generated. To add this to Chrome extension locally, first enable developer mode and press `Load unpacked` button the `build` folder
 
 ![Load chrome extension](extension/screenshots/upload_extension.gif)
 
-Build for development
+### Development
 
-```
+```bash
 $ yarn start
 ```
 

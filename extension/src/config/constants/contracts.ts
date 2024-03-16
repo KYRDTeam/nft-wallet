@@ -3,17 +3,17 @@ import { ChainId } from "../types";
 export const multiCall: {
   [chainId in ChainId]: string;
 } = {
-  [ChainId.MAINNET]: "",
-  [ChainId.ROPSTEN]: "",
+  [ChainId.MAINNET]: process.env.REACT_APP_MULTICALL || "",
+  [ChainId.ROPSTEN]: process.env.REACT_APP_MULTICALL || "",
   [ChainId.BSC]: process.env.REACT_APP_MULTICALL || "",
   [ChainId.POLYGON]: process.env.REACT_APP_MULTICALL || "",
-  [ChainId.AVALANCHE]: "",
-  [ChainId.FANTOM]: "",
-  [ChainId.CRONOS]: "",
-  [ChainId.BSC_TESTNET]: "",
-  [ChainId.ARBITRUM]: "",
-  [ChainId.POLYGON_ZKEVM_TESTNET]: "",
-  [ChainId.LINEA_TESTNET]: "",
+  [ChainId.AVALANCHE]: process.env.REACT_APP_MULTICALL || "",
+  [ChainId.FANTOM]: process.env.REACT_APP_MULTICALL || "",
+  [ChainId.CRONOS]: process.env.REACT_APP_MULTICALL || "",
+  [ChainId.BSC_TESTNET]: process.env.REACT_APP_MULTICALL || "",
+  [ChainId.ARBITRUM]: process.env.REACT_APP_MULTICALL || "",
+  [ChainId.POLYGON_ZKEVM_TESTNET]: process.env.REACT_APP_MULTICALL || "",
+  [ChainId.LINEA_TESTNET]: process.env.REACT_APP_MULTICALL || "",
 };
 
 export const SMART_WALLET_PROXY: { [chainId in ChainId]: string } = {

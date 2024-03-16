@@ -33,8 +33,10 @@ export const NFTitem = ({
     () =>
       !!account &&
       isNumber(idx) &&
-      accountsTBA?.[account?.toLowerCase()]?.[idx]?.address,
-    [account, accountsTBA, idx]
+      accountsTBA?.[account?.toLowerCase()]?.filter(
+        (i) => i.chainId === chainId
+      )?.[idx]?.address,
+    [account, accountsTBA, chainId, idx]
   );
 
   return (

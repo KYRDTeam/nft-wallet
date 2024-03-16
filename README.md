@@ -3,7 +3,7 @@
 
 <h4 style="text-align: center;margin-top: 10px;font-weight:semibold">Browser extension for NFT-linked smart contract wallet</h4>
 
-Web3 projects are issuing points to attract users, but their point system is mostly stored off-chain and tied to EOA wallets. That means in order to transfer points to others, one must provide the EOA wallet private key and that's a very insecure process.
+Web3 projects are issuing points to attract users, but their point system is mostly stored off-chain and tied to EOA (Externally Owned Accounts) wallets. That means in order to transfer points to others, one must provide the EOA wallet private key and that's a very insecure process.
 
 To tackle this, we are building a unique browser extension for smart contract wallets that are linked with NFTs in the way that owner of the NFT can control the wallet and transferring wallet is now as easy as transferring an NFT. You can use our extension to create smart contract wallets then connect to dApps and make transactions just like you're on Metamask or Rabby.
 
@@ -11,11 +11,14 @@ _Key features:_
 
 - Create smart account (NFT-linked smart contract wallet) from an EOA wallet
 - Connect smart account to dApps and interact with their smart contracts
-- Transfer smart account to other address
+- Transfer smart account to other address by transfer linked NFT
 
 ## Technical solution
 
-We adopted [ERC6551](https://eips.ethereum.org/EIPS/eip-6551) Token bound accounts for our smart accounts.
+- We adopted [ERC-6551](https://eips.ethereum.org/EIPS/eip-6551) **Token bound accounts** for our smart accounts.
+- We use [ERC-721](https://eips.ethereum.org/EIPS/eip-721) **NFT** to link with smart accounts.
+- We modify browser extension connection flow to let smart accounts connect to any dApps without the need of account's private key.
+- We modify browser extension transaction flow to let smart accounts make transactions from data sent by any dApps without the need of account's private key.
 
 # Contracts
 
@@ -28,7 +31,7 @@ forge script  --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast contract
 
 ### NOTE
 
-you can pre-compute nft and tba helper contract deployment address by using the following command
+You can pre-compute NFT and TBAHelper contract deployment address by using the following command
 
 ```bash
 forge script contracts/script/ComputeAddresses.s.sol

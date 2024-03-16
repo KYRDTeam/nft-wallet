@@ -29,7 +29,7 @@ export default function Confirm({
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="full">
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent>
+        <ModalContent bg="#0F1010">
           <ModalHeader textAlign="center" pt="8">
             {title}
           </ModalHeader>

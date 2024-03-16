@@ -16,7 +16,11 @@ import { useAppSelector } from "src/hooks/useStore";
 import { useWallet } from "src/hooks/useWallet";
 import { globalSelector } from "src/store/global";
 
-const QrCodeModal = ({ render }: { render: (onOpen: () => void) => JSX.Element }) => {
+const QrCodeModal = ({
+  render,
+}: {
+  render: (onOpen: () => void) => JSX.Element;
+}) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { chainId } = useAppSelector(globalSelector);
   const { account } = useWallet();
@@ -27,26 +31,43 @@ const QrCodeModal = ({ render }: { render: (onOpen: () => void) => JSX.Element }
       {render(onOpen)}
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="full">
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent>
+        <ModalContent bg="#0F1010">
           <ModalHeader textAlign="center" pt="8">
             Receive
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody px="10">
             <Center flexDir="column" textAlign="center">
-              <Box as={QRCode} value={account || ""} p="3" bg="white" borderRadius="xl" mb="5" />
+              <Box
+                as={QRCode}
+                value={account || ""}
+                p="3"
+                bg="white"
+                borderRadius="xl"
+                mb="5"
+              />
               {account}
               <Box opacity="0.75" mt="10" fontSize="sm">
                 <Box>
-                  Only transfer {NODE[chainId].currencySymbol} or any {NODE[chainId].standard} token to this address
+                  Only transfer {NODE[chainId].currencySymbol} or any{" "}
+                  {NODE[chainId].standard} token to this address
                 </Box>
-                <Box>*Transferring any other tokens may result in loss of your funds</Box>
+                <Box>
+                  *Transferring any other tokens may result in loss of your
+                  funds
+                </Box>
               </Box>
             </Center>
           </ModalBody>
 
           <ModalFooter py="10" justifyContent="space-evenly">
-            <Button w="40" colorScheme="gray" mr={3} onClick={onClose} color="white">
+            <Button
+              w="40"
+              colorScheme="gray"
+              mr={3}
+              onClick={onClose}
+              color="white"
+            >
               Cancel
             </Button>
             <Button w="40" colorScheme="primary" onClick={onCopy}>

@@ -19,18 +19,21 @@ import { useAppSelector } from "src/hooks/useStore";
 import { keysSelector } from "src/store/keys";
 import { closeCurrentWindow } from "src/background/bgHelper";
 import useGetPageInfo from "src/hooks/useGetPageInfo";
+import { useMemo } from "react";
 
 const SignRequest = () => {
   const { pageInfo, loading } = useGetPageInfo();
   const [data, setData] = useState<any>();
   const [balance, setBalance] = useState<any>(0);
-  const { chainId } = useWallet();
+  const { chainId, account } = useWallet();
   const { keyringController } = useAppSelector(keysSelector);
 
   const handleSign = async () => {
     const { tx, address } = data;
     const signedTx = await keyringController.signPersonalMessage(
-      { data: tx, from: address },
+      account === tx
+        ? { data: address, from: tx }
+        : { data: tx, from: address },
       {}
     );
     sendMessage({ type: "send_tx_hash", hash: signedTx });
@@ -66,6 +69,16 @@ const SignRequest = () => {
       getBalance();
     }
   }, [balance, chainId, data]);
+
+  const msg = useMemo(() => {
+    try {
+      return account === data?.tx
+        ? hexToUtf8(data?.address)
+        : hexToUtf8(data?.tx);
+    } catch (error) {
+      return account === data?.tx ? data?.address : data?.tx;
+    }
+  }, [account, data?.address, data?.tx]);
 
   if (!data || loading) {
     return <LoadingPage height="100vh" />;
@@ -124,7 +137,7 @@ const SignRequest = () => {
           mb={4}
           textAlign="left"
           dangerouslySetInnerHTML={{
-            __html: hexToUtf8(data.tx),
+            __html: msg,
           }}
         />
       </Box>

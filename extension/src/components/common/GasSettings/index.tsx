@@ -147,18 +147,34 @@ export default function GasSettings({
     <div>
       <>
         {!isCustomSetting && (
-          <Button colorScheme="primary" bg="transparent" variant="link" onClick={onOpen}>
+          <Button
+            colorScheme="primary"
+            bg="transparent"
+            variant="link"
+            onClick={onOpen}
+          >
             EDIT
           </Button>
         )}
 
-        <Modal isOpen={isOpen} onClose={closeModal} size="full" {...PropsModal} isCentered>
+        <Modal
+          isOpen={isOpen}
+          onClose={closeModal}
+          size="full"
+          {...PropsModal}
+          isCentered
+        >
           <ModalOverlay backdropFilter="blur(3px) !important;" />
-          <ModalContent width="100%" maxWidth="400px" bgColor="gray.900">
+          <ModalContent width="100%" maxWidth="400px" bg="#0F1010">
             <ModalHeader textAlign="left" py="8" pb="0">
               Transaction Setting
             </ModalHeader>
-            <ModalCloseButton top="32px" bg="transparent" border="0" color="white" />
+            <ModalCloseButton
+              top="32px"
+              bg="transparent"
+              border="0"
+              color="white"
+            />
             <ModalBody px="8">
               <Tabs colorScheme="primary">
                 <TabList>
@@ -167,13 +183,20 @@ export default function GasSettings({
                 </TabList>
 
                 {NODE[chainId].EIP1559 && (
-                  <Flex justify="center" align="center" direction="column" mt="7">
+                  <Flex
+                    justify="center"
+                    align="center"
+                    direction="column"
+                    mt="7"
+                  >
                     <Text>Estimated GAS fee (Gwei)</Text>
                     <Text fontSize="2xl">
-                      ~ {formatNumber(estimatedFee)} {NODE[chainId].currencySymbol}
+                      ~ {formatNumber(estimatedFee)}{" "}
+                      {NODE[chainId].currencySymbol}
                     </Text>
                     <Text color="whiteAlpha.700" fontSize="sm">
-                      Max fee: {formatNumber(maxFee)} {NODE[chainId].currencySymbol} ~ ${" "}
+                      Max fee: {formatNumber(maxFee)}{" "}
+                      {NODE[chainId].currencySymbol} ~ ${" "}
                       {formatNumber(+maxFee * nativeUsdPrice, 2)}
                     </Text>
                   </Flex>

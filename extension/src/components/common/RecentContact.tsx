@@ -34,49 +34,62 @@ export const RecentContact = ({ onSelect }: { onSelect: (address: string) => voi
           )}
         </Flex>
         {wallets.length === 0 && (
-          <Text fontSize="xs" fontStyle="italic" mt="2" opacity="0.75" textAlign="center">
+          <Text
+            fontSize="xs"
+            fontStyle="italic"
+            mt="2"
+            opacity="0.75"
+            textAlign="center"
+          >
             No Wallet added
           </Text>
         )}
         {wallets.length > 0 &&
-          wallets.slice(0, 3).map((wallet: { name: string; address: string }) => (
-            <Flex
-              key={wallet.address}
-              alignItems="center"
-              cursor="pointer"
-              _hover={{ bg: "gray.900" }}
-              px="2"
-              py="1"
-              borderRadius="12"
-              onClick={() => {
-                onSelect(wallet.address);
-              }}
-            >
-              <Avatar name={wallet.name || "<unknown>"} boxSize="9" mr="2" />
-              <Box>
-                <Text
-                  noOfLines={1}
-                  title={wallet.name || "<unknown>"}
-                  color={wallet.name ? "whiteAlpha.900" : "whiteAlpha.500"}
-                  fontSize="sm"
-                >
-                  {wallet.name || "<unknown>"}
-                </Text>
-                <Text color="whiteAlpha.500" fontSize="sm">
-                  {ellipsis(wallet.address, 26, 5)}
-                </Text>
-              </Box>
-            </Flex>
-          ))}
+          wallets
+            .slice(0, 3)
+            .map((wallet: { name: string; address: string }) => (
+              <Flex
+                key={wallet.address}
+                alignItems="center"
+                cursor="pointer"
+                _hover={{ bg: "gray.900" }}
+                px="2"
+                py="1"
+                borderRadius="12"
+                onClick={() => {
+                  onSelect(wallet.address);
+                }}
+              >
+                <Avatar name={wallet.name || "<unknown>"} boxSize="9" mr="2" />
+                <Box>
+                  <Text
+                    noOfLines={1}
+                    title={wallet.name || "<unknown>"}
+                    color={wallet.name ? "whiteAlpha.900" : "whiteAlpha.500"}
+                    fontSize="sm"
+                  >
+                    {wallet.name || "<unknown>"}
+                  </Text>
+                  <Text color="whiteAlpha.500" fontSize="sm">
+                    {ellipsis(wallet.address, 26, 5)}
+                  </Text>
+                </Box>
+              </Flex>
+            ))}
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="full">
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent bgColor="gray.900" p="0">
+        <ModalContent bg="#0F1010" p="0">
           <ModalCloseButton />
           <ModalHeader textAlign="left" py="4">
             Select Contact
           </ModalHeader>
-          <ModalBody fontSize={{ base: "md", md: "lg" }} px="0" height="800px" overflowY="auto">
+          <ModalBody
+            fontSize={{ base: "md", md: "lg" }}
+            px="0"
+            height="800px"
+            overflowY="auto"
+          >
             {wallets.length > 0 &&
               wallets.map((wallet: { name: string; address: string }) => (
                 <Flex
@@ -93,9 +106,16 @@ export const RecentContact = ({ onSelect }: { onSelect: (address: string) => voi
                   borderBottomWidth="1px"
                   borderBottomColor="whiteAlpha.100"
                 >
-                  <Avatar name={wallet.name || "<unknown>"} boxSize="9" mr="2" />
+                  <Avatar
+                    name={wallet.name || "<unknown>"}
+                    boxSize="9"
+                    mr="2"
+                  />
                   <Box>
-                    <Text color={wallet.name ? "whiteAlpha.900" : "whiteAlpha.500"} fontSize="sm">
+                    <Text
+                      color={wallet.name ? "whiteAlpha.900" : "whiteAlpha.500"}
+                      fontSize="sm"
+                    >
                       {wallet.name || "<unknown>"}
                     </Text>
                     <Text color="whiteAlpha.500" fontSize="sm">

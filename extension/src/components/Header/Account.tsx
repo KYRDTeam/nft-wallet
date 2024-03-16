@@ -293,7 +293,7 @@ export const Account = ({ account, accountName, onClose }: AccountProps) => {
       </Collapse>
       <Modal isOpen={isOpenModal} onClose={onCloseModal} isCentered>
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent bg="black">
+        <ModalContent bg="#0F1010">
           <ModalHeader textAlign="center" pt="4" fontSize="xl">
             Confirm Create TBA Account
           </ModalHeader>

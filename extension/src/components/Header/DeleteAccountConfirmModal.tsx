@@ -76,7 +76,7 @@ const DeleteAccountConfirmModal = ({
       {render(onOpen)}
       <Modal isOpen={isOpen} onClose={handleClose} isCentered size="full" initialFocusRef={initialRef}>
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent bg="black">
+        <ModalContent bg="#0F1010">
           <ModalHeader textAlign="center" pt="6" fontSize="xl">
             Remove account
           </ModalHeader>

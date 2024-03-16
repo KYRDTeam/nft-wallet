@@ -89,9 +89,15 @@ const AddAccountModal = ({
   return (
     <>
       {render(onOpen)}
-      <Modal isOpen={isOpen} onClose={handleClose} isCentered size="full" initialFocusRef={initialRef}>
+      <Modal
+        isOpen={isOpen}
+        onClose={handleClose}
+        isCentered
+        size="full"
+        initialFocusRef={initialRef}
+      >
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent bg="black">
+        <ModalContent bg="#0F1010">
           <ModalHeader pt="6" fontSize="xl">
             Create New Account
           </ModalHeader>
@@ -156,11 +162,27 @@ const AddAccountModal = ({
               {errorMessage}
             </Text>
           )}
-          <ModalFooter py="6" justifyContent="space-between" alignItems="center" display="flex" mx={4}>
-            <Button colorScheme="gray" onClick={handleClose} color="white" minW="150px">
+          <ModalFooter
+            py="6"
+            justifyContent="space-between"
+            alignItems="center"
+            display="flex"
+            mx={4}
+          >
+            <Button
+              colorScheme="gray"
+              onClick={handleClose}
+              color="white"
+              minW="150px"
+            >
               Cancel
             </Button>
-            <Button colorScheme="primary" onClick={handleSubmitAddAccount} minW="150px" disabled={!acceptTerms}>
+            <Button
+              colorScheme="primary"
+              onClick={handleSubmitAddAccount}
+              minW="150px"
+              disabled={!acceptTerms}
+            >
               Confirm
             </Button>
           </ModalFooter>

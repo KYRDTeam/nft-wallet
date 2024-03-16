@@ -1,7 +1,6 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { NFTItem } from "src/config/types";
 import NFTSvg from "src/assets/images/illus/NFT.svg";
-import { transparentize } from "@chakra-ui/theme-tools";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppSelector } from "src/hooks/useStore";
 import { globalSelector } from "src/store/global";
@@ -37,12 +36,12 @@ export const NFTitem = ({
 
   return (
     <Box
-      bg="gray.600"
+      bg="#1E2020"
       mb="4"
       display="block"
       w="full"
       borderRadius="16"
-      p={{ base: 3, md: 4 }}
+      p={2}
       cursor={onlyPreview ? "default" : "pointer"}
       as={onlyPreview ? Box : NavLink}
       to={
@@ -59,14 +58,13 @@ export const NFTitem = ({
         onlyPreview
           ? {}
           : {
-              bgColor: transparentize("primary.300", 0.3) as any,
-              borderColor: "primary.300",
+              bg: "rgba(255,255,255,0.15)",
+              borderColor: "#2D302F",
             }
       }
     >
       <Box
         borderRadius="16"
-        bg="gray.900"
         w="full"
         pt="100%"
         mb={{ base: 1, md: 3 }}
@@ -90,8 +88,9 @@ export const NFTitem = ({
         )}
         {collectibleAddress === process.env.REACT_APP_TBA_NFT && (
           <Flex
-            w="100%"
-            h="100%"
+            w="95%"
+            h="95%"
+            bg="gray.900"
             maxW="full"
             maxHeight="full"
             top="50%"
@@ -104,11 +103,12 @@ export const NFTitem = ({
             backgroundPosition="center"
             align="center"
             justify="center"
+            borderRadius="16px"
           >
             <Text
               color="primary.200"
               fontWeight="semibold"
-              fontSize="xl"
+              fontSize="lg"
               mt={1}
             >
               #{data?.tokenID}

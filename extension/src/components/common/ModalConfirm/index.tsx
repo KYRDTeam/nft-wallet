@@ -13,14 +13,19 @@ const ModalConfirm = ({ isOpen, onClose, children, onConfirm }: Props) => {
   return (
     <Modal onClose={onClose} size="lg" isOpen={isOpen} isCentered>
       <ModalOverlay backdropFilter="blur(3px) !important;" />
-      <ModalContent bg="gray.700" p={3} pb={5}>
+      <ModalContent bg="#0F1010" p={3} pb={5}>
         <ModalCloseButton />
         <ModalBody mt="5" textAlign="center">
           {children}
         </ModalBody>
         <ModalFooter>
           <Flex alignItems="center" justifyContent="space-around" w="100%">
-            <Button w="100%" borderRadius={16} colorScheme="gray" onClick={onClose}>
+            <Button
+              w="100%"
+              borderRadius={16}
+              colorScheme="gray"
+              onClick={onClose}
+            >
               Cancel
             </Button>
             {!!onConfirm && (

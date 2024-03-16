@@ -25,22 +25,36 @@ const CongratulationsCreateWallet = ({ render, vault }: CongratulationsCreateWal
   return (
     <>
       {render(onOpen)}
-      <Modal onClose={onClose} size="full" isOpen={isOpen} initialFocusRef={initialRef}>
-        <ModalContent fontSize="md" bg="black">
+      <Modal
+        onClose={onClose}
+        size="full"
+        isOpen={isOpen}
+        initialFocusRef={initialRef}
+      >
+        <ModalContent fontSize="md" bg="#0F1010">
           <ModalHeader mt={3}>Congratulations</ModalHeader>
           <ModalCloseButton />
           <ModalBody display="flex" pb="10" pt="0">
             <Flex flexDir="column" justifyContent="center">
-              <Image src={CongratulationImg} alt="congratulations-create-wallet" />
+              <Image
+                src={CongratulationImg}
+                alt="congratulations-create-wallet"
+              />
               <Text>
-                You have completed all of your steps properly. Keep your Secret Recovery Phrase safe, it's your
-                responsibility!
+                You have completed all of your steps properly. Keep your Secret
+                Recovery Phrase safe, it's your responsibility!
               </Text>
               <Text color="whiteAlpha.500" mt={2}>
                 *We cannot recover your Secret Recovery Phrase.
               </Text>
               <Box h="40px" mt="auto">
-                <Button colorScheme="primary" w="100%" size="md" onClick={submit} ref={initialRef}>
+                <Button
+                  colorScheme="primary"
+                  w="100%"
+                  size="md"
+                  onClick={submit}
+                  ref={initialRef}
+                >
                   Done
                 </Button>
               </Box>

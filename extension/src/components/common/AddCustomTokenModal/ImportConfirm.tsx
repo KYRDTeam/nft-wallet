@@ -75,7 +75,7 @@ export default function ImportConfirm({
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay backdropFilter="blur(3px) !important;" />
-      <ModalContent w="400px" maxWidth="100%">
+      <ModalContent w="400px" maxWidth="100%" bg="#0F1010">
         <ModalHeader textAlign="center">Import a token</ModalHeader>
         <ModalCloseButton />
         <ModalBody px="8">

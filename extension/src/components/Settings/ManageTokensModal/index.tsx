@@ -49,7 +49,7 @@ export const ManageTokensModal = ({ render }: { render: (onOpen: () => void) => 
       {render(onOpen)}
       <Modal isOpen={isOpen} onClose={onClose} isCentered size="full" initialFocusRef={initialRef}>
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent w="400px" maxWidth="100%" bg="black">
+        <ModalContent w="400px" maxWidth="100%" bg="#0F1010">
           <ModalHeader>Manage Tokens</ModalHeader>
           <ModalCloseButton />
           <ModalBody p="0">

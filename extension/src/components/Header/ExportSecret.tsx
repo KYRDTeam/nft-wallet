@@ -85,7 +85,7 @@ const ExportSecret = ({ render, type }: ExportSecretProps) => {
       {render(onOpen)}
       <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered size="full" initialFocusRef={initialRef}>
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent bg="black">
+        <ModalContent bg="#0F1010">
           <Text
             color="gray.100"
             onClick={handleCloseModal}

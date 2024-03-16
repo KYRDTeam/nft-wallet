@@ -139,7 +139,7 @@ const TxModal = ({
   return (
     <Modal onClose={handleCloseTxModal} size="lg" isOpen={isOpen} isCentered>
       <ModalOverlay backdropFilter="blur(3px) !important;" />
-      <ModalContent bg="gray.700" px="0" pb={5}>
+      <ModalContent bg="#0F1010" px="0" pb={5}>
         <ModalCloseButton />
         <ModalBody mt="5" textAlign="center">
           <Box mb={5} opacity="0.75">
@@ -147,7 +147,12 @@ const TxModal = ({
               <>
                 {receipt.status ? (
                   <Box>
-                    <Center fontSize="2xl" fontWeight="semibold" mb="5" gridGap="3">
+                    <Center
+                      fontSize="2xl"
+                      fontWeight="semibold"
+                      mb="5"
+                      gridGap="3"
+                    >
                       <DoneSVG />
                       Done!
                     </Center>
@@ -157,7 +162,12 @@ const TxModal = ({
                   </Box>
                 ) : (
                   <Box>
-                    <Center fontSize="2xl" fontWeight="semibold" mb="5" gridGap="3">
+                    <Center
+                      fontSize="2xl"
+                      fontWeight="semibold"
+                      mb="5"
+                      gridGap="3"
+                    >
                       <FailedSVG />
                       Failed!
                     </Center>
@@ -199,7 +209,8 @@ const TxModal = ({
               <Flex alignItems="center">
                 <Box opacity="0.5">Tx hash:</Box>
                 <Box ml="2">
-                  {hash && `${ellipsis(hash, 20, 5)}`} <ExternalLinkIcon ml="2" />
+                  {hash && `${ellipsis(hash, 20, 5)}`}{" "}
+                  <ExternalLinkIcon ml="2" />
                 </Box>
               </Flex>
             </Flex>
@@ -207,14 +218,20 @@ const TxModal = ({
 
           {isShowRating && <Rating txHash={hash} mt="5" />}
           <Flex mt={6} justifyContent="center">
-            {(!receipt || isEmpty(receipt)) && <GroupButtonAction data={dataTx} closeModalTx={handleResetHash} />}
+            {(!receipt || isEmpty(receipt)) && (
+              <GroupButtonAction data={dataTx} closeModalTx={handleResetHash} />
+            )}
           </Flex>
         </ModalBody>
         <ModalFooter justifyContent="center">
           {renderBottom
             ? renderBottom(receipt, handleCloseTxModal)
             : !isEmpty(receipt) && (
-                <Button onClick={handleCloseTxModal} w="120px" colorScheme="primary">
+                <Button
+                  onClick={handleCloseTxModal}
+                  w="120px"
+                  colorScheme="primary"
+                >
                   Close
                 </Button>
               )}

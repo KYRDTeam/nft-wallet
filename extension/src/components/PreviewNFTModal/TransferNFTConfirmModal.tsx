@@ -102,7 +102,7 @@ export const TransferNFTConfirmModal = ({
       </Button>
       <Modal isOpen={isOpen} onClose={handleClose} isCentered size="3xl">
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent width="sm" borderRadius="16">
+        <ModalContent width="sm" borderRadius="16" bg="#0F1010">
           <ModalCloseButton />
           <ModalHeader textAlign="center" py="4">
             Transfer Confirmation

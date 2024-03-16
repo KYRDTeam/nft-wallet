@@ -96,7 +96,7 @@ const ApproveTokenModal = ({ srcToken, render, spender, onSuccess, resetData }: 
       {render(onOpen)}
       <Modal isOpen={isOpen} onClose={handleCloseModal} isCentered>
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent>
+        <ModalContent bg="#0F1010">
           <ModalHeader textAlign="center" pt="8">
             Approve Token
           </ModalHeader>
@@ -109,7 +109,8 @@ const ApproveTokenModal = ({ srcToken, render, spender, onSuccess, resetData }: 
             <Flex justify="space-between">
               <Box opacity="0.75">Gas Fee</Box>
               <Box textAlign="right">
-                {formatNumber(gasFee)} {NODE[chainId].currencySymbol} ({formatNumber(+gasFee * nativeUsdPrice)} USD)
+                {formatNumber(gasFee)} {NODE[chainId].currencySymbol} (
+                {formatNumber(+gasFee * nativeUsdPrice)} USD)
                 <GasSettings
                   gasPrice={gasPrice}
                   setGasPrice={setGasPrice}
@@ -129,7 +130,13 @@ const ApproveTokenModal = ({ srcToken, render, spender, onSuccess, resetData }: 
             </SlideFade>
           </ModalBody>
           <ModalFooter py="10" justifyContent="space-evenly">
-            <Button w="40" colorScheme="gray" mr={3} onClick={handleCloseModal} color="white">
+            <Button
+              w="40"
+              colorScheme="gray"
+              mr={3}
+              onClick={handleCloseModal}
+              color="white"
+            >
               Cancel
             </Button>
             <Button
@@ -145,7 +152,11 @@ const ApproveTokenModal = ({ srcToken, render, spender, onSuccess, resetData }: 
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <TxModal txHash={txHash} callbackSuccess={onSuccess} resetData={resetData} />
+      <TxModal
+        txHash={txHash}
+        callbackSuccess={onSuccess}
+        resetData={resetData}
+      />
     </>
   );
 };

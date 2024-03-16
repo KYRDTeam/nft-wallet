@@ -138,9 +138,15 @@ export const AddCustomTokenModal = ({
     <>
       <BtnWrapper onClick={onOpen} />
 
-      <Modal isOpen={isOpen} onClose={onCloseModal} isCentered size="full" initialFocusRef={initialRef}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onCloseModal}
+        isCentered
+        size="full"
+        initialFocusRef={initialRef}
+      >
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent w="400px" maxWidth="100%" bg="black">
+        <ModalContent w="400px" maxWidth="100%" bg="#0F1010">
           <ModalHeader>Add Custom Token</ModalHeader>
           <ModalCloseButton />
           <ModalBody px="6">
@@ -182,7 +188,9 @@ export const AddCustomTokenModal = ({
               </InputGroup>
             </FormControl>
             <Box height="200px" mt="2">
-              {!loading && !!keyword && error && <Text color="primary.300">{error}</Text>}
+              {!loading && !!keyword && error && (
+                <Text color="primary.300">{error}</Text>
+              )}
               {!loading && !!keyword && token && (
                 <Flex justifyContent="space-between" mt="4">
                   <Flex justifyContent="flex-start" alignItems="center">
@@ -217,7 +225,12 @@ export const AddCustomTokenModal = ({
                 </Flex>
               )}
               {!loading && !!keyword && !token && (
-                <Flex w="full" direction="column" justifyContent="center" alignItems="center">
+                <Flex
+                  w="full"
+                  direction="column"
+                  justifyContent="center"
+                  alignItems="center"
+                >
                   <TokenNotFoundIcon boxSize="40" ml="6" />
                   <Text mt="3" color="whiteAlpha.600">
                     Token not found!

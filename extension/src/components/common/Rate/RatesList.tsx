@@ -79,7 +79,7 @@ const RatesList = ({
       </Center>
       <Modal onClose={onClose} isOpen={isOpen} size="md" isCentered>
         <ModalOverlay backdropFilter="blur(3px) !important;" />
-        <ModalContent>
+        <ModalContent bg="#0F1010">
           <ModalHeader mt="4" fontSize="lg" textAlign="center">
             Choose Rate and Gas fee
           </ModalHeader>

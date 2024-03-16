@@ -18,8 +18,13 @@ const GenerateSeedWord = ({ render, mnemonic }: GenerateSeedWordProps) => {
   return (
     <>
       {render(onOpen)}
-      <Modal onClose={onClose} size="full" isOpen={isOpen} initialFocusRef={initialRef}>
-        <ModalContent fontSize="md" bg="black">
+      <Modal
+        onClose={onClose}
+        size="full"
+        isOpen={isOpen}
+        initialFocusRef={initialRef}
+      >
+        <ModalContent fontSize="md" bg="#0F1010">
           <ModalHeader mt={3}>Secret Recovery Phrase</ModalHeader>
           <ModalCloseButton />
           <ModalBody display="flex" pb="10" pt="0">
@@ -37,7 +42,8 @@ const GenerateSeedWord = ({ render, mnemonic }: GenerateSeedWordProps) => {
                   <Box display="inline" color="yellow.500">
                     the only way
                   </Box>{" "}
-                  to restore your Wallet if you lose your device or forget your password.
+                  to restore your Wallet if you lose your device or forget your
+                  password.
                 </Box>
                 <Box
                   borderRadius="lg"
@@ -54,7 +60,13 @@ const GenerateSeedWord = ({ render, mnemonic }: GenerateSeedWordProps) => {
                 <ConfirmSeedWord
                   wordList={mnemonic}
                   render={(onOpen) => (
-                    <Button colorScheme="primary" w="100%" size="md" onClick={onOpen} ref={initialRef}>
+                    <Button
+                      colorScheme="primary"
+                      w="100%"
+                      size="md"
+                      onClick={onOpen}
+                      ref={initialRef}
+                    >
                       Next
                     </Button>
                   )}

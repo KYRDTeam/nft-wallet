@@ -26,8 +26,14 @@ const ConfirmSeedWord = ({ render, wordList }: { render: (onOpen: () => void) =>
   return (
     <>
       {render(onOpen)}
-      <Modal onClose={onClose} size="full" isOpen={isOpen} initialFocusRef={initialRef} finalFocusRef={finalRef}>
-        <ModalContent fontSize="md" bg="black">
+      <Modal
+        onClose={onClose}
+        size="full"
+        isOpen={isOpen}
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+      >
+        <ModalContent fontSize="md" bg="#0F1010">
           <ModalHeader mt={3}>Confirm Secret Recovery Phrase</ModalHeader>
           <ModalCloseButton />
           <ModalBody display="flex" pb="10" pt="0">
@@ -41,14 +47,27 @@ const ConfirmSeedWord = ({ render, wordList }: { render: (onOpen: () => void) =>
             >
               {({ handleChange, isValid }) => {
                 return (
-                  <Flex as={Form} flexDir="column" justifyContent="center" mt={10}>
+                  <Flex
+                    as={Form}
+                    flexDir="column"
+                    justifyContent="center"
+                    mt={10}
+                  >
                     <Center flexDir="column">
-                      <Box>Please select each phrase in order to make sure it is correct.</Box>
+                      <Box>
+                        Please select each phrase in order to make sure it is
+                        correct.
+                      </Box>
                       <Field name="wordList">
                         {(props: any) => (
                           <FormControl mt="5">
-                            <Flex justifyContent="space-between" color="whiteAlpha.500">
-                              <Text fontSize="sm">*Separate words with a space</Text>
+                            <Flex
+                              justifyContent="space-between"
+                              color="whiteAlpha.500"
+                            >
+                              <Text fontSize="sm">
+                                *Separate words with a space
+                              </Text>
                               <Text fontSize="sm">Word count: {wordCount}</Text>
                             </Flex>
                             <Textarea
@@ -66,11 +85,17 @@ const ConfirmSeedWord = ({ render, wordList }: { render: (onOpen: () => void) =>
                               }}
                               color="#F3F8F7"
                             />
-                            {props.form.errors.wordList && props.form.touched.wordList && (
-                              <Box mt="2" ml="2" color="red.300" fontSize="sm">
-                                {props.form.errors.wordList}
-                              </Box>
-                            )}
+                            {props.form.errors.wordList &&
+                              props.form.touched.wordList && (
+                                <Box
+                                  mt="2"
+                                  ml="2"
+                                  color="red.300"
+                                  fontSize="sm"
+                                >
+                                  {props.form.errors.wordList}
+                                </Box>
+                              )}
                           </FormControl>
                         )}
                       </Field>

@@ -15,39 +15,13 @@ _Key features:_
 
 ## Technical solution
 
-- We adopted [ERC-6551](https://eips.ethereum.org/EIPS/eip-6551) **Token bound accounts** for our smart accounts.
+- We adopted [ERC-6551](https://eips.ethereum.org/EIPS/eip-6551) **Token bound account** for our smart accounts.
 - We use [ERC-721](https://eips.ethereum.org/EIPS/eip-721) **NFT** to link with smart accounts.
 - We modify browser extension connection flow to let smart accounts connect to any dApps without the need of account's private key.
 - We modify browser extension transaction flow to let smart accounts make transactions from data sent by any dApps without the need of account's private key.
 
-# Extension
-
-## Get started
-
-Requirements:
-- Node 16
-
-Install dependencies:
-```
-$ yarn
-```
-
-Build extension
-```
-$ yarn build
-```
-
-After this step, a folder `build` is generated. To add this to Chrome extension locally, first enable developer mode and load the `build` folder
-
-![Load chrome extension](extension/screenshots/upload_extension.gif)
-
-Build for development
-```
-$ yarn start
-```
-Then load folder `dev` instead of `build`
-
 ## Functionalities
+
 ### Create smart account
 
 ![Create smart account](extension/screenshots/create_account.gif)
@@ -91,48 +65,81 @@ forge verify-contract --chain-id 137 0x18e49629A34bf735ED1816216ac754921AF26080 
 
 **Free2MintWallet**
 
-This contract is to mint new wallet. Every nft has minted from this contract is associated with a wallet address
+This contract is NFT contract we used to associate with smart account.
 
-| EVM Network   | Chain ID | Registry Address                                                                                                                       |
-| ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Linea Goerli  | 59140    | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://goerli.lineascan.build/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397)        |
-| Polygon       | 137      | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://polygonscan.com/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397)               |
-| Polygon zkEVM Testnet | 1442     | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://testnet-zkevm.polygonscan.com/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397) |
+| EVM Network          | Chain ID | Registry Address                                                                                                                       |
+| -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Polygon              | 137      | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://polygonscan.com/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397)               |
+| Polygon zkEvm Goerli | 1442     | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://testnet-zkevm.polygonscan.com/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397) |
+| Linea Goerli         | 59140    | [0xD629BB82c2217cE32Ff91143aed0816E26BaF397](https://goerli.lineascan.build/address/0xD629BB82c2217cE32Ff91143aed0816E26BaF397)        |
 
 **TBA Helper**
 
-Token bound account helper for mint new wallet
+Helper contract to mint NFT then create smart account which is associated with that NFT.
 
-| EVM Network   | Chain ID | Registry Address                                                                                                                       |
-| ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Linea Goerli  | 59140    | [0x18e49629A34bf735ED1816216ac754921AF26080](https://goerli.lineascan.build/address/0x18e49629A34bf735ED1816216ac754921AF26080)        |
-| Polygon       | 137      | [0x18e49629A34bf735ED1816216ac754921AF26080](https://polygonscan.com/address/0x18e49629A34bf735ED1816216ac754921AF26080)               |
-| Polygon zkEVM Testnet | 1442     | [0x18e49629A34bf735ED1816216ac754921AF26080](https://testnet-zkevm.polygonscan.com/address/0x18e49629A34bf735ED1816216ac754921AF26080) |
+| EVM Network          | Chain ID | Registry Address                                                                                                                       |
+| -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Polygon              | 137      | [0x18e49629A34bf735ED1816216ac754921AF26080](https://polygonscan.com/address/0x18e49629A34bf735ED1816216ac754921AF26080)               |
+| Polygon zkEvm Goerli | 1442     | [0x18e49629A34bf735ED1816216ac754921AF26080](https://testnet-zkevm.polygonscan.com/address/0x18e49629A34bf735ED1816216ac754921AF26080) |
+| Linea Goerli         | 59140    | [0x18e49629A34bf735ED1816216ac754921AF26080](https://goerli.lineascan.build/address/0x18e49629A34bf735ED1816216ac754921AF26080)        |
 
 **ERC-6551 Registry**
+This contract is used to create and get smart account.
 
-| EVM Network   | Chain ID | Registry Address                                                                                                                       |
-| ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Linea Goerli  | 59140    | [0x000000006551c19487814612e58FE06813775758](https://goerli.lineascan.build/address/0x000000006551c19487814612e58FE06813775758)        |
-| Polygon       | 137      | [0x000000006551c19487814612e58FE06813775758](https://polygonscan.com/address/0x000000006551c19487814612e58FE06813775758)               |
-| Polygon zkEVM Testnet | 1442     | [0x000000006551c19487814612e58FE06813775758](https://testnet-zkevm.polygonscan.com/address/0x000000006551c19487814612e58FE06813775758) |
+| EVM Network          | Chain ID | Registry Address                                                                                                                       |
+| -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Polygon              | 137      | [0x000000006551c19487814612e58FE06813775758](https://polygonscan.com/address/0x000000006551c19487814612e58FE06813775758)               |
+| Polygon zkEvm Goerli | 1442     | [0x000000006551c19487814612e58FE06813775758](https://testnet-zkevm.polygonscan.com/address/0x000000006551c19487814612e58FE06813775758) |
+| Linea Goerli         | 59140    | [0x000000006551c19487814612e58FE06813775758](https://goerli.lineascan.build/address/0x000000006551c19487814612e58FE06813775758)        |
 
-**Tokenbound Account Proxy**
+**Token bound account Proxy**
 
 Use this address as the `implementation` parameter when calling `createAccount` on the registry
 
-| EVM Network   | Chain ID | Account Proxy Address                                                                                                                  |
-| ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Linea Goerli  | 59140    | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://goerli.lineascan.build/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F)        |
-| Polygon       | 137      | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://polygonscan.com/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F)               |
-| Polygon zkEVM Testnet | 1442     | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://testnet-zkevm.polygonscan.com/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F) |
+| EVM Network          | Chain ID | Account Proxy Address                                                                                                                  |
+| -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Polygon              | 137      | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://polygonscan.com/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F)               |
+| Polygon zkEvm Goerli | 1442     | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://testnet-zkevm.polygonscan.com/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F) |
+| Linea Goerli         | 59140    | [0x55266d75D1a14E4572138116aF39863Ed6596E7F](https://goerli.lineascan.build/address/0x55266d75D1a14E4572138116aF39863Ed6596E7F)        |
 
-**Tokenbound Account Implementation**
+**Token bound account Implementation**
 
 Use this address as the `implementation` parameter when calling `initialize` on a created account
 
 | EVM Network   | Chain ID | Account Implementation Address                                                                                                         |
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Linea Goerli  | 59140    | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://goerli.lineascan.build/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC)        |
 | Polygon       | 137      | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://polygonscan.com/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC)               |
-| Polygon zkEVM Testnet | 1442     | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://testnet-zkevm.polygonscan.com/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC) |
+| Polygon zkEvm | 1442     | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://testnet-zkevm.polygonscan.com/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC) |
+| Linea Goerli  | 59140    | [0x41C8f39463A868d3A88af00cd0fe7102F30E44eC](https://goerli.lineascan.build/address/0x41C8f39463A868d3A88af00cd0fe7102F30E44eC)        |
+
+# Extension
+
+## Get started
+
+Requirements:
+
+- Node 16
+
+Install dependencies:
+
+```
+$ yarn
+```
+
+Build extension
+
+```
+$ yarn build
+```
+
+After this step, a folder `build` is generated. To add this to Chrome extension locally, first enable developer mode and load the `build` folder
+
+![Load chrome extension](extension/screenshots/upload_extension.gif)
+
+Build for development
+
+```
+$ yarn start
+```
+
+Then load folder `dev` instead of `build`

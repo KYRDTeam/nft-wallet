@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sendMessage } from "src/services/extension";
 import type { RootState } from "../store";
-import { isEmpty } from "lodash";
 import { ChainId } from "src/config/types";
 
 const KeyringController = require("eth-keyring-controller");
@@ -117,26 +116,6 @@ export const keysSlice = createSlice({
       state.keyringController.setLocked();
       sendMessage({ type: "set_password", password: "" });
     },
-    setAccountsTBA: (
-      state,
-      action: PayloadAction<{
-        account: string;
-        address: string;
-        tba: boolean;
-        chainId: ChainId;
-      }>
-    ) => {
-      const addressKey =
-        action.payload.account.toLowerCase() as keyof typeof state.accountsTBA;
-      if (isEmpty(state.accountsTBA[addressKey])) {
-        state.accountsTBA[addressKey] = [];
-      }
-      state.accountsTBA[addressKey].push({
-        address: action.payload.address,
-        isEnabled: action.payload.tba,
-        chainId: action.payload.chainId,
-      });
-    },
     setAllAccountTBAs: (
       state,
       action: PayloadAction<{
@@ -192,7 +171,6 @@ export const {
   deleteAccountsName,
   resetState,
   resetKeyringController,
-  setAccountsTBA,
   setAllAccountTBAs,
   enableTBA,
   setTbaRef,

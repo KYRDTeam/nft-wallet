@@ -1,4 +1,4 @@
-import { get, groupBy, mapValues, pick } from "lodash";
+import { get, pick } from "lodash";
 import { krystalApiEndPoint, KRYSTAL_API } from "../config/constants/constants";
 import {
   ChainId,
@@ -7,21 +7,17 @@ import {
   SwapParams,
   Token,
   Balance,
-  EarnToken,
-  EarnBalance,
   SwapAndDepositParams,
   ExploreData,
-  DistributionBalance,
   WithdrawParams,
   ClaimParams,
-  PoolBalances,
   TokenDetail,
   SupportedCurrencyType,
   QuoteList,
   Quote,
 } from "../config/types";
 import { getBalanceNumber } from "./formatBalance";
-import { calculateLiquidityPoolValue, toBigAmount } from "./helper";
+import { toBigAmount } from "./helper";
 import { subDays } from "date-fns";
 import { PLATFORM_WALLET } from "src/config/constants/contracts";
 
@@ -178,102 +174,6 @@ export async function fetchGasPrices(
       };
     } else {
       return Promise.reject(result.error);
-    }
-  } catch (e) {
-    return Promise.reject(e);
-  }
-}
-
-export async function fetchLendingOverview(
-  chainId: ChainId
-): Promise<EarnToken[] | undefined> {
-  try {
-    const response = await fetch(`${KRYSTAL_API[chainId]}/v1/lending/overview`);
-    const result = await response.json();
-    const lendingList = result.result;
-    if (lendingList) {
-      return lendingList;
-    } else {
-      return Promise.reject(result.error);
-    }
-  } catch (e) {
-    return Promise.reject(e);
-  }
-}
-
-export async function fetchLendingBalances(
-  chainId: ChainId,
-  address?: string
-): Promise<EarnBalance[] | undefined> {
-  try {
-    if (address) {
-      const response = await fetch(
-        `${KRYSTAL_API[chainId]}/v1/lending/balance?address=${address}`
-      );
-      const result = await response.json();
-      if (result.result) {
-        return result.result;
-      } else {
-        throw new Error(result.error);
-      }
-    }
-  } catch (e) {
-    return Promise.reject(e);
-  }
-}
-
-export async function fetchDistributionBalance(
-  chainId: ChainId,
-  platform?: string,
-  address?: string
-): Promise<DistributionBalance | undefined> {
-  try {
-    if (address && platform !== "") {
-      const response = await fetch(
-        `${KRYSTAL_API[chainId]}/v1/lending/distributionBalance?lendingPlatform=${platform}&address=${address}`
-      );
-      const result = await response.json();
-      if (result.balance) {
-        return result.balance;
-      } else {
-        throw new Error(result.error);
-      }
-    }
-  } catch (e) {
-    return Promise.reject(e);
-  }
-}
-
-export async function fetchPoolBalances(
-  chainId: ChainId,
-  address?: string
-): Promise<PoolBalances | undefined> {
-  try {
-    if (address) {
-      const response = await fetch(
-        `${KRYSTAL_API[chainId]}/v1/account/poolBalances?address=${address}`
-      );
-      const result = await response.json();
-      if (result.balances) {
-        const data = mapValues(groupBy(result.balances, "project"), (pools) => {
-          const poolsWithVal = pools.map((pool) => {
-            return {
-              ...pool,
-              value: calculateLiquidityPoolValue(
-                pool.underlying,
-                "usd"
-              ).toNumber(),
-            };
-          });
-          return {
-            value: poolsWithVal.reduce((sum, item) => sum + item.value, 0),
-            pools: poolsWithVal,
-          };
-        });
-        return data as any;
-      } else {
-        throw new Error(result.error);
-      }
     }
   } catch (e) {
     return Promise.reject(e);

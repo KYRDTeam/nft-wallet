@@ -159,52 +159,6 @@ export type Platform = {
   variableBorrowRate: number;
 };
 
-export type EarnBalance = {
-  name: string;
-  balances: EarnBalanceToken[];
-};
-
-export type EarnBalanceToken = {
-  address: string;
-  decimals: number;
-  logo: string;
-  name: string;
-  symbol: string;
-  tag: string;
-  requiresApproval: boolean;
-  interestBearingTokenAddress: string;
-  interestBearingTokenBalance: string;
-  interestBearingTokenDecimals: number;
-  interestBearingTokenSymbol: string;
-  supplyBalance: string; // full decimals
-  supplyRate: number;
-};
-
-export type DistributionBalance = Token & {
-  unclaimed: string;
-  current: string;
-  address: string;
-  decimals: number;
-  logo: string;
-  name: string;
-  symbol: string;
-};
-
-export type PoolBalances = {
-  [x: string]: {
-    value: number;
-    pools: {
-      project: string;
-      value: number;
-      underlying: {
-        balance: string;
-        token: Token;
-        quotes?: QuoteList<Quote>;
-      }[];
-    }[];
-  };
-};
-
 export type Balance = {
   balance: string;
   token: Token;

@@ -1,20 +1,5 @@
 import { ChainId, SupportedCurrencyType } from "../types";
 
-export const KRYSTAL_APP: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.ROPSTEN]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.BSC]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.BSC_TESTNET]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.POLYGON]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.CRONOS]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.FANTOM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.AVALANCHE]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.ARBITRUM]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.LINEA_TESTNET]: process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-  [ChainId.POLYGON_ZKEVM_TESTNET]:
-    process.env.REACT_APP_KRYSTAL_APP_MAINNET || "",
-};
-
 export const krystalApiEndPoint = process.env.REACT_APP_KRYSTAL_API || "";
 
 export const KRYSTAL_API: { [chainId in ChainId]: string } = {
@@ -29,22 +14,6 @@ export const KRYSTAL_API: { [chainId in ChainId]: string } = {
   [ChainId.ARBITRUM]: `${krystalApiEndPoint}/arbitrum`,
   [ChainId.LINEA_TESTNET]: `${krystalApiEndPoint}/linea`,
   [ChainId.POLYGON_ZKEVM_TESTNET]: `${krystalApiEndPoint}/zkevm`,
-};
-
-export const KRYSTAL_ADMIN_URL = process.env.REACT_APP_KRYSTAL_ADMIN_API || "";
-
-export const LENDING_PLATFORM: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "Compound",
-  [ChainId.ROPSTEN]: "Compound",
-  [ChainId.BSC]: "Venus",
-  [ChainId.BSC_TESTNET]: "Venus",
-  [ChainId.POLYGON]: "",
-  [ChainId.CRONOS]: "",
-  [ChainId.FANTOM]: "",
-  [ChainId.AVALANCHE]: "",
-  [ChainId.ARBITRUM]: "",
-  [ChainId.LINEA_TESTNET]: "",
-  [ChainId.POLYGON_ZKEVM_TESTNET]: "",
 };
 
 export const DEFAULT_GAS_LIMIT = {

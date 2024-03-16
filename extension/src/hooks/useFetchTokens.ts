@@ -56,25 +56,28 @@ export const useFetchTokens = () => {
               quotes: b.quotes,
             };
           }),
-          chainTokens,
+          chainTokens
         ),
-        "address",
+        "address"
       ).map((token: Token) => ({
         ...token,
-        isNative: token.address.toLowerCase() === NODE[chainId].address.toLowerCase(),
+        isNative:
+          token.address.toLowerCase() === NODE[chainId].address.toLowerCase(),
       }));
 
       dispatch(
         setTokens({
           tokens: availableTokenList,
           chainId,
-        }),
+        })
       );
 
       setBalances(balanceList || []);
 
       dispatch(syncHiddenWorth({ chainId }));
+      dispatch(setLoading(false));
     } catch (e) {
+      dispatch(setLoading(false));
       throw e;
     }
 
@@ -84,7 +87,10 @@ export const useFetchTokens = () => {
 
   // Fetch tokens balances
   useEffect(() => {
-    if (currentChainId.current !== chainId || currentAccount.current !== account) {
+    if (
+      currentChainId.current !== chainId ||
+      currentAccount.current !== account
+    ) {
       dispatch(setLoading(true));
     }
 
@@ -125,7 +131,7 @@ export const useFetchTokens = () => {
         chainId,
         tokens: [...customTokensWithBalance],
         isOverride: true,
-      }),
+      })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [balances, chainId, isAddedCustomToken, dispatch]);

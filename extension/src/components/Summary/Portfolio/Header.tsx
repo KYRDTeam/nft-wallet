@@ -42,7 +42,7 @@ export const Header = ({
   const usdValue = useMemo(() => {
     if (nativeToken) {
       return formatNumberV2(
-        chainWorth?.find((i) => i.chainID === chainId)?.usdValue,
+        chainWorth?.find((i) => i.chainID === chainId)?.usdValue || 0,
         4
       );
     } else return "0";
